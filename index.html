@@ -38,7 +38,7 @@
         <img class="Blob" src="/./img/avt.jpg" width="120" height="120" alt="TienMinh">
       </p>
       <h2 class="NameFtTienMinh">
-        <div id="userName" style="font-family: 'Pattaya';font-size: 26px;"> 𝙃𝙤̂̀ 𝙃𝙪̛̃𝙪 𝘾𝙪̛𝙤̛𝙣𝙜 <img
+        <div id="userName" style="font-family: 'Pattaya';font-size: 26px;"> ᴄʜứɴɢ ᴄʜỉ ɪᴏꜱ <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/512px-Twitter_Verified_Badge.svg.png"
             width="19" height="19" alt="Tích Xanh">
         </div>
@@ -94,6 +94,7 @@
       cursor: pointer;
       transition: all .25s cubic-bezier(.08, .59, .29, .99);
     }
+	
 		
     .modal {
       display: none;
@@ -317,7 +318,22 @@
       cursor: pointer;
       transition: all .25s cubic-bezier(.08, .59, .29, .99);
     }
-    
+
+    #openModalBtn-esign {
+      background-color: black;
+      color: var(--accentColor);
+      border: solid var(--accentColor) 2px;
+      border-radius: 10px;
+      font-size: 1rem;
+      margin: 20px auto;
+      width: 75%;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .25s cubic-bezier(.08, .59, .29, .99);
+    }    
 
   </style>
 </head>
@@ -378,7 +394,7 @@
   			<a href="https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/LocalIAPStore14.dylib" download class="custom-button-dylib">Free-Buy-Shop.dylib</a>
   			<a href="https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/SatellaJailed.dylib" download class="custom-button-dylib">SatellaJailed.dylib</a>
 
-  <!-- Thêm tiếp các link .dylib khác -->
+<!-- Thêm tiếp các link .dylib khác -->
       </div>
     </div>
   </div>
@@ -388,12 +404,10 @@
 
 <!-- Dylib trollfools mod app premium -->
 	<button id="openModalBtn-tf">Dylib App Pre - Trollfools</button>
-
 	<div id="myModal-tf" class="modal-dylib">
   	<div class="modal-content-dylib">
     	<button class="close-btn-dylib" onclick="closeModaltf()">X</button>
     	<p style="text-align: center;">Chọn file để xem hướng dẫn:</p>
-
     	<div class="modal-buttons-dylib">
       	<button class="custom-button-dylib" onclick="showGuide('https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/MessNoAds.dylib')">Messenger NoAds</button>
       	<button class="custom-button-dylib" onclick="showGuide('https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/BHTikTokPlus.zip')">TikTok BHPlus</button>
@@ -415,11 +429,48 @@
   	</div>
 	</div>
 
+<!--filza dowload-->
+	<button id="openModalBtn" onclick="filza('https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Filza_4.0_No_Url_Crack.ipa')">
+  Filza 4.0 No URL
+	</button>
+
+	<button id="openModalBtn" onclick="trollfools('https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/TrollFools_3.0-28.tipa')">
+  TrollFools_3.0
+	</button>
+
+	<button id="openModalBtn" onclick="TrollDecrypt('https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/TrollDecrypt.tipa')">
+  TrollDecrypt
+	</button>
+
+	<button id="openModalBtn" onclick="LocSim('https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Locsim.ipa')">
+  Sim Ảo 
+	</button>
+
+
+
+<!--kho Esign-->
+	<button id="openModalBtn-esign">Kho Esign</button>
+
+	<div id="myModal-esign" class="modal">
+  	<div class="modal-content">
+    	<button class="close-btn" onclick="closeModal()">X</button>
+    	<p style="text-align: center;">Chọn bản cấu hình cần dùng:</p>
+    	<div class="modal-buttons">
+      	<button class="custom-button" onclick="showGuideAndOpen('https://www.mediafire.com/file/33ddp45kg5f6vjp/YouTube_19.23.3.ipa/file', 'Youtube Premium: Mở khoá Premium\n Bỏ quảng cáo,\n Tắt màn hình nghe nhạc,\n Tải video miễn phí,\n Chế độ PiP ...')">Youtube Premium</button>
+      	<button class="custom-button" onclick="showGuideAndOpen('https://www.mediafire.com/file/fy7lbzagkuxynm5/Facebook_445.0.0_NoAds_1.4.1_LeTi.ipa/file', 'FaceBook:\n Không quảng cáo\n Tải Video/ảnh Story \n Tải Video/mp3 về máy bằng cách nhấn dữ vào video,...')">FaceBook Mod</button>
+      	<button class="custom-button" onclick="showGuideAndOpen('https://whatshub.top/module/spotifyVIP.module', 'Spotify Premium: Không quảng cáo, mở full tính năng')">Spotify Premium</button>
+    	</div>
+  	</div>
+	</div>
+
+
+
+
 
 
 
   
-	<!--script menu button conf shadow-->
+<!--script menu button conf shadow-->
   <script>
 	  function copyAndOpen(configURL) {
     // Copy link vào clipboard
@@ -496,6 +547,60 @@
     	window.location.href = downloadLink;
   	}
 	</script>
+	
+
+ <!--filza dowload-->
+	<script>
+  	function filza(link) {
+    	alert("📥 Hướng dẫn cài đặt:\n\nCHỈ CÓ THỂ SỬ DỤNG KHI CÀI QUA TROLLSTORE\n\nBạn có thể kiểm tra và cài trollstore qua check Download Trollstore\n\nSau khi đóng sẽ bắt đầu tải file filza");
+        	window.location.href = link;
+  	}
+	</script>
+	<script>
+  	function trollfools(link) {
+    	alert("📥 Hướng dẫn cài đặt:\n\nCHỈ CÓ THỂ SỬ DỤNG KHI CÀI QUA TROLLSTORE\n\nBạn có thể kiểm tra và cài trollstore qua check Download Trollstore\n\n Hỗ trợ IOS14 - 15+");
+        	window.location.href = link;
+  	}
+  	function TrollDecrypt(link) {
+    	alert("📥 Hướng dẫn cài đặt:\n\nCHỈ CÓ THỂ SỬ DỤNG KHI CÀI QUA TROLLSTORE\n\nBạn có thể kiểm tra và cài trollstore qua check Download Trollstore\n\n Dùng để xuất Ipa ứng dụng trên thiết bị");
+         	window.location.href = link;
+    }
+  	function LocSim(link) {
+    	alert("📥 Hướng dẫn cài đặt:\n\nCHỈ CÓ THỂ SỬ DỤNG KHI CÀI QUA TROLLSTORE\n\nBạn có thể kiểm tra và cài trollstore qua check Download Trollstore\n\n Dùng để fake định vị GPS");
+         	window.location.href = link;
+    }
+	</script>
+
+	
+<!--esign kho-->
+	<script>
+  	const modalesign = document.getElementById("myModal-esign");
+  	const openBtnesign = document.getElementById("openModalBtn-esign");
+
+  	openBtnesign.onclick = function () {
+    	modalesign.style.display = "block";
+  	};
+
+  	function closeModal() {
+    	modalesign.style.display = "none";
+  	}
+
+  	window.onclick = function (event) {
+    	if (event.target === modalesign) {
+      	closeModal();
+    	}
+  	}
+
+  	// Hàm hiển thị hướng dẫn riêng cho từng nút và mở link
+  	function showGuideAndOpen(link, message) {
+    	alert("📘 Chi tiết ứng dụng:\n\n" + message + "\n\nSau khi bấm đóng , liên kết sẽ được mở.");
+    	window.open(link, '_blank'); // Mở tab mới
+  	}
+	</script>
+
+	
+	
+	
 	
 	
 	
