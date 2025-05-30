@@ -1,5 +1,4 @@
-
-<!DOCTYPE html>
+ html>
 <html lang="en">
 
 <head>
@@ -333,11 +332,51 @@
       justify-content: center;
       cursor: pointer;
       transition: all .25s cubic-bezier(.08, .59, .29, .99);
-    }    
+    }
+    
+    #musicToggle {
+  		position: fixed;
+  		top: 20px;
+  		right: 20px;
+  		background: none;
+  		border: none;
+  		padding: 0;
+  		margin: 0;
+  		cursor: pointer;
+  		z-index: 9999;
+		}
+
+		#musicToggle svg {
+  		pointer-events: none;
+  		user-select: none;
+  		transition: opacity 0.2s;
+		}
+
+		#musicToggle:hover svg {
+  		opacity: 0.7;
+		}
+
 
   </style>
 </head>
 <body>
+	<!-- Nút bật/tắt nhạc -->
+	<button id="musicToggle" title="Tắt/Bật nhạc">
+  	<svg id="playIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+      fill="none" stroke="white" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round"
+      width="24" height="24" style="display: none;">
+      <polygon points="5,3 19,12 5,21" />
+    </svg>
+
+    <svg id="pauseIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+      fill="none" stroke="white" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round"
+      width="24" height="24">
+      <line x1="6" y1="4" x2="6" y2="20" />
+      <line x1="18" y1="4" x2="18" y2="20" />
+    </svg>
+	</button>
 
 
 
@@ -445,6 +484,9 @@
 	<button id="openModalBtn" onclick="LocSim('https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Locsim.ipa')">
   Sim Ảo 
 	</button>
+	<button id="openModalBtn" onclick="airtroller('https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/AirTroller-1.1.1.tipa')">
+  AirTroller 
+	</button>
 
 
 
@@ -457,9 +499,15 @@
     	<p style="text-align: center;">Chọn bản cấu hình cần dùng:</p>
     	<div class="modal-buttons">
       	<button class="custom-button" onclick="showGuideAndOpen('https://www.mediafire.com/file/33ddp45kg5f6vjp/YouTube_19.23.3.ipa/file', 'Youtube Premium: Mở khoá Premium\n Bỏ quảng cáo,\n Tắt màn hình nghe nhạc,\n Tải video miễn phí,\n Chế độ PiP ...')">Youtube Premium</button>
-      	<button class="custom-button" onclick="showGuideAndOpen('https://www.mediafire.com/file/fy7lbzagkuxynm5/Facebook_445.0.0_NoAds_1.4.1_LeTi.ipa/file', 'FaceBook:\n Không quảng cáo\n Tải Video/ảnh Story \n Tải Video/mp3 về máy bằng cách nhấn dữ vào video,...')">FaceBook Mod</button>
-      	<button class="custom-button" onclick="showGuideAndOpen('https://whatshub.top/module/spotifyVIP.module', 'Spotify Premium: Không quảng cáo, mở full tính năng')">Spotify Premium</button>
-    	</div>
+      	<button class="custom-button" onclick="showGuideAndOpen('https://www.mediafire.com/file/fy7lbzagkuxynm5/Facebook_mod.ipa/file', 'FaceBook:\n Không quảng cáo\n Tải Video/ảnh Story \n Tải Video/mp3 về máy bằng cách nhấn dữ vào video,...')">FaceBook Mod</button>
+      	<button class="custom-button" onclick="showGuideAndOpen('https://www.mediafire.com/file/wsf4e7oxao7ql59/Remini_2.10.117.ipa/file', 'Remini Premium: Không quảng cáo \n\n Remini ứng dụng tăng chất lượng, tạo ảnh/video AI')">Remini Mod </button>
+      	<button class="custom-button" onclick="showGuideAndOpen('https://www.mediafire.com/file/zf97f7k0olgg7rr/Doulingo_7.65.ipa/file', 'Doulingo Premium:\n 🟢Ứng dụng học ngoại ngữ\n🟢Vô hạn tim\n🟢Mở khoá các chức năng')">Doulingo Mod</button>
+      	<button class="custom-button" onclick="showGuideAndOpen('https://www.mediafire.com/file/b68r6lyo2oj7ccs/TikTok_mod.ipa/file', 'TikTok Mod: có thể phải fake vpn để login\n 🟢Fix login\n🟢Download video không logo\n🟢Bật tích xanh ảo✅\n🟢Tuỳ chỉnh follow, like phông bạt\n Nhiều chức năng khác...')">TikTok Mod</button>
+        <button class="custom-button" onclick="showGuideAndOpen('https://www.mediafire.com/file/tnj6x3wh7oe1310/Instagram_372.1.0.ipa/file', 'Instagram nhân bản không giới hạn')">Instagram</button>
+
+      	<button class="custom-button" onclick="showGuideAndOpen('linktai', 'app Premium:\n 🟢')">Comingsoon</button>
+
+      </div>
   	</div>
 	</div>
 
@@ -569,6 +617,10 @@
     	alert("📥 Hướng dẫn cài đặt:\n\nCHỈ CÓ THỂ SỬ DỤNG KHI CÀI QUA TROLLSTORE\n\nBạn có thể kiểm tra và cài trollstore qua check Download Trollstore\n\n Dùng để fake định vị GPS");
          	window.location.href = link;
     }
+  	function airtroller(link) {
+    	alert("📥 Hướng dẫn cài đặt:\n\nCHỈ CÓ THỂ SỬ DỤNG KHI CÀI QUA TROLLSTORE\n\nBạn có thể kiểm tra và cài trollstore qua check Download Trollstore\n\n Dùng để Troll Spam AirDrop Iphone");
+         	window.location.href = link;
+    }
 	</script>
 
 	
@@ -597,11 +649,28 @@
     	window.open(link, '_blank'); // Mở tab mới
   	}
 	</script>
+	
+	
+	<script>
+    const playIcon = document.getElementById("playIcon");
+    const pauseIcon = document.getElementById("pauseIcon");
+    const toggleBtn = document.getElementById("musicToggle");
 
-	
-	
-	
-	
+    toggleBtn.addEventListener("click", () => {
+        if (!audio) return;
+
+        if (audio.paused) {
+            audio.play();
+            playIcon.style.display = "none";
+            pauseIcon.style.display = "inline";
+        } else {
+            audio.pause();
+            playIcon.style.display = "inline";
+            pauseIcon.style.display = "none";
+        }
+    });
+	</script>
+
 	
 	
 	
