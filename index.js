@@ -5984,7 +5984,7 @@ var audio; // toàn cục
 document.addEventListener('DOMContentLoaded', function () {
     var overlay = document.getElementById('overlay');
     var text = document.getElementById('text');
-	audio = new Audio('./audio/huucuong.mp3');
+	audio = new Audio('./audio/huucuongg.mp3');
 
     overlay.addEventListener('click', function () {
         audio.loop = true;
