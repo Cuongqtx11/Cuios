@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trang Chủ - Kho App VIP</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    /* CSS cục bộ cho trang Home */
+    .home-container {
+      padding: 30px 20px;
+      text-align: center;
+      max-width: 800px;
+      margin: 20px auto;
+      background: var(--card-bg-light);
+      border-radius: 16px;
+      box-shadow: 0 4px 15px var(--card-shadow-light);
+      transition: background-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    }
+
+    body.dark .home-container {
+      background: var(--card-bg-dark);
+      box-shadow: 0 4px 15px var(--card-shadow-dark);
+    }
+
+    .home-container h1 {
+      color: var(--primary-color);
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+
+    .home-container p {
+      font-size: 1.1em;
+      line-height: 1.8;
+      color: var(--text-light);
+      margin-bottom: 20px;
+    }
+
+    body.dark .home-container p {
+      color: var(--text-dark);
+    }
+
+    .home-container .call-to-action {
+      margin-top: 30px;
+    }
+
+    .home-container .call-to-action a {
+      display: inline-block;
+      background: var(--secondary-color);
+      color: white;
+      padding: 12px 25px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1em;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .home-container .call-to-action a:hover {
+      background: #2980b9;
+      transform: translateY(-2px);
+    }
+
+    .home-container ul {
+        list-style: none;
+        padding: 0;
+        margin-top: 25px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .home-container ul li {
+        background: var(--bg-light);
+        padding: 10px 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        font-weight: bold;
+        color: var(--primary-color);
+        transition: background var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    }
+
+    body.dark .home-container ul li {
+        background: var(--card-bg-dark);
+        box-shadow: 0 2px 8px rgba(26, 188, 156, 0.2);
+    }
+
+    @media (max-width: 768px) {
+        .home-container {
+            padding: 20px 15px;
+            margin: 15px auto;
+        }
+        .home-container h1 {
+            font-size: 2em;
+        }
+        .home-container p {
+            font-size: 1em;
+        }
+        .home-container ul li {
+            padding: 8px 15px;
+            font-size: 0.9em;
+        }
+    }
+  </style>
+</head>
+<body>
+  <div class="home-container">
+    <h1>Chào mừng đến với Kho App VIP! 🚀</h1>
+    <p>
+      Khám phá thế giới của các ứng dụng, dylib (mod) và cấu hình VPN (Conf) độc quyền.
+      Chúng tôi mang đến những công cụ mạnh mẽ giúp bạn tùy biến và nâng cao trải nghiệm di động của mình.
+    </p>
+    <p>
+      Tại đây, bạn có thể tìm thấy:
+    </p>
+    <ul>
+        <li>📱 Các file IPA modded chất lượng cao</li>
+        <li>⚙️ Dylib giúp tùy chỉnh ứng dụng</li>
+        <li>🔑 Cấu hình Shadowrocket (Conf) an toàn và nhanh chóng</li>
+    </ul>
+    <p>
+      Đừng ngần ngại khám phá các danh mục ở thanh điều hướng phía dưới để tìm những gì bạn cần!
+    </p>
+    <div class="call-to-action">
+      <a href="ipa.html" target="_parent">Bắt đầu khám phá ngay!</a>
+    </div>
+  </div>
+
+  <script>
+    // Đồng bộ Dark Mode từ trang cha
+    window.addEventListener('message', (event) => {
+        if (event.data.type === 'themeChange') {
+            if (event.data.theme === 'dark') {
+                document.body.classList.add('dark');
+            } else {
+                document.body.classList.remove('dark');
+            }
+        }
+    });
+
+    // Khôi phục theme đã lưu khi trang home load trực tiếp (nếu có)
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.body.classList.add('dark');
+    }
+  </script>
+</body>
+</html>
