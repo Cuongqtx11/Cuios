@@ -1,21 +1,21 @@
 [
   {
-    "id": 1,
-    "name": "Liên Quân",
-    "icon": "https://i.imgur.com/nuuDZT5.jpeg",
-    "fileLink": "https://p12.vn",
-    "desc": "Test thử nghiệm",
-    "version": 1.0,
+    "id": "ipa-001",
+    "name": "Instagram Rocket",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/1200px-Instagram_logo_2016.svg.png",
+    "fileLink": "https://example.com/instagram-rocket.ipa",
+    "desc": "Phiên bản Instagram mod với nhiều tính năng nâng cao như tải ảnh/video, ẩn xem story, và nhiều hơn nữa",
+    "version": 280.0,
     "developer": "Cuios",
     "date": "2025-06-21"
   },
   {
-    "id": 2,
-    "name": "Facebook",
-    "icon": "https://cdn1.iconfinder.com/data/icons/social-media-2285/512/Colored_Facebook3_svg-1024.png",
-    "fileLink": "https://example.com/substitute.dylib",
+    "id": "ipa-002",
+    "name": "YouTube Reborn",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png",
+    "fileLink": "https://example.com/youtube-reborn.ipa",
     "desc": "Một nền tảng tiêm thư viện",
-    "version": 1.5,
+    "version": "19.22.4",
     "developer": "Cuios",
     "date": "2025-06-21"
   }

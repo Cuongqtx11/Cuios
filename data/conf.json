@@ -1,10 +1,10 @@
 [
   {
-    "id": 1,
-    "name": "Youtube",
+    "id": "conf-001",
+    "name": "Shadowrocket",
     "icon": "https://raw.githubusercontent.com/Shadowrocket-bio/assets/main/icon.png",
-    "link": "ss://aes-256-gcm:password@example.com",
-    "desc": "Test mo hinh",
-    "usage": "Mở app test"
+    "link": "ss://aes-256-gcm:password@example.com:8443#VN-Server",
+    "desc": "Cấu hình Shadowrocket tối ưu cho server Việt Nam, tốc độ cao và ổn định.",
+    "usage": "1. Mở Shadowrocket.\\n2. Bấm dấu '+' ở góc trên bên phải.\\n3. Chọn 'Import from Clipboard'"
   }
 ]
