@@ -1,33 +1,33 @@
 [
   {
     "id": "dylib-001",
-    "name": "Messenger NoAds",
+    "name": "Messenger",
     "icon": "https://play-lh.googleusercontent.com/JfQNUnohpuq5IP65WN9C109VjLjDEj2tZYlPtComLznQfGeeoesubOaHGBcpZdXKuHU",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/MessNoAds.dylib",
-    "desc": "Một nền tảng tiêm thư viện",
-    "version": "1.2.0202",
+    "desc": "Mod không quảng cáo trong messenger",
+    "version": "",
     "developer": "cuios",
-    "date": "2025-21-06"
+    "date": "2025-06-21"
   },
   {
     "id": "dylib-002",
-    "name": "",
+    "name": "Facebook",
     "icon": "",
-    "fileLink": "",
-    "desc": "",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Facebook_Mod.zip",
+    "desc": "Không quảng cáo - tải video story - …",
     "version": "",
-    "developer": "",
-    "date": ""
+    "developer": "cuios",
+    "date": "2025-06-21"
   },
   {
     "id": "dylib-003",
-    "name": "",
+    "name": "TikTok",
     "icon": "",
-    "fileLink": "",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/BHTikTokPlus.zip",
     "desc": "",
     "version": "",
-    "developer": "",
-    "date": ""
+    "developer": "cuios",
+    "date": "2025-06-21"
   },
   {
     "id": "dylib-004",
@@ -36,8 +36,8 @@
     "fileLink": "",
     "desc": "",
     "version": "",
-    "developer": "",
-    "date": ""
+    "developer": "cuios",
+    "date": "2025-06-21"
   },
   {
     "id": "dylib-005",
@@ -46,8 +46,8 @@
     "fileLink": "",
     "desc": "",
     "version": "",
-    "developer": "",
-    "date": ""
+    "developer": "cuios",
+    "date": "2025-06-21"
   },
   {
     "id": "dylib-006",
@@ -56,8 +56,8 @@
     "fileLink": "",
     "desc": "",
     "version": "",
-    "developer": "",
-    "date": ""
+    "developer": "cuios",
+    "date": "2025-06-21"
   },
   {
     "id": "dylib-007",
@@ -66,8 +66,8 @@
     "fileLink": "",
     "desc": "",
     "version": "",
-    "developer": "",
-    "date": ""
+    "developer": "cuios",
+    "date": "2025-06-21"
   },
   {
     "id": "dylib-008",
@@ -76,8 +76,8 @@
     "fileLink": "",
     "desc": "",
     "version": "",
-    "developer": "",
-    "date": ""
+    "developer": "cuios",
+    "date": "2025-06-21"
   },
   {
     "id": "dylib-009",
@@ -86,8 +86,8 @@
     "fileLink": "",
     "desc": "",
     "version": "",
-    "developer": "",
-    "date": ""
+    "developer": "cuios",
+    "date": "2025-06-21"
   },
   {
     "id": "dylib-010",
@@ -96,8 +96,8 @@
     "fileLink": "",
     "desc": "",
     "version": "",
-    "developer": "",
-    "date": ""
+    "developer": "cuios",
+    "date": "2025-06-21"
   },
   {
     "id": "dylib-011",
