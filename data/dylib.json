@@ -12,7 +12,7 @@
   {
     "id": "dylib-002",
     "name": "Facebook",
-    "icon": "",
+    "icon": "https://play-lh.googleusercontent.com/KCMTYuiTrKom4Vyf0G4foetVOwhKWzNbHWumV73IXexAIy5TTgZipL52WTt8ICL-oIo",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Facebook_Mod.zip",
     "desc": "Không quảng cáo - tải video story - …",
     "version": "",
@@ -22,7 +22,7 @@
   {
     "id": "dylib-003",
     "name": "TikTok",
-    "icon": "",
+    "icon": "https://play-lh.googleusercontent.com/Ui_-OW6UJI147ySDX9guWWDiCPSq1vtxoC-xG17BU2FpU0Fi6qkWwuLdpddmT9fqrA=w240-h480-rw",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/BHTikTokPlus.zip",
     "desc": "Tiktok BH - Tải video/ảnh không logo - fake tích xanh - fake flow …",
     "version": "",
@@ -32,7 +32,7 @@
   {
     "id": "dylib-004",
     "name": "Youtube",
-    "icon": "",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/youtubeReborn.zip",
     "desc": "Youtube Reborn - không quảng cáo - tải video về máy - fake premium …",
     "version": "",
@@ -42,9 +42,9 @@
   {
     "id": "dylib-005",
     "name": "Messenger",
-    "icon": "",
+    "icon": "https://play-lh.googleusercontent.com/JfQNUnohpuq5IP65WN9C109VjLjDEj2tZYlPtComLznQfGeeoesubOaHGBcpZdXKuHU",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Messenger_Flow.zip",
-    "desc": "Messenger Flow:\n🟢 Chặn quảng cáo\n🟢 Tải Story (Nút 3 chấm)\n🟢 Chặn “đã xem” ở tin nhắn và Story; Ẩn “đang gõ” tin nhắn\n🟢 Và nhiều tính năng hơn nữa…",
+    "desc": "Messenger Flow: Chặn quảng cáo - Tải Story (Nút 3 chấm) - Chặn “đã xem” ở tin nhắn và Story; Ẩn “đang gõ” tin nhắn - Và nhiều tính năng hơn nữa…",
     "version": "",
     "developer": "cuios",
     "date": "2025-06-21"
@@ -52,101 +52,211 @@
   {
     "id": "dylib-006",
     "name": "TikTok",
-    "icon": "",
+    "icon": "https://play-lh.googleusercontent.com/Ui_-OW6UJI147ySDX9guWWDiCPSq1vtxoC-xG17BU2FpU0Fi6qkWwuLdpddmT9fqrA=w240-h480-rw",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/TiktokCommentPlus.dylib",
-    "desc": "TikTok Mod:\n🟢 Chặn quảng cáo\n🟢 Tải Story (Nút 3 chấm)\n🟢 Chặn “đã xem” ở tin nhắn và Story; Ẩn “đang gõ” tin nhắn\n🟢 Và nhiều tính năng hơn nữa…\"",
+    "desc": "TikTok Mod: comment ảnh - tăng giới hạn ký tự cmt",
     "version": "",
     "developer": "cuios",
     "date": "2025-06-21"
   },
   {
     "id": "dylib-007",
-    "name": "",
-    "icon": "",
-    "fileLink": "",
-    "desc": "",
+    "name": "TikTok ",
+    "icon": "https://play-lh.googleusercontent.com/Ui_-OW6UJI147ySDX9guWWDiCPSq1vtxoC-xG17BU2FpU0Fi6qkWwuLdpddmT9fqrA=w240-h480-rw",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Tiktokcmtplus.dylib",
+    "desc": "\"TikTok Mod: comment ảnh - nhiều chức năng hơn …",
     "version": "",
     "developer": "cuios",
     "date": "2025-06-21"
   },
   {
     "id": "dylib-008",
-    "name": "",
-    "icon": "",
-    "fileLink": "",
-    "desc": "",
+    "name": "Spotify",
+    "icon": "https://play-lh.googleusercontent.com/7ynvVIRdhJNAngCg_GI7i8TtH8BqkJYmffeUHsG-mJOdzt1XLvGmbsKuc5Q1SInBjDKN=w240-h480-rw",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Spotify_Eevee_5.8.5.zip",
+    "desc": "Spotify Eevee - premium",
     "version": "",
     "developer": "cuios",
     "date": "2025-06-21"
   },
   {
     "id": "dylib-009",
-    "name": "",
-    "icon": "",
-    "fileLink": "",
-    "desc": "",
+    "name": "Locket",
+    "icon": "https://play-lh.googleusercontent.com/eRZLg00mAQGayCrFjDBklPIpW3qFHcmUs8PUQA4z7hVe-cDKMcRqecVHONAIexJGJZM",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Locket%20Gold.dylib",
+    "desc": "Locket Gold",
     "version": "",
     "developer": "cuios",
     "date": "2025-06-21"
   },
   {
     "id": "dylib-010",
-    "name": "",
-    "icon": "",
-    "fileLink": "",
-    "desc": "",
+    "name": "ChatSmith",
+    "icon": "https://play-lh.googleusercontent.com/_wcc1yeDtK4dvgwOLt-VkMSMXDRZbcpWDNLXn9jTu8g6CjByl9X74_JZsQo8ukp_Bsw",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/ChatSmith.dylib",
+    "desc": "ChatSmith premium",
     "version": "",
     "developer": "cuios",
     "date": "2025-06-21"
   },
   {
     "id": "dylib-011",
-    "name": "",
-    "icon": "",
-    "fileLink": "",
-    "desc": "",
+    "name": "Instagram",
+    "icon": "https://play-lh.googleusercontent.com/VRMWkE5p3CkWhJs6nv-9ZsLAs1QOg5ob1_3qg-rckwYW7yp1fMrYZqnEFpk0IoVP4LM",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Rocket_Instagram.zip",
+    "desc": "Instagram rocket",
     "version": "",
-    "developer": "",
-    "date": ""
+    "developer": "cuios",
+    "date": "2025-06-21"
   },
   {
     "id": "dylib-012",
-    "name": "",
-    "icon": "",
-    "fileLink": "",
-    "desc": "",
+    "name": "X-Twitter",
+    "icon": "https://play-lh.googleusercontent.com/XyI6Hyz9AFg7E_joVzX2zh6CpWm9B2DG2JuEz5meCFVm4-wTKTnHgqbmg62iFKe4Gzca",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/X_BHTwitter.zip",
+    "desc": "X-Twitter BH",
     "version": "",
-    "developer": "",
-    "date": ""
+    "developer": "cuios",
+    "date": "2025-06-21"
   },
   {
     "id": "dylib-013",
-    "name": "",
-    "icon": "",
-    "fileLink": "",
-    "desc": "",
+    "name": "Facebook",
+    "icon": "https://play-lh.googleusercontent.com/KCMTYuiTrKom4Vyf0G4foetVOwhKWzNbHWumV73IXexAIy5TTgZipL52WTt8ICL-oIo",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Facebook_Glow.zip",
+    "desc": "Facebook Glow: Chặn quảng cáo - Tải Video/Story <Bấm giữ video> - Và nhiều tính năng hơn nữa… - Mở Menu bằng cách bấm giữ nút Tab bất kì (VD : Menu, Trang chủ, zz…)",
     "version": "",
-    "developer": "",
-    "date": ""
+    "developer": "cuios",
+    "date": "2025-06-21"
   },
   {
     "id": "dylib-014",
-    "name": "",
-    "icon": "",
-    "fileLink": "",
-    "desc": "",
+    "name": "XingTu",
+    "icon": "https://xingtu.info/wp-content/uploads/2023/12/logo-app-xingtu.jpg",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/XingTu_Mod.dylib'",
+    "desc": "XingTu Mod",
     "version": "",
-    "developer": "",
-    "date": ""
+    "developer": "cuios",
+    "date": "2025-06-21"
   },
   {
     "id": "dylib-015",
-    "name": "",
-    "icon": "",
-    "fileLink": "",
-    "desc": "",
+    "name": "TrueCaller",
+    "icon": "https://play-lh.googleusercontent.com/T9WgkoSUXy7wa3_oMRWt-kxsLVtgwMKoX4IdHRU_mF33MKudjAIn1ls-J2XHHo06-rY",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/TrueCaller_Premium.dylib",
+    "desc": "TrueCaller Premium",
     "version": "",
-    "developer": "",
-    "date": ""
+    "developer": "cuios",
+    "date": "2025-06-21"
+  },
+  {
+    "id": "dylib-016",
+    "name": "B612",
+    "icon": "https://play-lh.googleusercontent.com/MZQJwhOkgsXWeR-5-dey7Ckras4a9xx2JN8ZfQ_Twz0otjKwUcT6qkPWo8OheOShWeg",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/B612_VIP.dylib",
+    "desc": "B612 Vip",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-21"
+  },
+  {
+    "id": "dylib-017",
+    "name": "Lightroom",
+    "icon": "https://play-lh.googleusercontent.com/RGvuFCqPOIiR1i9QDN6-HNt5nOuWj4zuqQduxnJn0ughdo-yhAJNG1r6W1A3Fc6Z9w",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Lightroom_Mod.dylib",
+    "desc": "Lightroom Mod",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-21"
+  },
+  {
+    "id": "dylib-018",
+    "name": "Douyin",
+    "icon": "https://play-lh.googleusercontent.com/xey8dXOB53LtCR97JhDH7T-6np_sUBBE9iF7WP4Sp6T55oO28e6hic1LFTklCELw9Iw",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Douyin_Mod.dylib",
+    "desc": "Douyin Mod ",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-21"
+  },
+  {
+    "id": "dylib-019",
+    "name": "Ghi Âm",
+    "icon": "",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Ghi_am_tat_man.dylib",
+    "desc": "Ghi âm tắt màn hình",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-21"
+  },
+  {
+    "id": "dylib-020",
+    "name": "NiceGram",
+    "icon": "https://play-lh.googleusercontent.com/0MJ-XLLhjcBjPy_CCUjCwrOWEIA-IcAuQQXiTFKwoClM_TNKDcmalX2AoviUqfjaItY",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Nicegram_Premium.dylib",
+    "desc": "NiceGram premium",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-21"
+  },
+  {
+    "id": "dylib-021",
+    "name": "NiceGram",
+    "icon": "https://play-lh.googleusercontent.com/0MJ-XLLhjcBjPy_CCUjCwrOWEIA-IcAuQQXiTFKwoClM_TNKDcmalX2AoviUqfjaItY",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/NiceGram_Pro.dylib",
+    "desc": "NiceGram pro",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-21"
+  },
+  {
+    "id": "dylib-022",
+    "name": "Surge",
+    "icon": "",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Surge_Pro.dylib",
+    "desc": "Surge Pro",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-21"
+  },
+  {
+    "id": "dylib-023",
+    "name": "Regram",
+    "icon": "",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Regram_Mod.zip",
+    "desc": "Regram Mod",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-21"
+  },
+  {
+    "id": "dylib-024",
+    "name": "TikTok",
+    "icon": "https://play-lh.googleusercontent.com/Ui_-OW6UJI147ySDX9guWWDiCPSq1vtxoC-xG17BU2FpU0Fi6qkWwuLdpddmT9fqrA=w240-h480-rw",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/TikTok_DarkTik.zip",
+    "desc": "TikTok DarkTik Mod",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-21"
+  },
+  {
+    "id": "dylib-025",
+    "name": "Youtube",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/uYou_Youtube.zip",
+    "desc": "uYou - Youtube",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-21"
+  },
+  {
+    "id": "dylib-026",
+    "name": "Pokecut",
+    "icon": "",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Pokecut.dylib",
+    "desc": "Pokecut Vip",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-21"
   }
 ]
