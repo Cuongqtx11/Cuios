@@ -10,7 +10,7 @@
   {
     "id": "conf-002",
     "name": "Locket Gold",
-    "icon": "",
+    "icon": "https://play-lh.googleusercontent.com/eRZLg00mAQGayCrFjDBklPIpW3qFHcmUs8PUQA4z7hVe-cDKMcRqecVHONAIexJGJZM",
     "link": "https://raw.githubusercontent.com/DungHoang120401/Nobita/refs/heads/main/Module/Locket_Gold_Nobita.sgmodule",
     "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip Gold không mất phí, an toàn, bảo mật",
     "usage": "Xem hd ở trang chủ nhé (home)"
@@ -49,49 +49,65 @@
   },
   {
     "id": "conf-007",
-    "name": "",
+    "name": "Photoshop Express",
     "icon": "",
-    "link": "",
-    "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip không mất phí, an toàn, bảo mật",
+    "link": "https://whatshub.top/module/photoshop.module",
+    "desc": "Cấu hình Shadowrocket tận hưởng chức năng Premium không mất phí, an toàn, bảo mật",
     "usage": "Xem hd ở trang chủ nhé (home)"
   },
   {
     "id": "conf-008",
-    "name": "",
+    "name": "Photomath Plus",
     "icon": "",
-    "link": "",
+    "link": "https://whatshub.top/module/photomath.module",
     "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip không mất phí, an toàn, bảo mật",
     "usage": "Xem hd ở trang chủ nhé (home)"
   },
   {
     "id": "conf-009",
-    "name": "",
+    "name": "Piscart Plus",
     "icon": "",
-    "link": "",
+    "link": "https://whatshub.top/module/picsart.module",
     "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip không mất phí, an toàn, bảo mật",
     "usage": "Xem hd ở trang chủ nhé (home)"
   },
   {
     "id": "conf-010",
-    "name": "",
+    "name": "Bilibili HD",
     "icon": "",
-    "link": "",
+    "link": "https://whatshub.top/module/bili.module",
     "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip không mất phí, an toàn, bảo mật",
     "usage": "Xem hd ở trang chủ nhé (home)"
   },
   {
     "id": "conf-011",
-    "name": "",
+    "name": "Bilibili NoAds",
     "icon": "",
-    "link": "",
+    "link": "https://whatshub.top/module/biliad.module",
     "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip không mất phí, an toàn, bảo mật",
     "usage": "Xem hd ở trang chủ nhé (home)"
   },
   {
     "id": "conf-012",
-    "name": "",
+    "name": "B612 Vip",
     "icon": "",
-    "link": "",
+    "link": "https://whatshub.top/module/b612.module",
+    "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip không mất phí, an toàn, bảo mật",
+    "usage": "Xem hd ở trang chủ nhé (home)"
+  },
+  {
+    "id": "conf-013",
+    "name": "Grammarly Pro",
+    "icon": "",
+    "link": "https://whatshub.top/module/grammarly.module",
+    "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip không mất phí, an toàn, bảo mật",
+    "usage": "Xem hd ở trang chủ nhé (home)"
+  },
+  {
+    "id": "conf-014",
+    "name": "Nicegram Premium",
+    "icon": "",
+    "link": "https://whatshub.top/module/nicegram.module",
     "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip không mất phí, an toàn, bảo mật",
     "usage": "Xem hd ở trang chủ nhé (home)"
   }
