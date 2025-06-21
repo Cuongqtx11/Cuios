@@ -1,11 +1,21 @@
 [
   {
-    "id": 1001,
+    "id": 1,
     "name": "Liên Quân",
     "icon": "https://i.imgur.com/nuuDZT5.jpeg",
     "fileLink": "https://p12.vn",
     "desc": "Test thử nghiệm",
     "version": 1.0,
+    "developer": "Cuios",
+    "date": "2025-06-21"
+  },
+  {
+    "id": 2,
+    "name": "Facebook",
+    "icon": "https://cdn1.iconfinder.com/data/icons/social-media-2285/512/Colored_Facebook3_svg-1024.png",
+    "fileLink": "https://example.com/substitute.dylib",
+    "desc": "Một nền tảng tiêm thư viện",
+    "version": 1.5,
     "developer": "Cuios",
     "date": "2025-06-21"
   }
