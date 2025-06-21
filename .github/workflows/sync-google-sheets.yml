@@ -1,0 +1,92 @@
+name: Sync Google Sheets to JSON
+
+on:
+  workflow_dispatch: # Cho phép chạy thủ công từ tab Actions
+  schedule:
+    - cron: '0 * * * *' # Chạy mỗi giờ (vào phút 0 của mỗi giờ).
+                       # Bạn có thể thay đổi lịch trình theo ý muốn.
+                       # Ví dụ: '0 0 * * *' sẽ chạy vào 0h00 KST mỗi ngày.
+                       # Tìm kiếm "cron job generator" để tạo lịch trình phù hợp.
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install gspread google-auth pandas
+
+      - name: Create service account key file
+        env:
+          GOOGLE_SERVICE_ACCOUNT_KEY: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+        run: |
+          echo $GOOGLE_SERVICE_ACCOUNT_KEY > service_account_key.json
+          echo "Created service_account_key.json"
+
+      - name: Fetch and process Google Sheet data
+        run: |
+          python - <<EOF
+          import pandas as pd
+          import gspread
+          from google.oauth2.service_account import Credentials
+          import json
+          import os
+
+          # Cấu hình Google Sheets API
+          scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+          creds = Credentials.from_service_account_file('service_account_key.json', scopes=scope)
+          gc = gspread.authorize(creds)
+
+          # Mở bảng tính của bạn (THAY THẾ BẰNG TÊN CHÍNH XÁC CỦA GOOGLE TRANG TÍNH CỦA BẠN)
+          spreadsheet = gc.open("KhoAppVIP_Data") 
+
+          def get_sheet_data(sheet_name):
+              try:
+                  worksheet = spreadsheet.worksheet(sheet_name)
+                  records = worksheet.get_all_records()
+                  return records
+              except gspread.exceptions.WorksheetNotFound:
+                  print(f"Sheet '{sheet_name}' not found. Returning empty list.")
+                  return []
+              except Exception as e:
+                  print(f"Error fetching data from sheet '{sheet_name}': {e}")
+                  return []
+
+          # Lấy dữ liệu từ các sheet
+          ipa_data = get_sheet_data('IPAs')
+          dylib_data = get_sheet_data('Dylibs')
+          conf_data = get_sheet_data('Confs')
+
+          # Đảm bảo thư mục data tồn tại
+          # Các file JSON của bạn đang nằm trong thư mục 'data/'
+          os.makedirs('data', exist_ok=True) 
+
+          # Ghi dữ liệu vào file JSON
+          with open('data/ipa.json', 'w', encoding='utf-8') as f:
+              json.dump(ipa_data, f, ensure_ascii=False, indent=2)
+          print("ipa.json updated.")
+
+          with open('data/dylib.json', 'w', encoding='utf-8') as f:
+              json.dump(dylib_data, f, ensure_ascii=False, indent=2)
+          print("dylib.json updated.")
+
+          with open('data/conf.json', 'w', encoding='utf-8') as f:
+              json.dump(conf_data, f, ensure_ascii=False, indent=2)
+          print("conf.json updated.")
+          EOF
+
+      - name: Commit and push changes
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data/*.json
+          git commit -m "chore: Auto-sync data from Google Sheets" || echo "No changes to commit"
+          git push
