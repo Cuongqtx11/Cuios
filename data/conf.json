@@ -2,9 +2,97 @@
   {
     "id": "conf-001",
     "name": "Youtube Premium",
-    "icon": "https://raw.githubusercontent.com/Shadowrocket-bio/assets/main/icon.png",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png",
     "link": "https://whatshub.top/module/YouTubeAd.sgmodule",
-    "desc": "Cấu hình Shadowrocket tối ưu cho server Việt Nam, tốc độ cao và ổn định.",
-    "usage": "1. Mở Shadowrocket.\\n2. Bấm dấu '+' ở góc trên bên phải.\\n3. Chọn 'Import from Clipboard'"
+    "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip premium không mất phí, an toàn, bảo mật",
+    "usage": "Xem hd ở trang chủ nhé (home)"
+  },
+  {
+    "id": "conf-002",
+    "name": "Locket Gold",
+    "icon": "",
+    "link": "https://raw.githubusercontent.com/DungHoang120401/Nobita/refs/heads/main/Module/Locket_Gold_Nobita.sgmodule",
+    "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip Gold không mất phí, an toàn, bảo mật",
+    "usage": "Xem hd ở trang chủ nhé (home)"
+  },
+  {
+    "id": "conf-003",
+    "name": "Spotify Premium",
+    "icon": "",
+    "link": "https://whatshub.top/module/spotifyVIP.module",
+    "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip premium không mất phí, an toàn, bảo mật",
+    "usage": "Xem hd ở trang chủ nhé (home)"
+  },
+  {
+    "id": "conf-004",
+    "name": "SoundCloud Go+",
+    "icon": "",
+    "link": "https://whatshub.top/module/soundcloud.module",
+    "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip không mất phí, an toàn, bảo mật",
+    "usage": "Xem hd ở trang chủ nhé (home)"
+  },
+  {
+    "id": "conf-005",
+    "name": "Wink Vip",
+    "icon": "",
+    "link": "https://whatshub.top/module/wink.module",
+    "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip không mất phí, an toàn, bảo mật",
+    "usage": "Xem hd ở trang chủ nhé (home)"
+  },
+  {
+    "id": "conf-006",
+    "name": "Lightroom Premium",
+    "icon": "",
+    "link": "https://whatshub.top/module/lightroom.module",
+    "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip không mất phí, an toàn, bảo mật",
+    "usage": "Xem hd ở trang chủ nhé (home)"
+  },
+  {
+    "id": "conf-007",
+    "name": "",
+    "icon": "",
+    "link": "",
+    "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip không mất phí, an toàn, bảo mật",
+    "usage": "Xem hd ở trang chủ nhé (home)"
+  },
+  {
+    "id": "conf-008",
+    "name": "",
+    "icon": "",
+    "link": "",
+    "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip không mất phí, an toàn, bảo mật",
+    "usage": "Xem hd ở trang chủ nhé (home)"
+  },
+  {
+    "id": "conf-009",
+    "name": "",
+    "icon": "",
+    "link": "",
+    "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip không mất phí, an toàn, bảo mật",
+    "usage": "Xem hd ở trang chủ nhé (home)"
+  },
+  {
+    "id": "conf-010",
+    "name": "",
+    "icon": "",
+    "link": "",
+    "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip không mất phí, an toàn, bảo mật",
+    "usage": "Xem hd ở trang chủ nhé (home)"
+  },
+  {
+    "id": "conf-011",
+    "name": "",
+    "icon": "",
+    "link": "",
+    "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip không mất phí, an toàn, bảo mật",
+    "usage": "Xem hd ở trang chủ nhé (home)"
+  },
+  {
+    "id": "conf-012",
+    "name": "",
+    "icon": "",
+    "link": "",
+    "desc": "Cấu hình Shadowrocket tận hưởng chức năng vip không mất phí, an toàn, bảo mật",
+    "usage": "Xem hd ở trang chủ nhé (home)"
   }
 ]
