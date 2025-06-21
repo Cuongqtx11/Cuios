@@ -1,10 +1,20 @@
 [
   {
-    "id": 1,
-    "name": "Youtube",
+    "id": "conf-001",
+    "type": "conf",
+    "name": "Shadowrocket - Server Vietnam",
     "icon": "https://raw.githubusercontent.com/Shadowrocket-bio/assets/main/icon.png",
-    "link": "ss://aes-256-gcm:password@example.com",
-    "desc": "Test mo hinh",
-    "usage": "Mở app test"
+    "link": "ss://aes-256-gcm:password@example.com:8443#VN-Server",
+    "desc": "Cấu hình Shadowrocket tối ưu cho server Việt Nam, tốc độ cao và ổn định.",
+    "usage": "1. Mở Shadowrocket.\n2. Bấm dấu '+' ở góc trên bên phải.\n3. Chọn 'Import from Clipboard'."
+  },
+  {
+    "id": "conf-002",
+    "type": "conf",
+    "name": "Shadowrocket - Game Server",
+    "icon": "https://raw.githubusercontent.com/Shadowrocket-bio/assets/main/icon.png",
+    "link": "vmess://eyJhZGRyZXNzIjoiZXhhbXBsZS5jb20iLCJwb3J0Ijo0NDMsImlkIjoiZmFrZWlkIiwiaWQiOiJmYWtlc2VjdXJlIiwic2VjdXJpdHkiOiJhdXRvIiwibmV0d29yayI6IndzIiwidHlwZSI6Im5vbmUiLCJob3N0IjoiZXhhbXBsZS5jb20iLCJwYXRoIjoiL2dhbWUifQ==",
+    "desc": "Cấu hình chuyên dụng để chơi game, giảm ping và tăng cường kết nối ổn định.",
+    "usage": "1. Sao chép link này.\n2. Dán vào Shadowrocket."
   }
 ]
