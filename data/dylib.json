@@ -258,5 +258,105 @@
     "version": "",
     "developer": "cuios",
     "date": "2025-06-21"
+  },
+  {
+    "id": "",
+    "name": "H5GG",
+    "icon": "https://avatars.githubusercontent.com/u/74475614?v=4",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/H5GG.dylib",
+    "desc": "Dylib mod tiêm vào ipa hoặc tiêm vào trollfools để mod các thông số (vd tài nguyên game,…)",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-22"
+  },
+  {
+    "id": "",
+    "name": "NoADS",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/No_ads.svg/3369px-No_ads.svg.png",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/NoADS%202.dylib",
+    "desc": "Dylib mod tiêm vào ipa hoặc tiêm vào app qua TrollFools để chặn quảng cáo trong ứng dụng",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-22"
+  },
+  {
+    "id": "",
+    "name": "Speed Noads",
+    "icon": "https://static.vecteezy.com/system/resources/thumbnails/027/438/640/small_2x/no-ads-sign-block-ad-icon-prohibited-advertising-and-promotion-sign-vector.jpg",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/adSpeed-Noads-purchase.dylib",
+    "desc": "Dylib mod tiêm vào ipa hoặc tiêm vào app qua TrollFools để tăng tốc độ quảng cáo. Mục đích để xem quảng cáo nhận quà và có thể chặn quảng cáo ",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-22"
+  },
+  {
+    "id": "",
+    "name": "Speed Ads",
+    "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdnB42rg804O7EHb5Yf-i1KausqxZBP7roiQ&s",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/adspeed.dylib",
+    "desc": "Dylib mod tiêm vào ipa hoặc tiêm vào app qua TrollFools để tăng tốc độ xem quảng cáo. ( chỉ tăng tốc quảng cáo)",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-22"
+  },
+  {
+    "id": "",
+    "name": "Fix crack",
+    "icon": "https://img.icons8.com/?size=512w&id=11151&format=png",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/FixCrash.dylib",
+    "desc": "Dylib mod tiêm vào ipa fix văng app khi crack",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-22"
+  },
+  {
+    "id": "",
+    "name": "Fix crack 1",
+    "icon": "https://img.icons8.com/?size=512w&id=11151&format=png",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/FixCrash1.dylib",
+    "desc": "Dylib mod tiêm vào ipa fix văng app khi crack",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-22"
+  },
+  {
+    "id": "",
+    "name": "Fix crack 2",
+    "icon": "https://img.icons8.com/?size=512w&id=11151&format=png",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/FixCrash2.dylib",
+    "desc": "Dylib mod tiêm vào ipa fix văng app khi crack",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-22"
+  },
+  {
+    "id": "",
+    "name": "Auto Click",
+    "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNWmorYB4Gu9i5z3wW5AUxXUGiWim9zsVCRA&s",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/autoclick.dylib",
+    "desc": "Dylib mod tiêm vào ipa hoặc tiêm vào app qua TrollFools để thực hiện auto click ",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-22"
+  },
+  {
+    "id": "",
+    "name": "LocalIAPStore",
+    "icon": "",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/LocalIAPStore14.dylib",
+    "desc": "Dylib mod tiêm vào ipa hoặc tiêm vào app qua TrollFools nhằm mua hàng miễn phí trong ứng dụng hoặc game",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-22"
+  },
+  {
+    "id": "",
+    "name": "SatellaJailed",
+    "icon": "",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/SatellaJailed.dylib",
+    "desc": "Dylib mod tiêm vào ipa hoặc tiêm vào app qua TrollFools tương tự như localIAPStore để mua hàng miễn phí trong ứng dụng hoặc game",
+    "version": "",
+    "developer": "cuios",
+    "date": "2025-06-22"
   }
 ]
