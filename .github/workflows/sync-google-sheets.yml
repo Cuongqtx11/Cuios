@@ -3,7 +3,7 @@ name: Sync Google Sheets to JSON
 on:
   workflow_dispatch: # Cho phép chạy thủ công từ tab Actions
   schedule:
-    - cron: '*/5 * * * *' # Chạy mỗi giờ (vào phút 0 của mỗi giờ).
+    - cron: '*/3 * * * *' # Chạy mỗi giờ (vào phút 0 của mỗi giờ).
                        # Bạn có thể thay đổi lịch trình theo ý muốn.
                        # Ví dụ: '0 0 * * *' sẽ chạy vào 0h00 KST mỗi ngày.
                        # Tìm kiếm "cron job generator" để tạo lịch trình phù hợp.
