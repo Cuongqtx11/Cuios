@@ -1,102 +1,142 @@
 [
   {
     "id": "ipa-001",
-    "name": "Instagram Rocket",
-    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/1200px-Instagram_logo_2016.svg.png",
-    "fileLink": "https://example.com/instagram-rocket.ipa",
-    "desc": "Phiên bản Instagram mod với nhiều tính năng nâng cao như tải ảnh/video, ẩn xem story, và nhiều hơn nữa",
-    "version": 280.0,
+    "name": "Youtube Premium",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png",
+    "fileLink": "https://www.mediafire.com/file/33ddp45kg5f6vjp/YouTube_19.23.3.ipa/file",
+    "desc": "Phiên bản Youtube mod premium với nhiều tính năng nâng cao như: Bỏ quảng cáo - Tắt màn hình nghe nhạc - Tải video miễn phí - Chế độ PiP ...",
+    "version": "19.23.3",
     "developer": "Cuios",
-    "date": "2025-06-21"
+    "date": "2025-06-22"
   },
   {
     "id": "ipa-002",
-    "name": "YouTube Reborn",
-    "icon": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png",
-    "fileLink": "https://example.com/youtube-reborn.ipa",
-    "desc": "Một nền tảng tiêm thư viện",
-    "version": "19.22.4",
+    "name": "Clash of Clans",
+    "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwrSEDIvOOBUZMc7rsno-D2H3NvCXjaX6c_A&s",
+    "fileLink": "https://www.mediafire.com/file/grcun7jbx7fjror/Clash_of_Clans_17.126.6.ipa/file",
+    "desc": "Sever riêng - Full tài nguyên - Gõ /help trong kênh hội ở game để biết các lệnh mod",
+    "version": "17.126.6",
     "developer": "Cuios",
-    "date": "2025-06-21"
+    "date": "2025-06-22"
   },
   {
     "id": "ipa-003",
-    "name": "",
-    "icon": "",
-    "fileLink": "",
-    "desc": "",
-    "version": "",
-    "developer": "",
-    "date": ""
+    "name": "Doulingo",
+    "icon": "https://play-lh.googleusercontent.com/Rz4JVKiQM7ZnLYTEzwzpvWROphw5Wo6kh3vnx8HhgHTaOzsknlTLmXUsknurSqTqUj0",
+    "fileLink": "https://www.mediafire.com/file/zf97f7k0olgg7rr/Doulingo_7.65.ipa/file",
+    "desc": "Doulingo Premium: Ứng dụng học ngoại ngữ - Vô hạn tim - Mở khoá các chức năng",
+    "version": 7.65,
+    "developer": "Cuios",
+    "date": "2025-06-22"
   },
   {
     "id": "ipa-004",
-    "name": "",
-    "icon": "",
-    "fileLink": "",
-    "desc": "",
-    "version": "",
-    "developer": "",
-    "date": ""
+    "name": "Remini",
+    "icon": "https://play-lh.googleusercontent.com/XJ6_UDSJx-QHQreBmIro5VMRJ--42F1XY3QphSYkeSRZdAUA0o_Y-EydVdK-NZOh",
+    "fileLink": "https://www.mediafire.com/file/wsf4e7oxao7ql59/Remini_2.10.117.ipa/file",
+    "desc": "Remini Premium: Không quảng cáo, Remini ứng dụng tăng chất lượng, tạo ảnh/video AI",
+    "version": "2.10.0117",
+    "developer": "Cuios",
+    "date": "2025-06-22"
   },
   {
     "id": "ipa-005",
-    "name": "",
-    "icon": "",
-    "fileLink": "",
-    "desc": "",
-    "version": "",
-    "developer": "",
-    "date": ""
+    "name": "TikTok",
+    "icon": "https://play-lh.googleusercontent.com/Ui_-OW6UJI147ySDX9guWWDiCPSq1vtxoC-xG17BU2FpU0Fi6qkWwuLdpddmT9fqrA=w240-h480-rw",
+    "fileLink": "https://www.mediafire.com/file/b68r6lyo2oj7ccs/TikTok_mod.ipa/file",
+    "desc": "có thể phải fake vpn để login - Download video không logo - Bật tích xanh ảo - Tuỳ chỉnh follow, like phông bạt - Nhiều chức năng khác...",
+    "version": "38.4.0",
+    "developer": "Cuios",
+    "date": "2025-06-22"
   },
   {
     "id": "ipa-006",
-    "name": "",
-    "icon": "",
-    "fileLink": "",
-    "desc": "",
-    "version": "",
-    "developer": "",
-    "date": ""
+    "name": "Instagram",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/1200px-Instagram_logo_2016.svg.png",
+    "fileLink": "https://www.mediafire.com/file/tnj6x3wh7oe1310/Instagram_372.1.0.ipa/file",
+    "desc": "Instagram nhân bản không giới hạn",
+    "version": "372.1.0",
+    "developer": "Cuios",
+    "date": "2025-06-22"
   },
   {
     "id": "ipa-007",
-    "name": "",
-    "icon": "",
-    "fileLink": "",
-    "desc": "",
-    "version": "",
-    "developer": "",
-    "date": ""
+    "name": "Messenger",
+    "icon": "https://play-lh.googleusercontent.com/JfQNUnohpuq5IP65WN9C109VjLjDEj2tZYlPtComLznQfGeeoesubOaHGBcpZdXKuHU",
+    "fileLink": "https://www.mediafire.com/file/d2lar04g3u249eh/Messenger-Flow_511.0.ipa/file",
+    "desc": "Messenger Flow: Chặn quảng cáo - Tải Story (Nút 3 chấm) - Chặn “đã xem” ở tin nhắn và Story; Ẩn “đang gõ” tin nhắn - Và nhiều tính năng hơn nữa… - Mở Mục Cài Đặt > Góc phải bên trên là Menu Flow",
+    "version": 1.0,
+    "developer": "Cuios",
+    "date": "2025-06-22"
   },
   {
     "id": "ipa-008",
-    "name": "",
-    "icon": "",
-    "fileLink": "",
-    "desc": "",
-    "version": "",
-    "developer": "",
-    "date": ""
+    "name": "Facebook",
+    "icon": "https://play-lh.googleusercontent.com/KCMTYuiTrKom4Vyf0G4foetVOwhKWzNbHWumV73IXexAIy5TTgZipL52WTt8ICL-oIo",
+    "fileLink": "https://www.mediafire.com/file/jwcu4aiz2o3dkmp/Facebook-Glow_517.0.0.ipa/file",
+    "desc": "Facebook Glow: Chặn quảng cáo - Tải Video/Story <Bấm giữ video> Và nhiều tính năng hơn nữa… - Mở Menu bằng cách bấm giữ nút Tab bất kì (VD : Menu, Trang chủ, zz…)",
+    "version": "1.0.1",
+    "developer": "Cuios",
+    "date": "2025-06-22"
   },
   {
     "id": "ipa-009",
-    "name": "",
-    "icon": "",
-    "fileLink": "",
-    "desc": "",
-    "version": "",
-    "developer": "",
-    "date": ""
+    "name": "Facebook Mod",
+    "icon": "https://play-lh.googleusercontent.com/KCMTYuiTrKom4Vyf0G4foetVOwhKWzNbHWumV73IXexAIy5TTgZipL52WTt8ICL-oIo",
+    "fileLink": "https://www.mediafire.com/file/fy7lbzagkuxynm5/Facebook_mod.ipa/file",
+    "desc": "Không quảng cáo - Tải Video/ảnh Story - Tải Video/mp3 về máy bằng cách nhấn dữ vào video,...",
+    "version": 445.0,
+    "developer": "Cuios",
+    "date": "2025-06-22"
   },
   {
     "id": "ipa-010",
-    "name": "",
-    "icon": "",
-    "fileLink": "",
-    "desc": "",
+    "name": "Filza",
+    "icon": "https://appsdecoded.com/wp-content/uploads/2024/02/Filza-iPA.jpg",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Filza_4.0_No_Url_Crack.ipa",
+    "desc": "Bắt buộc phải cài qua TrollStore - Filza No url",
+    "version": 4.0,
+    "developer": "Cuios",
+    "date": "2025-06-22"
+  },
+  {
+    "id": "ipa-011",
+    "name": "TrollFools",
+    "icon": "https://media.havoc.app/669b9b9a4e505bb0dae0841f",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/TrollFools_3.0-28.tipa",
+    "desc": "Bắt buộc phải cài qua TrollStore",
+    "version": 3.0,
+    "developer": "Cuios",
+    "date": "2025-06-22"
+  },
+  {
+    "id": "ipa-012",
+    "name": "TrollDecrypt",
+    "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvTegbJJLA6GUP4tgAdGWddWVAa9mCIyqvYA&s",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/TrollDecrypt.tipa",
+    "desc": "Bắt buộc phải cài qua TrollStore - TrollDecrypt dùng để xuất ipa trắng từ các app trên điện thoại",
     "version": "",
-    "developer": "",
-    "date": ""
+    "developer": "Cuios",
+    "date": "2025-06-22"
+  },
+  {
+    "id": "ipa-013",
+    "name": "LocSim",
+    "icon": "https://ipaomtk.com/wp-content/uploads/2023/02/Location-Simulation-locsim-e1707671904136.png",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Locsim.ipa",
+    "desc": "Bắt buộc phải cài qua TrollStore - LocSim - fake GPS định vị",
+    "version": "",
+    "developer": "Cuios",
+    "date": "2025-06-22"
+  },
+  {
+    "id": "ipa-014",
+    "name": "AirTroller",
+    "icon": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQBy0O8la6ZrCi98CV-zim88mDIGvQio3ynEd414VKR9hcHSt73",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/AirTroller-1.1.1.tipa",
+    "desc": "Bắt buộc phải cài qua TrollStore - AirTroller dùng để troll spam gửi qua airdrop iphone",
+    "version": "1.1..1",
+    "developer": "Cuios",
+    "date": "2025-06-22"
   }
 ]
