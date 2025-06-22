@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Trang Chủ - Kho App VIP</title>
   <link rel="stylesheet" href="../css/style.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
     /* CSS cục bộ cho trang Home */
     .home-container {
@@ -14,13 +15,13 @@
       margin: 20px auto;
       background: var(--card-bg-light);
       border-radius: 16px;
-      box-shadow: 0 4px 15px var(--card-shadow-light);
+      box-shadow: 0 4px 15px var(--shadow-light); /* Sử dụng biến shadow-light từ style.css chung */
       transition: background-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
     }
 
     body.dark .home-container {
-      background: var(--card-bg-dark);
-      box-shadow: 0 4px 15px var(--card-shadow-dark);
+      background: var(--card-bg-dark); /* Sử dụng biến card-bg-dark từ style.css chung */
+      box-shadow: 0 4px 15px var(--shadow-dark); /* Sử dụng biến shadow-dark từ style.css chung */
     }
 
     .home-container h1 {
@@ -32,12 +33,12 @@
     .home-container p {
       font-size: 1.1em;
       line-height: 1.8;
-      color: var(--text-light);
+      color: var(--text-light); /* Sử dụng biến text-light từ style.css chung */
       margin-bottom: 20px;
     }
 
     body.dark .home-container p {
-      color: var(--text-dark);
+      color: var(--text-dark); /* Sử dụng biến text-dark từ style.css chung */
     }
 
     .home-container .call-to-action {
@@ -46,7 +47,7 @@
 
     .home-container .call-to-action a {
       display: inline-block;
-      background: var(--secondary-color);
+      background: var(--primary-color); /* Sử dụng biến primary-color từ style.css chung */
       color: white;
       padding: 12px 25px;
       border-radius: 8px;
@@ -57,7 +58,7 @@
     }
 
     .home-container .call-to-action a:hover {
-      background: #2980b9;
+      background: var(--primary-color-hover); /* Sử dụng biến primary-color-hover từ style.css chung */
       transform: translateY(-2px);
     }
 
@@ -72,20 +73,165 @@
     }
 
     .home-container ul li {
-        background: var(--bg-light);
+        background: var(--bg-light); /* Sử dụng biến bg-light từ style.css chung */
         padding: 10px 20px;
         border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Giữ cứng hoặc thêm biến shadow cho li nếu muốn khác */
         font-weight: bold;
         color: var(--primary-color);
         transition: background var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
     }
 
     body.dark .home-container ul li {
-        background: var(--card-bg-dark);
-        box-shadow: 0 2px 8px rgba(26, 188, 156, 0.2);
+        background: var(--card-bg-dark); /* Sử dụng biến card-bg-dark từ style.css chung */
+        box-shadow: 0 2px 8px rgba(26, 188, 156, 0.2); /* Giữ cứng hoặc thêm biến shadow cho li nếu muốn khác */
     }
 
+    /* === Các kiểu mới cho nút hướng dẫn và popup video === */
+    .tutorial-section {
+        margin-top: 40px;
+        border-top: 1px solid var(--border-light); /* Đường phân cách, đồng bộ với theme */
+        padding-top: 30px;
+    }
+
+    .tutorial-section h2 {
+        font-size: 1.8em;
+        color: var(--text-light); /* Đồng bộ với theme */
+        margin-bottom: 25px;
+        transition: color var(--transition-speed) ease;
+    }
+    body.dark .tutorial-section h2 {
+        color: var(--text-dark); /* Đồng bộ với theme */
+    }
+
+    .tutorial-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px; /* Khoảng cách giữa các nút */
+        /* Không dùng flex-direction: column; ở đây để các nút luôn nằm ngang */
+        flex-wrap: wrap; /* Cho phép các nút xuống dòng nếu không đủ chỗ */
+    }
+
+    /* Điều chỉnh kiểu nút để giống ảnh minh họa */
+    .tutorial-button {
+        background-color: transparent; /* Nền trong suốt */
+        color: var(--text-light); /* Màu chữ đồng bộ theme */
+        border: 2px solid var(--border-light); /* Viền đồng bộ theme */
+        padding: 15px 25px; /* Tăng padding để nút to hơn */
+        border-radius: 12px; /* Bo góc ít hơn để giống ảnh */
+        font-size: 1.1em; /* Tăng kích thước chữ */
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        display: flex; /* Dùng flexbox để căn icon nếu có, hoặc để căn chữ giữa */
+        align-items: center; /* Căn giữa theo chiều dọc */
+        justify-content: center; /* Căn giữa theo chiều ngang */
+        gap: 8px; /* Khoảng cách giữa icon và chữ nếu có */
+        min-width: 150px; /* Chiều rộng tối thiểu cho nút */
+        /* flex-grow: 1; */ /* Tùy chọn: Cho phép nút giãn ra để lấp đầy không gian trống nếu muốn */
+        text-align: center; /* Căn chữ giữa (nếu không dùng flex justify-content) */
+    }
+
+    body.dark .tutorial-button {
+        color: var(--text-dark); /* Màu chữ đồng bộ dark theme */
+        border-color: var(--border-dark); /* Màu viền đồng bộ dark theme */
+    }
+
+    .tutorial-button:hover {
+        background-color: var(--hover-bg-light); /* Nền khi hover, đồng bộ theme */
+        border-color: var(--primary-color); /* Viền đổi màu khi hover */
+        color: var(--primary-color); /* Chữ đổi màu khi hover */
+        transform: translateY(-3px); /* Hiệu ứng nổi nhẹ */
+        box-shadow: 0 4px 15px rgba(0, 122, 255, 0.1); /* Shadow nhẹ khi hover */
+    }
+
+    body.dark .tutorial-button:hover {
+        background-color: var(--hover-bg-dark); /* Nền khi hover dark theme */
+        border-color: var(--primary-color); /* Viền đổi màu khi hover dark theme */
+        color: var(--primary-color); /* Chữ đổi màu khi hover dark theme */
+    }
+
+
+    /* Nếu bạn vẫn muốn icon, giữ lại phần này */
+    .tutorial-button .material-icons {
+        font-size: 20px;
+    }
+
+    /* Popup cho video hướng dẫn */
+    .video-popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 3000; /* Đảm bảo popup nằm trên cùng */
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .video-popup.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .video-popup-content {
+        background-color: var(--card-bg-light); /* Đồng bộ với theme */
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: var(--shadow-hover-light); /* Đồng bộ với theme */
+        width: 90%;
+        max-width: 800px; /* Kích thước tối đa cho popup */
+        position: relative;
+        transform: translateY(20px); /* Hiệu ứng trượt lên */
+        transition: transform 0.3s ease, background-color var(--transition-speed) ease;
+        max-height: 90vh; /* Giới hạn chiều cao popup */
+        overflow: hidden; /* Ẩn nội dung tràn ra ngoài */
+    }
+
+    body.dark .video-popup-content {
+        background-color: var(--card-bg-dark); /* Đồng bộ với theme */
+        box-shadow: var(--shadow-hover-dark); /* Đồng bộ với theme */
+    }
+
+    .video-popup.active .video-popup-content {
+        transform: translateY(0);
+    }
+
+    .video-popup .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 28px;
+        cursor: pointer;
+        color: var(--icon-color-light); /* Đồng bộ với theme */
+        transition: color 0.2s ease;
+    }
+
+    body.dark .video-popup .close-btn {
+        color: var(--icon-color-dark); /* Đồng bộ với theme */
+    }
+
+    .video-popup .close-btn:hover {
+        color: var(--primary-color-hover);
+    }
+
+    .video-popup iframe {
+        width: 100%;
+        /* Tính toán tỷ lệ khung hình 16:9 cho video nhúng */
+        aspect-ratio: 16 / 9; /* Tỷ lệ khung hình hiện đại */
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 15px; /* Khoảng cách với nút đóng */
+    }
+
+    /* Responsive cho popup video và các nút */
     @media (max-width: 768px) {
         .home-container {
             padding: 20px 15px;
@@ -101,6 +247,34 @@
             padding: 8px 15px;
             font-size: 0.9em;
         }
+        /* Loại bỏ flex-direction: column để các nút luôn nằm ngang */
+        .tutorial-button {
+            /* Giảm chiều rộng nút để trông cân đối hơn khi 3 nút nằm ngang trên màn hình nhỏ */
+            width: calc(33% - 20px); /* 33% trừ đi gap (20px) cho mỗi nút */
+            max-width: 200px; /* Giới hạn chiều rộng tối đa */
+            padding: 12px 15px; /* Điều chỉnh padding cho màn hình nhỏ */
+            font-size: 0.95em; /* Điều chỉnh font size cho màn hình nhỏ */
+        }
+    }
+    @media (max-width: 480px) {
+        .home-container {
+            padding: 15px 10px;
+        }
+        .home-container h1 {
+            font-size: 1.8em;
+        }
+        .home-container p {
+            font-size: 0.95em;
+        }
+        .tutorial-section h2 {
+            font-size: 1.5em;
+        }
+        .tutorial-button {
+            width: calc(33% - 15px); /* Điều chỉnh width và gap cho màn hình rất nhỏ */
+            padding: 10px 12px; /* Điều chỉnh padding cho màn hình rất nhỏ */
+            font-size: 0.85em; /* Điều chỉnh font size cho màn hình rất nhỏ */
+            min-width: unset; /* Bỏ min-width để nút có thể co lại nhỏ hơn nếu cần */
+        }
     }
   </style>
 </head>
@@ -108,7 +282,7 @@
   <div class="home-container">
     <h1>Chào mừng đến với Kho App VIP! 🚀</h1>
     <p>
-      Khám phá thế giới của các ứng dụng, dylib (mod) và cấu hình VPN (Conf) siêu vip.
+      Khám phá thế giới của các ứng dụng, dylib (mod) và cấu hình VPN (Conf) độc quyền.
       Chúng tôi mang đến những công cụ mạnh mẽ giúp bạn tùy biến và nâng cao trải nghiệm di động của mình.
     </p>
     <p>
@@ -125,14 +299,29 @@
     <div class="call-to-action">
       <a href="ipa.html" target="_parent">Bắt đầu khám phá ngay!</a>
     </div>
-    <div class="video-hd">
-      <h2>Tổng hợp các video Hướng dẫn</h2>
-      <ul>
-        <li>coming soon</li>
-      </ul>
+
+    <div class="tutorial-section">
+        <h2>Hướng dẫn sử dụng</h2>
+        <div class="tutorial-buttons">
+            <button class="tutorial-button" data-video-id="YOUR_IPA_VIDEO_ID">
+                Hướng dẫn IPA
+            </button>
+            <button class="tutorial-button" data-video-id="YOUR_DYLIB_VIDEO_ID">
+                Hướng dẫn Dylib
+            </button>
+            <button class="tutorial-button" data-video-id="YOUR_CONF_VIDEO_ID">
+                Hướng dẫn Conf
+            </button>
+        </div>
     </div>
   </div>
-  
+
+  <div class="video-popup" id="videoPopup">
+    <div class="video-popup-content">
+      <button class="close-btn material-icons" id="closeVideoPopup">close</button>
+      <iframe id="youtubePlayer" width="560" height="315" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
 
   <script>
     // Đồng bộ Dark Mode từ trang cha
@@ -151,6 +340,43 @@
     if (savedTheme === 'dark') {
       document.body.classList.add('dark');
     }
+
+    // Xử lý Popup video hướng dẫn
+    const videoPopup = document.getElementById('videoPopup');
+    const closeVideoPopupBtn = document.getElementById('closeVideoPopup');
+    const youtubePlayer = document.getElementById('youtubePlayer');
+    const tutorialButtons = document.querySelectorAll('.tutorial-button');
+
+    tutorialButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const videoId = button.dataset.videoId;
+            if (videoId) {
+                // Đảm bảo autoplay hoạt động bằng cách thêm &autoplay=1
+                // Sử dụng embed URL của YouTube
+                youtubePlayer.src = `https://www.youtube.com/embed/${videoId}?rel=0&autoplay=1`;
+                videoPopup.classList.add('active');
+            }
+        });
+    });
+
+    closeVideoPopupBtn.addEventListener('click', () => {
+        videoPopup.classList.remove('active');
+        youtubePlayer.src = ''; // Dừng video khi đóng popup bằng cách xóa src
+    });
+
+    videoPopup.addEventListener('click', (event) => {
+        if (event.target === videoPopup) { // Chỉ đóng khi click trực tiếp vào nền overlay
+            videoPopup.classList.remove('active');
+            youtubePlayer.src = ''; // Dừng video khi click ra ngoài popup
+        }
+    });
+
+    // VÍ DỤ VIDEO ID - BẠN CẦN THAY THẾ BẰNG ID VIDEO THẬT CỦA BẠN
+    // HƯỚNG DẪN: Thay 'YOUR_IPA_VIDEO_ID', 'YOUR_DYLIB_VIDEO_ID', 'YOUR_CONF_VIDEO_ID' bằng ID video YouTube của bạn
+    // Ví dụ: 'dQw4w9WgXcQ' là ID của "Never Gonna Give You Up"
+    document.querySelector('.tutorial-button[data-video-id="YOUR_IPA_VIDEO_ID"]').dataset.videoId = 'n_nB0G36x_Q'; // Thay bằng ID video HD IPA của bạn
+    document.querySelector('.tutorial-button[data-video-id="YOUR_DYLIB_VIDEO_ID"]').dataset.videoId = 'L1QJm2K9XFk'; // Thay bằng ID video HD Dylib của bạn
+    document.querySelector('.tutorial-button[data-video-id="YOUR_CONF_VIDEO_ID"]').dataset.videoId = 'L1QJm2K9XFk'; // Thay bằng ID video HD Conf của bạn (có thể trùng nếu HD chung)
   </script>
 </body>
 </html>
