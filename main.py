@@ -108,12 +108,12 @@ def get_orders_data_from_html(url, cookies_str):
         raise Exception(f"Không thể truy cập URL: {url}. Status code: {response.status_code}. Vui lòng kiểm tra lại URL hoặc cookie.")
 
 # Hàm cập nhật dữ liệu vào Google Sheet
-def update_google_sheet(orders_data, spreadsheet_name, lịch_sử_giao_dịch_sheet_name, tổng_hợp_doanh_thu_sheet_name, credentials_path='credentials.json'):
+def update_google_sheet(orders_data, spreadsheet_name, lịch_sử_giao_dịch_sheet_name, credentials_path='credentials.json'):
     try:
         gc = gspread.service_account(filename=credentials_path)
         sh = gc.open(spreadsheet_name)
         worksheet = sh.worksheet(lịch_sử_giao_dịch_sheet_name)
-        summary_worksheet = sh.worksheet(tổng_hợp_doanh_thu_sheet_name)
+        # Đã xóa tham chiếu đến summary_worksheet
 
         # Xóa dữ liệu cũ trên sheet 'Lich Su Giao Dich' (giữ lại hàng tiêu đề)
         worksheet.clear() # Xóa tất cả các ô
@@ -121,43 +121,41 @@ def update_google_sheet(orders_data, spreadsheet_name, lịch_sử_giao_dịch_s
         print("Đã xóa dữ liệu cũ và cập nhật tiêu đề trên sheet 'Lich Su Giao Dich'.")
 
         data_to_write = []
-        total_monthly_revenue = 0
-        
+        # Đã xóa total_monthly_revenue vì không còn sheet 'Tong Hop Doanh Thu'
+
         # Sắp xếp lại dữ liệu theo ngày mới nhất lên đầu (tùy chọn)
         orders_data_sorted = sorted(orders_data, key=lambda x: datetime.strptime(x['date'], "%Y-%m-%d %H:%M:%S"), reverse=False)
 
         for i, order in enumerate(orders_data_sorted):
-            row_num = i + 2 # Dữ liệu bắt đầu từ hàng thứ 2 sau tiêu đề
+            row_num = i + 2 # Dữ liệu bắt đầu từ hàng thứ 2 sau tiêu đề (hàng 1 là tiêu đề)
             data_to_write.append([
                 i + 1, # STT
                 order['date'],
                 order['content'],
-                order['actual_revenue'], # Đây là "Doanh thu (Khách trả)"
-                order['actual_cost'],    # Đây là "Giá vốn (Tôi trả)"
-                order['order_code'],
-                f"=D{row_num}-E{row_num}", # Ghi công thức Lãi/Lỗ vào đây
-                ""  # Cột Ghi chú
+                order['actual_revenue'], # Đây là "Doanh thu (Khách trả)" (Cột D)
+                order['actual_cost'],    # Đây là "Giá vốn (Tôi trả)" (Cột E)
+                order['order_code'],     # (Cột F)
+                f"=D{row_num}-E{row_num}", # Ghi công thức Lãi/Lỗ vào đây (Cột G)
+                ""  # Cột Ghi chú (Cột H)
             ])
-            total_monthly_revenue += order['actual_revenue']
 
         if data_to_write:
             # gspread sẽ tự động nhận diện chuỗi bắt đầu bằng "=" là công thức
             worksheet.append_rows(data_to_write)
             print(f"Đã ghi {len(data_to_write)} lịch sử giao dịch vào Google Sheet 'Lich Su Giao Dich'.")
+            last_data_row = len(data_to_write) + 1 # Hàng cuối cùng có dữ liệu (bao gồm cả tiêu đề)
         else:
             print("Không có dữ liệu đơn hàng nào để ghi vào sheet 'Lich Su Giao Dich'.")
+            last_data_row = 1 # Chỉ có hàng tiêu đề tồn tại
 
-        # Cập nhật tổng doanh thu vào sheet 'Tong Hop Doanh Thu'
-        summary_worksheet.clear() # Xóa tất cả các ô trên sheet tổng hợp
-        summary_worksheet.update(range_name='A1', values=[['Tổng Doanh Thu Tháng Này:']])
-        summary_worksheet.update(range_name='B1', values=[[total_monthly_revenue]])
-        
-        # Thêm lại dòng tiêu đề "Tổng Lãi/Lỗ Tháng Này:" và công thức của nó
-        summary_worksheet.update(range_name='A2', values=[['Tổng Lãi/Lỗ Tháng Này:']])
-        # Sử dụng value_input_option='USER_ENTERED' để đảm bảo chuỗi được phân tích là công thức
-        summary_worksheet.update(range_name='B2', values=[["=SUMPRODUCT('Lich Su Giao Dich'!D:D - 'Lich Su Giao Dich'!E:E)"]], value_input_option='USER_ENTERED')
+        # Thêm dòng tổng lãi/lỗ vào cuối sheet 'Lich Su Giao Dich'
+        total_profit_loss_row = last_data_row + 1 # Dòng bên dưới dòng dữ liệu cuối cùng
+        # Ghi nhãn "Tổng Lãi/Lỗ:" vào cột F (col=6)
+        worksheet.update_cell(row=total_profit_loss_row, col=6, value="Tổng Lãi/Lỗ:", value_input_option='USER_ENTERED')
+        # Ghi công thức SUM() vào cột G (col=7) để tính tổng từ ô G2 đến ô G của dòng cuối cùng có dữ liệu
+        worksheet.update_cell(row=total_profit_loss_row, col=7, value=f"=SUM(G2:G{last_data_row})", value_input_option='USER_ENTERED')
 
-        print(f"Tổng doanh thu tháng này ({total_monthly_revenue:,} VNĐ) và tổng lãi/lỗ đã được cập nhật vào sheet 'Tong Hop Doanh Thu'.")
+        print(f"Tổng lãi/lỗ đã được cập nhật vào sheet 'Lich Su Giao Dich' tại ô G{total_profit_loss_row}.")
         return True
     except Exception as e:
         print(f"Lỗi khi cập nhật Google Sheet: {e}")
@@ -168,7 +166,7 @@ if __name__ == '__main__':
     spreadsheet_name = 'Bao Cao Doanh Thu Thang'
     cookie_sheet_name = 'Cookie_Config'
     lịch_sử_giao_dịch_sheet_name = 'Lich Su Giao Dich'
-    tổng_hợp_doanh_thu_sheet_name = 'Tong Hop Doanh Thu'
+    # Đã bỏ tổng_hợp_doanh_thu_sheet_name
     url_to_scrape = "https://p12apple.com/api/balance_history"
     credentials_file_path = 'credentials.json' 
 
@@ -191,8 +189,8 @@ if __name__ == '__main__':
         # 3. Cập nhật dữ liệu vào Google Sheet
         print("Đang cập nhật dữ liệu vào Google Sheet...")
         if update_google_sheet(
-            orders_data, spreadsheet_name, lịch_sử_giao_dịch_sheet_name,
-            tổng_hợp_doanh_thu_sheet_name, credentials_file_path
+            orders_data, spreadsheet_name, lịch_sử_giao_dịch_sheet_name, # Đã bỏ tổng_hợp_doanh_thu_sheet_name
+            credentials_file_path
         ):
             print("Cập nhật doanh thu thành công vào Google Sheet!")
         else:
