@@ -44,9 +44,6 @@ def read_cookie_from_google_sheet(spreadsheet_name, cookie_sheet_name, credentia
         return None
 
 # Hàm lấy dữ liệu đơn hàng từ HTML
-# LƯU Ý: Với URL 'api/balance_history', bạn có thể cần điều chỉnh cách phân tích cú pháp
-# nếu nó trả về JSON thay vì HTML. Hiện tại, code vẫn dùng BeautifulSoup để phân tích HTML.
-# Nếu API trả về JSON, bạn sẽ cần dùng thư viện 'json' thay vì 'BeautifulSoup'.
 def get_orders_data_from_html(url, cookies_str):
     cookies = {}
     if cookies_str:
@@ -150,10 +147,15 @@ def update_google_sheet(orders_data, spreadsheet_name, lịch_sử_giao_dịch_s
 
         # Thêm dòng tổng lãi/lỗ vào cuối sheet 'Lich Su Giao Dich'
         total_profit_loss_row = last_data_row + 1 # Dòng bên dưới dòng dữ liệu cuối cùng
-        # Ghi nhãn "Tổng Lãi/Lỗ:" vào cột F (col=6)
-        worksheet.update_cell(row=total_profit_loss_row, col=6, value="Tổng Lãi/Lỗ:", value_input_option='USER_ENTERED')
-        # Ghi công thức SUM() vào cột G (col=7) để tính tổng từ ô G2 đến ô G của dòng cuối cùng có dữ liệu
-        worksheet.update_cell(row=total_profit_loss_row, col=7, value=f"=SUM(G2:G{last_data_row})", value_input_option='USER_ENTERED')
+        
+        # Sử dụng update() để ghi cả nhãn và công thức, cho phép dùng value_input_option
+        worksheet.update(
+            range_name=f'F{total_profit_loss_row}:G{total_profit_loss_row}',
+            values=[
+                ["Tổng Lãi/Lỗ:", f"=SUM(G2:G{last_data_row})"]
+            ],
+            value_input_option='USER_ENTERED' # Áp dụng cho cả phạm vi
+        )
 
         print(f"Tổng lãi/lỗ đã được cập nhật vào sheet 'Lich Su Giao Dich' tại ô G{total_profit_loss_row}.")
         return True
