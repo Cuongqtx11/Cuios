@@ -26,7 +26,7 @@ cost_mapping = {
     -86400: 86400,
     -75000: 75000,
     -110000: 110000,
-    -130000: 130000 # Giá trị tuyệt đối của số tiền gốc -60,000
+    -130000: 130000 # Giá trị tuyệt đối của số tiền gốc
 }
 
 # Hàm để đọc chuỗi cookie từ Google Sheet
@@ -116,9 +116,9 @@ def update_google_sheet(orders_data, spreadsheet_name, lịch_sử_giao_dịch_s
         summary_worksheet = sh.worksheet(tổng_hợp_doanh_thu_sheet_name)
 
         # Xóa dữ liệu cũ trên sheet 'Lich Su Giao Dich' (giữ lại hàng tiêu đề)
+        # Đã sửa lỗi DeprecationWarning bằng cách dùng named arguments
         worksheet.clear() # Xóa tất cả các ô
-        # Cập nhật tiêu đề cột theo cấu trúc mới
-        worksheet.update('A1:H1', [['STT', 'Ngày', 'Nội dung', 'Doanh thu (Khách trả)', 'Giá vốn (Tôi trả)', 'Mã đơn hàng', 'Lãi/Lỗ', 'Ghi chú']])
+        worksheet.update(range_name='A1:H1', values=[['STT', 'Ngày', 'Nội dung', 'Doanh thu (Khách trả)', 'Giá vốn (Tôi trả)', 'Mã đơn hàng', 'Lãi/Lỗ', 'Ghi chú']])
         print("Đã xóa dữ liệu cũ và cập nhật tiêu đề trên sheet 'Lich Su Giao Dich'.")
 
         data_to_write = []
@@ -148,8 +148,10 @@ def update_google_sheet(orders_data, spreadsheet_name, lịch_sử_giao_dịch_s
 
         # Cập nhật tổng doanh thu vào sheet 'Tong Hop Doanh Thu'
         summary_worksheet.clear() # Xóa tất cả các ô trên sheet tổng hợp
-        summary_worksheet.update('A1', 'Tổng Doanh Thu Tháng Này:')
-        summary_worksheet.update('B1', total_monthly_revenue)
+        # Đã sửa lỗi "Invalid value at 'data.values', "A1"" bằng cách truyền giá trị dạng [[value]]
+        # và dùng named arguments để tránh DeprecationWarning.
+        summary_worksheet.update(range_name='A1', values=[['Tổng Doanh Thu Tháng Này:']])
+        summary_worksheet.update(range_name='B1', values=[[total_monthly_revenue]])
         # Cột B2 (Tổng Lãi/Lỗ Tháng Này) đã có công thức tự tính từ sheet 'Lich Su Giao Dich'
         print(f"Tổng doanh thu tháng này ({total_monthly_revenue:,} VNĐ) đã được cập nhật vào sheet 'Tong Hop Doanh Thu'.")
         return True
@@ -163,7 +165,7 @@ if __name__ == '__main__':
     cookie_sheet_name = 'Cookie_Config'
     lịch_sử_giao_dịch_sheet_name = 'Lich Su Giao Dich'
     tổng_hợp_doanh_thu_sheet_name = 'Tong Hop Doanh Thu'
-    url_to_scrape = "https://p12apple.com/api/balance_history" # Đã cập nhật URL
+    url_to_scrape = "https://p12apple.com/api/balance_history"
     credentials_file_path = 'credentials.json' 
 
     try:
