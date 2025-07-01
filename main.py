@@ -116,7 +116,6 @@ def update_google_sheet(orders_data, spreadsheet_name, lịch_sử_giao_dịch_s
         summary_worksheet = sh.worksheet(tổng_hợp_doanh_thu_sheet_name)
 
         # Xóa dữ liệu cũ trên sheet 'Lich Su Giao Dich' (giữ lại hàng tiêu đề)
-        # Đã sửa lỗi DeprecationWarning bằng cách dùng named arguments
         worksheet.clear() # Xóa tất cả các ô
         worksheet.update(range_name='A1:H1', values=[['STT', 'Ngày', 'Nội dung', 'Doanh thu (Khách trả)', 'Giá vốn (Tôi trả)', 'Mã đơn hàng', 'Lãi/Lỗ', 'Ghi chú']])
         print("Đã xóa dữ liệu cũ và cập nhật tiêu đề trên sheet 'Lich Su Giao Dich'.")
@@ -128,6 +127,7 @@ def update_google_sheet(orders_data, spreadsheet_name, lịch_sử_giao_dịch_s
         orders_data_sorted = sorted(orders_data, key=lambda x: datetime.strptime(x['date'], "%Y-%m-%d %H:%M:%S"), reverse=False)
 
         for i, order in enumerate(orders_data_sorted):
+            row_num = i + 2 # Dữ liệu bắt đầu từ hàng thứ 2 sau tiêu đề
             data_to_write.append([
                 i + 1, # STT
                 order['date'],
@@ -135,12 +135,13 @@ def update_google_sheet(orders_data, spreadsheet_name, lịch_sử_giao_dịch_s
                 order['actual_revenue'], # Đây là "Doanh thu (Khách trả)"
                 order['actual_cost'],    # Đây là "Giá vốn (Tôi trả)"
                 order['order_code'],
-                "", # Cột Lãi/Lỗ sẽ được tính bằng công thức trong Google Sheet
+                f"=D{row_num}-E{row_num}", # Ghi công thức Lãi/Lỗ vào đây
                 ""  # Cột Ghi chú
             ])
             total_monthly_revenue += order['actual_revenue']
 
         if data_to_write:
+            # gspread sẽ tự động nhận diện chuỗi bắt đầu bằng "=" là công thức
             worksheet.append_rows(data_to_write)
             print(f"Đã ghi {len(data_to_write)} lịch sử giao dịch vào Google Sheet 'Lich Su Giao Dich'.")
         else:
@@ -148,12 +149,15 @@ def update_google_sheet(orders_data, spreadsheet_name, lịch_sử_giao_dịch_s
 
         # Cập nhật tổng doanh thu vào sheet 'Tong Hop Doanh Thu'
         summary_worksheet.clear() # Xóa tất cả các ô trên sheet tổng hợp
-        # Đã sửa lỗi "Invalid value at 'data.values', "A1"" bằng cách truyền giá trị dạng [[value]]
-        # và dùng named arguments để tránh DeprecationWarning.
         summary_worksheet.update(range_name='A1', values=[['Tổng Doanh Thu Tháng Này:']])
         summary_worksheet.update(range_name='B1', values=[[total_monthly_revenue]])
-        # Cột B2 (Tổng Lãi/Lỗ Tháng Này) đã có công thức tự tính từ sheet 'Lich Su Giao Dich'
-        print(f"Tổng doanh thu tháng này ({total_monthly_revenue:,} VNĐ) đã được cập nhật vào sheet 'Tong Hop Doanh Thu'.")
+        
+        # Thêm lại dòng tiêu đề "Tổng Lãi/Lỗ Tháng Này:" và công thức của nó
+        summary_worksheet.update(range_name='A2', values=[['Tổng Lãi/Lỗ Tháng Này:']])
+        # Sử dụng value_input_option='USER_ENTERED' để đảm bảo chuỗi được phân tích là công thức
+        summary_worksheet.update(range_name='B2', values=[["=SUMPRODUCT('Lich Su Giao Dich'!D:D - 'Lich Su Giao Dich'!E:E)"]], value_input_option='USER_ENTERED')
+
+        print(f"Tổng doanh thu tháng này ({total_monthly_revenue:,} VNĐ) và tổng lãi/lỗ đã được cập nhật vào sheet 'Tong Hop Doanh Thu'.")
         return True
     except Exception as e:
         print(f"Lỗi khi cập nhật Google Sheet: {e}")
