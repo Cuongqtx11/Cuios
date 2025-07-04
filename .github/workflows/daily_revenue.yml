@@ -6,7 +6,7 @@ on:
     # Bạn có thể điều chỉnh thời gian và múi giờ.
     # Để chạy lúc 7 AM giờ Việt Nam (GMT+7), bạn có thể đặt là '0 0 * * *' nếu múi giờ của runner là UTC+7
     # Hoặc tính toán lệch múi giờ. Ví dụ: 7 AM VN = 0 AM UTC.
-    - cron: '0 0 * * *'
+    - cron: '55 * * * *'
   workflow_dispatch:
     # Cho phép bạn chạy workflow này thủ công từ GitHub UI
 
