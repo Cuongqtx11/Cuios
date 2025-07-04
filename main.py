@@ -29,6 +29,17 @@ cost_mapping = {
     -130000: 130000 # Giá trị tuyệt đối của số tiền gốc
 }
 
+# --- Ánh xạ tên mặt hàng theo giá tiền (Doanh thu Khách trả) ---
+product_name_mapping_by_revenue = {
+    369000: "Unband Vip",
+    69000: "Cert 72h",
+    79000: "Cert 72h++",
+    119000: "Cert 24h",
+    111000: "Premium 72h",
+    149000: "Combo 72H",
+    169000: "Combo 24h"
+}
+
 # Hàm để đọc chuỗi cookie từ Google Sheet
 def read_cookie_from_google_sheet(spreadsheet_name, cookie_sheet_name, credentials_path='credentials.json'):
     try:
@@ -133,33 +144,75 @@ def update_google_sheet(orders_data, spreadsheet_name, lịch_sử_giao_dịch_s
         if all_data_to_write:
             # Sử dụng update() cho toàn bộ dữ liệu (bao gồm tiêu đề và các dòng)
             # để đảm bảo value_input_option='USER_ENTERED' được áp dụng cho tất cả
-            end_row = len(all_data_to_write)
+            end_row_for_data = len(all_data_to_write)
             worksheet.update(
-                range_name=f'A1:H{end_row}',
+                range_name=f'A1:H{end_row_for_data}',
                 values=all_data_to_write,
                 value_input_option='USER_ENTERED'
             )
             print(f"Đã ghi {len(all_data_to_write) - 1} lịch sử giao dịch và tiêu đề vào Google Sheet 'Lich Su Giao Dich'.")
-            last_data_row = len(all_data_to_write) # Hàng cuối cùng có dữ liệu giao dịch
+            last_data_row = len(all_data_to_write) # Hàng cuối cùng có dữ liệu giao dịch (không tính hàng tổng hợp)
         else:
             # Nếu không có dữ liệu, chỉ cập nhật tiêu đề
             worksheet.update(range_name='A1:H1', values=[['STT', 'Ngày', 'Nội dung', 'Doanh thu (Khách trả)', 'Giá vốn (Tôi trả)', 'Mã đơn hàng', 'Lãi/Lỗ', 'Ghi chú']])
             print("Không có dữ liệu đơn hàng nào để ghi vào sheet 'Lich Su Giao Dich'. Chỉ cập nhật tiêu đề.")
             last_data_row = 1 # Chỉ có hàng tiêu đề tồn tại
 
-        # Thêm dòng tổng lãi/lỗ vào cuối sheet 'Lich Su Giao Dich'
-        total_profit_loss_row = last_data_row + 1 # Dòng bên dưới dòng dữ liệu cuối cùng
-        
-        # Sử dụng update() với range để ghi cả nhãn và công thức tổng lãi/lỗ
+        # Thêm dòng tổng lãi/lỗ
+        total_profit_loss_row = last_data_row + 1
         worksheet.update(
             range_name=f'F{total_profit_loss_row}:G{total_profit_loss_row}',
             values=[
-                ["Tổng Lãi/Lỗ:", f"=SUM(G2:G{last_data_row})"] # Ghi công thức SUM vào cột G
+                ["Tổng Lãi/Lỗ:", f"=SUM(G2:G{last_data_row})"]
             ],
             value_input_option='USER_ENTERED'
         )
-
         print(f"Tổng lãi/lỗ đã được cập nhật vào sheet 'Lich Su Giao Dich' tại ô G{total_profit_loss_row}.")
+
+        # --- Thêm phần tổng hợp mới ---
+        summary_current_row = total_profit_loss_row + 2 # Bắt đầu sau 2 dòng trống từ dòng tổng lãi/lỗ
+
+        # 1. Tổng số đơn hàng
+        total_orders = len(orders_data_sorted)
+        worksheet.update(
+            range_name=f'F{summary_current_row}:G{summary_current_row}',
+            values=[
+                ["Tổng số đơn hàng:", total_orders]
+            ],
+            value_input_option='USER_ENTERED'
+        )
+        print(f"Tổng số đơn hàng ({total_orders}) đã được cập nhật.")
+        summary_current_row += 1 # Di chuyển xuống dòng tiếp theo
+
+        # 2. Phân loại theo mặt hàng theo tên mới
+        item_counts = {}
+        for order in orders_data_sorted:
+            # Lấy tên mặt hàng dựa trên doanh thu thực tế từ ánh xạ mới
+            product_name = product_name_mapping_by_revenue.get(order['actual_revenue'], order['content'])
+            item_counts[product_name] = item_counts.get(product_name, 0) + 1
+        
+        # Sắp xếp các mặt hàng theo số lượng giảm dần (tùy chọn, để dễ đọc)
+        sorted_items = sorted(item_counts.items(), key=lambda item: item[1], reverse=True)
+
+        summary_current_row += 1 # Thêm một dòng trống để tách
+        # Thêm tiêu đề cho phần thống kê mặt hàng
+        worksheet.update_cell(row=summary_current_row, col=6, value="Thống kê theo mặt hàng:")
+        summary_current_row += 1 # Di chuyển xuống dòng tiếp theo để ghi dữ liệu chi tiết
+
+        # Chuẩn bị dữ liệu chi tiết thống kê mặt hàng
+        data_to_update_items = []
+        for item_name, count in sorted_items:
+            data_to_update_items.append([item_name, count])
+            
+        if data_to_update_items:
+            # Cập nhật các mục thống kê hàng loạt
+            worksheet.update(
+                range_name=f'F{summary_current_row}:G{summary_current_row + len(data_to_update_items) - 1}',
+                values=data_to_update_items,
+                value_input_option='USER_ENTERED'
+            )
+            print("Thống kê theo mặt hàng đã được cập nhật.")
+
         return True
     except Exception as e:
         print(f"Lỗi khi cập nhật Google Sheet: {e}")
