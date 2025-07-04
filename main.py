@@ -5,9 +5,6 @@ import pytz
 import gspread
 import os
 
-# --- Cấu hình ánh xạ doanh thu và giá vốn của bạn ---
-# Key là "Số tiền" gốc từ lịch sử giao dịch (luôn là số âm)
-# Value là số tiền "Doanh thu (Khách trả)"
 revenue_mapping = {
     -49500: 69000, #72
     -215000: 369000, #ubln
@@ -18,7 +15,6 @@ revenue_mapping = {
     -130000: 169000 #ul24
 }
 
-# Giá vốn là giá trị tuyệt đối của "Số tiền" gốc từ lịch sử giao dịch
 cost_mapping = {
     -49500: 49500,
     -215000: 215000,
@@ -26,10 +22,9 @@ cost_mapping = {
     -86400: 86400,
     -75000: 75000,
     -110000: 110000,
-    -130000: 130000 # Giá trị tuyệt đối của số tiền gốc
+    -130000: 130000 
 }
 
-# --- Ánh xạ tên mặt hàng theo giá tiền (Doanh thu Khách trả) ---
 product_name_mapping_by_revenue = {
     369000: "Unband Vip",
     69000: "Cert 72h",
