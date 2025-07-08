@@ -1,6 +1,16 @@
 [
   {
     "id": "ipa-001",
+    "name": "ZingMP3",
+    "icon": "https://play-lh.googleusercontent.com/nlO5MunfWjMNktvnGda84FWUT3RPtnQUIeuYOdgiOmFCTYAMHDf8Dq1ASM9HkoiEFYU",
+    "fileLink": "https://www.mediafire.com/file/1ifmmcoz3c9jzyz/Zing_MP3_22.08.02.ipa/file",
+    "desc": "Đăng nhập vào Zalo sẽ kích hoạt vip. Phiên bản cũ",
+    "version": "22.08.02",
+    "developer": "Cuios",
+    "date": "2025-07-08"
+  },
+  {
+    "id": "ipa-002",
     "name": "Minecraft",
     "icon": "https://cdn.tgdd.vn/GameApp/2/229031/Screentshots/minecraft-sinh-ton-the-gioi-lap-phuong-229031-logo-22-09-2020.png",
     "fileLink": "https://www.mediafire.com/file/0lont13qgui30z0/Minecraft_1.21.92.ipa/file",
@@ -10,7 +20,7 @@
     "date": "2025-07-05"
   },
   {
-    "id": "ipa-002",
+    "id": "ipa-003",
     "name": "Chat Smith",
     "icon": "https://play-lh.googleusercontent.com/_wcc1yeDtK4dvgwOLt-VkMSMXDRZbcpWDNLXn9jTu8g6CjByl9X74_JZsQo8ukp_Bsw",
     "fileLink": "https://www.mediafire.com/file/nauswnt5ilv37vi/Chat+Smith_7.19.1.ipa/file",
@@ -20,7 +30,7 @@
     "date": "2025-07-04"
   },
   {
-    "id": "ipa-003",
+    "id": "ipa-004",
     "name": "Coin Master",
     "icon": "https://play-lh.googleusercontent.com/lja_bcS9SXsaK4x_q0rXuiqf3CIIwfy8QveRWfW5MEaAPOST_auDLuzWMyMUrBzi0sI",
     "fileLink": "https://www.mediafire.com/file/3wnxmhmfxyygl4k/Coin+Master_3.5.2101.ipa/file",
@@ -30,7 +40,7 @@
     "date": "2025-07-02"
   },
   {
-    "id": "ipa-004",
+    "id": "ipa-005",
     "name": "INSIDE",
     "icon": "https://img.tapimg.net/market/images/67940346183b8daef7c9cf66f4fdecb1.jpg",
     "fileLink": "https://www.mediafire.com/file/7mh2sqerec3p9gq/Inside+full_1.1.10.ipa/file",
@@ -40,7 +50,7 @@
     "date": "2025-06-27"
   },
   {
-    "id": "ipa-005",
+    "id": "ipa-006",
     "name": "GTA Vice City",
     "icon": "https://taigtavicecity.com/wp-content/uploads/2025/02/Download-GTA-Vice-City-Viet-Hoa-Full-Huong-dan-cai-dat-chi-tiet-1.png",
     "fileLink": "https://www.mediafire.com/file/a7cs0ana7gkz78o/GTA+Vice+City+Việt+Hoá.ipa/file",
@@ -50,7 +60,7 @@
     "date": "2025-06-27"
   },
   {
-    "id": "ipa-006",
+    "id": "ipa-007",
     "name": "Clash of Clans",
     "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwrSEDIvOOBUZMc7rsno-D2H3NvCXjaX6c_A&s",
     "fileLink": "https://www.mediafire.com/file/fbrhzyr5ypsql92/Null's+Clash+17.360.13+for+iOS.ipa/file",
@@ -60,7 +70,7 @@
     "date": "2025-06-27"
   },
   {
-    "id": "ipa-007",
+    "id": "ipa-008",
     "name": "Zombie Tsunami",
     "icon": "https://play-lh.googleusercontent.com/y2v9w4KjUe4djmd3yYgj2_XrDIt_D9JO2c2NkYdxtYyE6cGl21JgU4aMqTEcoQzQorLD",
     "fileLink": "https://www.mediafire.com/file/660lh5wk4na1fx6/Zombie_Tsunami_4.3.0.ipa/file",
@@ -70,7 +80,7 @@
     "date": "2025-06-25"
   },
   {
-    "id": "ipa-008",
+    "id": "ipa-009",
     "name": "PUBG VNG",
     "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRe2Xn3mIhQTULQxnvmLQ4YvqirOcsdzZlKdg&s",
     "fileLink": "https://drive.google.com/file/d/1XeXXt8buunL-wOmnfsr6RKGBAa51oOFa/view?usp=drivesdk",
@@ -80,7 +90,7 @@
     "date": "2025-06-25"
   },
   {
-    "id": "ipa-009",
+    "id": "ipa-010",
     "name": "Youtube Premium",
     "icon": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png",
     "fileLink": "https://www.mediafire.com/file/33ddp45kg5f6vjp/YouTube_19.23.3.ipa/file",
@@ -90,7 +100,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "ipa-010",
+    "id": "ipa-011",
     "name": "Clash of Clans",
     "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwrSEDIvOOBUZMc7rsno-D2H3NvCXjaX6c_A&s",
     "fileLink": "https://www.mediafire.com/file/grcun7jbx7fjror/Clash_of_Clans_17.126.6.ipa/file",
@@ -100,7 +110,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "ipa-011",
+    "id": "ipa-012",
     "name": "Doulingo",
     "icon": "https://play-lh.googleusercontent.com/Rz4JVKiQM7ZnLYTEzwzpvWROphw5Wo6kh3vnx8HhgHTaOzsknlTLmXUsknurSqTqUj0",
     "fileLink": "https://www.mediafire.com/file/zf97f7k0olgg7rr/Doulingo_7.65.ipa/file",
@@ -110,7 +120,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "ipa-012",
+    "id": "ipa-013",
     "name": "Remini",
     "icon": "https://play-lh.googleusercontent.com/XJ6_UDSJx-QHQreBmIro5VMRJ--42F1XY3QphSYkeSRZdAUA0o_Y-EydVdK-NZOh",
     "fileLink": "https://www.mediafire.com/file/wsf4e7oxao7ql59/Remini_2.10.117.ipa/file",
@@ -120,7 +130,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "ipa-013",
+    "id": "ipa-014",
     "name": "Avatar DK",
     "icon": "https://play-lh.googleusercontent.com/KP-qwqxqGXm_bBP-E5zf7KnhCigMSdW6cmgD85_edRvkOQIASTOJmks91MBjVxrJ9i0P=w240-h480-rw",
     "fileLink": "https://www.mediafire.com/file/mi9e6wen9bkvc5w/AvatarDK_2.6.1_decrypted.ipa/file",
@@ -130,7 +140,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "ipa-014",
+    "id": "ipa-015",
     "name": "TikTok",
     "icon": "https://play-lh.googleusercontent.com/Ui_-OW6UJI147ySDX9guWWDiCPSq1vtxoC-xG17BU2FpU0Fi6qkWwuLdpddmT9fqrA=w240-h480-rw",
     "fileLink": "https://www.mediafire.com/file/b68r6lyo2oj7ccs/TikTok_mod.ipa/file",
@@ -140,7 +150,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "ipa-015",
+    "id": "ipa-016",
     "name": "Instagram",
     "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/1200px-Instagram_logo_2016.svg.png",
     "fileLink": "https://www.mediafire.com/file/tnj6x3wh7oe1310/Instagram_372.1.0.ipa/file",
@@ -150,7 +160,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "ipa-016",
+    "id": "ipa-017",
     "name": "Army2D",
     "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsP2WmiEbg7UMJ4mtKGu6VdKpdLXZ9LodrNw&s",
     "fileLink": "https://www.mediafire.com/file/e3ofb819kiec7zi/Army2D_0.1_decrypted.ipa/file",
@@ -160,7 +170,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "ipa-017",
+    "id": "ipa-018",
     "name": "Messenger",
     "icon": "https://play-lh.googleusercontent.com/JfQNUnohpuq5IP65WN9C109VjLjDEj2tZYlPtComLznQfGeeoesubOaHGBcpZdXKuHU",
     "fileLink": "https://www.mediafire.com/file/d2lar04g3u249eh/Messenger-Flow_511.0.ipa/file",
@@ -170,7 +180,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "ipa-018",
+    "id": "ipa-019",
     "name": "Facebook",
     "icon": "https://play-lh.googleusercontent.com/KCMTYuiTrKom4Vyf0G4foetVOwhKWzNbHWumV73IXexAIy5TTgZipL52WTt8ICL-oIo",
     "fileLink": "https://www.mediafire.com/file/jwcu4aiz2o3dkmp/Facebook-Glow_517.0.0.ipa/file",
@@ -180,7 +190,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "ipa-019",
+    "id": "ipa-020",
     "name": "Zalo",
     "icon": "https://play-lh.googleusercontent.com/rFIOt4fDSCgJh_FkHU2qP8YiZUUhfVoKoNfQFbPEM-Wl8zuyuwn7vzkEx_XMh5B6FfO3",
     "fileLink": "https://www.mediafire.com/file/4r2t15nkzf9igdj/Zalo_Nha%25CC%2582n_Ba%25CC%2589n.ipa/file",
@@ -190,7 +200,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "ipa-020",
+    "id": "ipa-021",
     "name": "Facebook Mod",
     "icon": "https://play-lh.googleusercontent.com/KCMTYuiTrKom4Vyf0G4foetVOwhKWzNbHWumV73IXexAIy5TTgZipL52WTt8ICL-oIo",
     "fileLink": "https://www.mediafire.com/file/fy7lbzagkuxynm5/Facebook_mod.ipa/file",
@@ -200,7 +210,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "ipa-021",
+    "id": "ipa-022",
     "name": "Filza",
     "icon": "https://appsdecoded.com/wp-content/uploads/2024/02/Filza-iPA.jpg",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Filza_4.0_No_Url_Crack.ipa",
@@ -210,7 +220,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "ipa-022",
+    "id": "ipa-023",
     "name": "TrollFools",
     "icon": "https://media.havoc.app/669b9b9a4e505bb0dae0841f",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/TrollFools_3.0-28.tipa",
@@ -220,7 +230,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "ipa-023",
+    "id": "ipa-024",
     "name": "TrollDecrypt",
     "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvTegbJJLA6GUP4tgAdGWddWVAa9mCIyqvYA&s",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/TrollDecrypt.tipa",
@@ -230,7 +240,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "ipa-024",
+    "id": "ipa-025",
     "name": "LocSim",
     "icon": "https://ipaomtk.com/wp-content/uploads/2023/02/Location-Simulation-locsim-e1707671904136.png",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Locsim.ipa",
@@ -240,7 +250,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "ipa-025",
+    "id": "ipa-026",
     "name": "AirTroller",
     "icon": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQBy0O8la6ZrCi98CV-zim88mDIGvQio3ynEd414VKR9hcHSt73",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/AirTroller-1.1.1.tipa",
@@ -250,7 +260,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "ipa-026",
+    "id": "ipa-027",
     "name": "SMS Reciever",
     "icon": "https://ipaomtk.com/wp-content/uploads/2024/09/Receive-SMS-Multiple-SIM.jpg",
     "fileLink": "https://www.mediafire.com/file/5f7y7p37iqg904t/SMS_Reciever_3.7.23.ipa/file",
