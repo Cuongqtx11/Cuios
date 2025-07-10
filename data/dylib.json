@@ -1,6 +1,16 @@
 [
   {
     "id": "dylib-001",
+    "name": "Spotify",
+    "icon": "https://play-lh.googleusercontent.com/7ynvVIRdhJNAngCg_GI7i8TtH8BqkJYmffeUHsG-mJOdzt1XLvGmbsKuc5Q1SInBjDKN=w240-h480-rw",
+    "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Spotify-Eevee-5.9.2.zip",
+    "desc": "Thoát app vào lại 2 3 lần sẽ kích hoạt premium. Ổn đinh hơn khi tiêm bằng trollfool",
+    "version": "5.9.2",
+    "developer": "",
+    "date": "2025-07-09"
+  },
+  {
+    "id": "dylib-002",
     "name": "TikTok++",
     "icon": "https://play-lh.googleusercontent.com/Ui_-OW6UJI147ySDX9guWWDiCPSq1vtxoC-xG17BU2FpU0Fi6qkWwuLdpddmT9fqrA=w240-h480-rw",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/BHTikTok++_1.9.3.zip",
@@ -10,7 +20,7 @@
     "date": "2025-07-07"
   },
   {
-    "id": "dylib-002",
+    "id": "dylib-003",
     "name": "Messenger",
     "icon": "https://play-lh.googleusercontent.com/JfQNUnohpuq5IP65WN9C109VjLjDEj2tZYlPtComLznQfGeeoesubOaHGBcpZdXKuHU",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/MessNoAds.dylib",
@@ -20,7 +30,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-003",
+    "id": "dylib-004",
     "name": "Facebook",
     "icon": "https://play-lh.googleusercontent.com/KCMTYuiTrKom4Vyf0G4foetVOwhKWzNbHWumV73IXexAIy5TTgZipL52WTt8ICL-oIo",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Facebook_Mod.zip",
@@ -30,7 +40,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-004",
+    "id": "dylib-005",
     "name": "TikTok",
     "icon": "https://play-lh.googleusercontent.com/Ui_-OW6UJI147ySDX9guWWDiCPSq1vtxoC-xG17BU2FpU0Fi6qkWwuLdpddmT9fqrA=w240-h480-rw",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/BHTikTokPlus.zip",
@@ -40,7 +50,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-005",
+    "id": "dylib-006",
     "name": "Youtube",
     "icon": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/youtubeReborn.zip",
@@ -50,7 +60,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-006",
+    "id": "dylib-007",
     "name": "Messenger",
     "icon": "https://play-lh.googleusercontent.com/JfQNUnohpuq5IP65WN9C109VjLjDEj2tZYlPtComLznQfGeeoesubOaHGBcpZdXKuHU",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Messenger_Flow.zip",
@@ -60,7 +70,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-007",
+    "id": "dylib-008",
     "name": "TikTok",
     "icon": "https://play-lh.googleusercontent.com/Ui_-OW6UJI147ySDX9guWWDiCPSq1vtxoC-xG17BU2FpU0Fi6qkWwuLdpddmT9fqrA=w240-h480-rw",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/TiktokCommentPlus.dylib",
@@ -70,7 +80,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-008",
+    "id": "dylib-009",
     "name": "TikTok ",
     "icon": "https://play-lh.googleusercontent.com/Ui_-OW6UJI147ySDX9guWWDiCPSq1vtxoC-xG17BU2FpU0Fi6qkWwuLdpddmT9fqrA=w240-h480-rw",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Tiktokcmtplus.dylib",
@@ -80,7 +90,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-009",
+    "id": "dylib-010",
     "name": "Spotify",
     "icon": "https://play-lh.googleusercontent.com/7ynvVIRdhJNAngCg_GI7i8TtH8BqkJYmffeUHsG-mJOdzt1XLvGmbsKuc5Q1SInBjDKN=w240-h480-rw",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Spotify_Eevee_5.8.5.zip",
@@ -90,7 +100,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-010",
+    "id": "dylib-011",
     "name": "Locket",
     "icon": "https://play-lh.googleusercontent.com/eRZLg00mAQGayCrFjDBklPIpW3qFHcmUs8PUQA4z7hVe-cDKMcRqecVHONAIexJGJZM",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Locket%20Gold.dylib",
@@ -100,7 +110,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-011",
+    "id": "dylib-012",
     "name": "ChatSmith",
     "icon": "https://play-lh.googleusercontent.com/_wcc1yeDtK4dvgwOLt-VkMSMXDRZbcpWDNLXn9jTu8g6CjByl9X74_JZsQo8ukp_Bsw",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/ChatSmith.dylib",
@@ -110,7 +120,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-012",
+    "id": "dylib-013",
     "name": "Instagram",
     "icon": "https://play-lh.googleusercontent.com/VRMWkE5p3CkWhJs6nv-9ZsLAs1QOg5ob1_3qg-rckwYW7yp1fMrYZqnEFpk0IoVP4LM",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Rocket_Instagram.zip",
@@ -120,7 +130,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-013",
+    "id": "dylib-014",
     "name": "X-Twitter",
     "icon": "https://play-lh.googleusercontent.com/XyI6Hyz9AFg7E_joVzX2zh6CpWm9B2DG2JuEz5meCFVm4-wTKTnHgqbmg62iFKe4Gzca",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/X_BHTwitter.zip",
@@ -130,7 +140,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-014",
+    "id": "dylib-015",
     "name": "Facebook",
     "icon": "https://play-lh.googleusercontent.com/KCMTYuiTrKom4Vyf0G4foetVOwhKWzNbHWumV73IXexAIy5TTgZipL52WTt8ICL-oIo",
     "fileLink": "https://www.mediafire.com/file/io07220mfit7o6u/Glow_1.3.zip/file",
@@ -140,7 +150,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-015",
+    "id": "dylib-016",
     "name": "XingTu",
     "icon": "https://xingtu.info/wp-content/uploads/2023/12/logo-app-xingtu.jpg",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/XingTu_Mod.dylib'",
@@ -150,7 +160,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-016",
+    "id": "dylib-017",
     "name": "TrueCaller",
     "icon": "https://play-lh.googleusercontent.com/T9WgkoSUXy7wa3_oMRWt-kxsLVtgwMKoX4IdHRU_mF33MKudjAIn1ls-J2XHHo06-rY",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/TrueCaller_Premium.dylib",
@@ -160,7 +170,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-017",
+    "id": "dylib-018",
     "name": "B612",
     "icon": "https://play-lh.googleusercontent.com/MZQJwhOkgsXWeR-5-dey7Ckras4a9xx2JN8ZfQ_Twz0otjKwUcT6qkPWo8OheOShWeg",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/B612_VIP.dylib",
@@ -170,7 +180,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-018",
+    "id": "dylib-019",
     "name": "Lightroom",
     "icon": "https://play-lh.googleusercontent.com/RGvuFCqPOIiR1i9QDN6-HNt5nOuWj4zuqQduxnJn0ughdo-yhAJNG1r6W1A3Fc6Z9w",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Lightroom_Mod.dylib",
@@ -180,7 +190,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-019",
+    "id": "dylib-020",
     "name": "Douyin",
     "icon": "https://play-lh.googleusercontent.com/xey8dXOB53LtCR97JhDH7T-6np_sUBBE9iF7WP4Sp6T55oO28e6hic1LFTklCELw9Iw",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Douyin_Mod.dylib",
@@ -190,7 +200,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-020",
+    "id": "dylib-021",
     "name": "Ghi Âm",
     "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/17/e4/46/17e4469c-32c7-f92e-2ebb-67a96bb17bf5/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/0x0ss-85.png",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Ghi_am_tat_man.dylib",
@@ -200,7 +210,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-021",
+    "id": "dylib-022",
     "name": "NiceGram",
     "icon": "https://play-lh.googleusercontent.com/0MJ-XLLhjcBjPy_CCUjCwrOWEIA-IcAuQQXiTFKwoClM_TNKDcmalX2AoviUqfjaItY",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Nicegram_Premium.dylib",
@@ -210,7 +220,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-022",
+    "id": "dylib-023",
     "name": "NiceGram",
     "icon": "https://play-lh.googleusercontent.com/0MJ-XLLhjcBjPy_CCUjCwrOWEIA-IcAuQQXiTFKwoClM_TNKDcmalX2AoviUqfjaItY",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/NiceGram_Pro.dylib",
@@ -220,7 +230,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-023",
+    "id": "dylib-024",
     "name": "Surge",
     "icon": "https://play-lh.googleusercontent.com/sBQESsYC1nCpRUwu6aW7ZwJvFjL3628HsIBGgJamEfzyyRDT3lt86FrJwd2CSsOKuLo",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Surge_Pro.dylib",
@@ -230,7 +240,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-024",
+    "id": "dylib-025",
     "name": "Regram",
     "icon": "https://play-lh.googleusercontent.com/gZMXQwV8BMvhobHbigHbg9A4Bx6nvKHSM5hTk2k9yKuDOevjApIvHFEFzIZzt94mzLYW",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Regram_Mod.zip",
@@ -240,7 +250,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-025",
+    "id": "dylib-026",
     "name": "TikTok",
     "icon": "https://play-lh.googleusercontent.com/Ui_-OW6UJI147ySDX9guWWDiCPSq1vtxoC-xG17BU2FpU0Fi6qkWwuLdpddmT9fqrA=w240-h480-rw",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/TikTok_DarkTik.zip",
@@ -250,7 +260,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-026",
+    "id": "dylib-027",
     "name": "Youtube",
     "icon": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/uYou_Youtube.zip",
@@ -260,7 +270,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-027",
+    "id": "dylib-028",
     "name": "Pokecut",
     "icon": "https://play-lh.googleusercontent.com/j2xZMXrwtKhe_6zA7wDigYhEINRrzXa-Lf4c0oIEF4xPB38izrgnSoC3-TTFSy5DJHU",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/Pokecut.dylib",
@@ -270,7 +280,7 @@
     "date": "2025-06-21"
   },
   {
-    "id": "dylib-028",
+    "id": "dylib-029",
     "name": "H5GG",
     "icon": "https://avatars.githubusercontent.com/u/74475614?v=4",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/H5GG.dylib",
@@ -280,7 +290,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "dylib-029",
+    "id": "dylib-030",
     "name": "NoADS",
     "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/No_ads.svg/3369px-No_ads.svg.png",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/NoADS%202.dylib",
@@ -290,7 +300,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "dylib-030",
+    "id": "dylib-031",
     "name": "Speed Noads",
     "icon": "https://static.vecteezy.com/system/resources/thumbnails/027/438/640/small_2x/no-ads-sign-block-ad-icon-prohibited-advertising-and-promotion-sign-vector.jpg",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/adSpeed-Noads-purchase.dylib",
@@ -300,7 +310,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "dylib-031",
+    "id": "dylib-032",
     "name": "Speed Ads",
     "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdnB42rg804O7EHb5Yf-i1KausqxZBP7roiQ&s",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/adspeed.dylib",
@@ -310,7 +320,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "dylib-032",
+    "id": "dylib-033",
     "name": "Fix crack",
     "icon": "https://img.icons8.com/?size=512w&id=11151&format=png",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/FixCrash.dylib",
@@ -320,7 +330,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "dylib-033",
+    "id": "dylib-034",
     "name": "Fix crack 1",
     "icon": "https://img.icons8.com/?size=512w&id=11151&format=png",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/FixCrash1.dylib",
@@ -330,7 +340,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "dylib-034",
+    "id": "dylib-035",
     "name": "Fix crack 2",
     "icon": "https://img.icons8.com/?size=512w&id=11151&format=png",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/FixCrash2.dylib",
@@ -340,7 +350,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "dylib-035",
+    "id": "dylib-036",
     "name": "Auto Click",
     "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNWmorYB4Gu9i5z3wW5AUxXUGiWim9zsVCRA&s",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/autoclick.dylib",
@@ -350,7 +360,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "dylib-036",
+    "id": "dylib-037",
     "name": "LocalIAPStore",
     "icon": "https://i.imgur.com/JMlPvQS.jpeg",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/LocalIAPStore14.dylib",
@@ -360,7 +370,7 @@
     "date": "2025-06-22"
   },
   {
-    "id": "dylib-037",
+    "id": "dylib-038",
     "name": "SatellaJailed",
     "icon": "https://i.imgur.com/k7WM7ZT.jpeg",
     "fileLink": "https://raw.githubusercontent.com/Cuongqtx11/Cuios/main/SatellaJailed.dylib",
