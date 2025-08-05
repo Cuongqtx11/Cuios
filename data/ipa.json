@@ -1,6 +1,16 @@
 [
   {
     "id": "ipa-001",
+    "name": "Coin Master",
+    "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIupT8g6OUF_ATCL8-DQRyk0Fy-a_74k8mfg&s",
+    "fileLink": "https://www.mediafire.com/file/1d8q01udwuosf7b/Coin+Master_3.5.2181.ipa/file",
+    "desc": "Hack Speed. nhấn dữ nút bánh răng để bật menu tăng speed - Fix văng",
+    "version": "3.5.2101",
+    "developer": "Cuios",
+    "date": "2025-08-05"
+  },
+  {
+    "id": "ipa-001",
     "name": "Plants vs. Zombies™ 2",
     "icon": "https://img.utdstc.com/icon/889/533/8895331dfa5d196b0447dae5849a66c663080e5931a36e3909586fae09d5d238:200",
     "fileLink": "https://www.mediafire.com/file/yyfgnkirje7zypg/Plant+Vs+Zombie+2_970.ipa/file",
