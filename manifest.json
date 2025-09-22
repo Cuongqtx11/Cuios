@@ -1,0 +1,17 @@
+{
+  "name": "Locket",
+  "identifier": "com.locket.Locket",
+  "apps": [
+    {
+      "name": "Locket",
+      "bundleID": "com.locket.Locket",
+      "developerName": "",
+      "version": "2.13.0",
+      "versionDate": "2025-09-13",
+      "size": 143998638,
+      "downloadURL": "https://github.com/apptesters-org/AppTesters_Repo/releases/download/13-09-2025/Locket_2.13.0_Gold_%40thisismanpreets_apptesters.org.ipa",
+      "iconURL": "https://raw.githubusercontent.com/apptesters-org/AppTesters_Repo/main/icons/com.locket.Locket.png",
+      "localizedDescription": "Injected with Gold"
+    }
+  ]
+}
