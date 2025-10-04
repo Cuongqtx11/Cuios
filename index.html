@@ -1,123 +1,123 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>P12.vn - Check UDID & Cert</title>
-<style>
-body{background:#0b1622;color:#fff;font-family:Arial,Helvetica,sans-serif;padding:30px}
-.box{max-width:560px;margin:0 auto;background:#122233;padding:22px;border-radius:10px}
-h1{color:#8fbcd4;margin:0 0 10px}
-input,button{width:100%;padding:10px;margin:8px 0;border-radius:6px;border:0;font-size:15px}
-button{background:#1c87c9;color:#fff;cursor:pointer}
-.result{background:#0f1a28;padding:12px;border-radius:8px;margin-top:12px;white-space:pre-wrap}
-.small{color:#98aab3;font-size:13px}
-.row{display:flex;gap:8px}
-.col{flex:1}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>P12.vn — Kiểm tra UDID & Chứng chỉ</title>
+  <link rel="icon" href="🔍" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0f1b2b;
+      color: #cde3ff;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 16px;
+    }
+    input {
+      width: 80%;
+      max-width: 400px;
+    }
+    button {
+      background-color: #1e90ff;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #4682b4;
+    }
+    .error {
+      color: #ff4d4f;
+      margin-top: 15px;
+    }
+    .success {
+      color: #52c41a;
+      margin-top: 15px;
+    }
+  </style>
 </head>
 <body>
-<div class="box">
   <h1>🔍 P12.vn — Kiểm tra UDID & Chứng chỉ</h1>
-  <p class="small">Nhập UDID để kiểm tra hoặc upload file .zip kèm mật khẩu.</p>
+  <p>Nhập UDID để kiểm tra hoặc upload file .zip kèm mật khẩu.</p>
 
-  <input id="udid" type="text" placeholder="Nhập UDID (ví dụ: 00008030-...)" />
-  <button id="btnCheck">Kiểm tra UDID</button>
+  <input id="udid" placeholder="Nhập UDID (ví dụ: 00008030...)" />
+  <br />
+  <button onclick="checkUDID()">Kiểm tra UDID</button>
 
-  <hr style="border-color:#223344">
+  <hr style="margin: 30px 0;" />
 
-  <label class="small">Upload file .zip (nếu có):</label>
-  <input id="zipfile" type="file" accept=".zip" />
-  <input id="zippass" type="text" placeholder="Nhập mật khẩu file (nếu có)" />
-  <div class="row">
-    <div class="col"><button id="btnUpload">Upload & Check ZIP</button></div>
-  </div>
+  <label>Upload file .zip (nếu có):</label>
+  <br />
+  <input type="file" id="zipFile" accept=".zip" />
+  <br />
+  <input id="zipPass" placeholder="Nhập mật khẩu file (nếu có)" />
+  <br />
+  <button onclick="uploadZip()">Upload & Check ZIP</button>
 
-  <div id="loading" class="small" style="display:none;margin-top:8px">⏳ Đang xử lý...</div>
-  <div id="result" class="result" style="display:none"></div>
-  <div class="small" style="margin-top:10px">Kết quả sẽ gửi đồng thời tới bot Telegram quản trị.</div>
-</div>
+  <div id="result"></div>
 
-<script>
-const API_BASE = "https://bot.p12.vn"; // ensure your DNS + proxy set
-const el = id => document.getElementById(id);
-const resultEl = el('result');
-const loadingEl = el('loading');
+  <script>
+    const API_BASE = "https://bot.p12.vn"; // ✅ Cập nhật endpoint chính thức
 
-function showResult(text){
-  loadingEl.style.display='none';
-  resultEl.style.display='block';
-  resultEl.textContent = text;
-}
+    async function checkUDID() {
+      const udid = document.getElementById("udid").value.trim();
+      const resultBox = document.getElementById("result");
+      resultBox.innerHTML = "";
+      if (!udid) return (resultBox.innerHTML = "<p class='error'>⚠️ Vui lòng nhập UDID!</p>");
 
-function showError(err){
-  loadingEl.style.display='none';
-  resultEl.style.display='block';
-  resultEl.textContent = "❌ " + err;
-}
-
-el('btnCheck').addEventListener('click', async () => {
-  const udid = el('udid').value.trim();
-  if(!udid){ alert("Nhập UDID trước"); return; }
-  loadingEl.style.display='block'; resultEl.style.display='none';
-  try {
-    const res = await fetch(API_BASE + "/api/check", {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({udid})
-    });
-    const j = await res.json();
-    if(!j.ok){ showError(j.error || "Lỗi không xác định"); return; }
-    const d = j.data;
-    let txt = "";
-    txt += "📝 Thông tin đơn hàng:\n\n";
-    txt += `🔎 PIN: ${d.PIN}\n`;
-    txt += `📱 UDID: ${d.UDID}\n`;
-    txt += `📌 Trạng thái: ${d["Trạng thái"]}\n`;
-    txt += `⏰ Thời hạn: ${d["Thời hạn"]}\n`;
-    txt += `📆 Ngày mua: ${d["Ngày mua"]}\n`;
-    txt += `📆 Bảo hành đến: ${d["Bảo hành đến ngày"]}\n`;
-    txt += `✅ Còn lại: ${d.DaysLeft !== null ? d.DaysLeft + " ngày" : "N/A"}\n`;
-    if(d.note) txt += `\n⚠️ ${d.note}\n`;
-    showResult(txt);
-  } catch(e){
-    showError("Không thể kết nối tới server (API).");
-    console.error(e);
-  }
-});
-
-el('btnUpload').addEventListener('click', async () => {
-  const file = el('zipfile').files[0];
-  const pass = el('zippass').value.trim();
-  if(!file){ alert("Chọn file .zip trước"); return; }
-  loadingEl.style.display='block'; resultEl.style.display='none';
-  try {
-    const fd = new FormData();
-    fd.append('zipfile', file);
-    fd.append('password', pass);
-    const res = await fetch(API_BASE + "/api/upload_zip", { method: "POST", body: fd });
-    const j = await res.json();
-    if(!j.ok){ showError(j.error || "Lỗi upload/check"); return; }
-    const d = j.data;
-    if(d.CertInfo){
-      let txt = "📱 Thông tin chứng chỉ:\n\n";
-      // attempt to present cleanly: show a few key fields
-      const ci = d.CertInfo;
-      if(ci.get){} // just to be safe
-      const keys = Object.keys(ci);
-      keys.forEach(k => {
-        txt += `${k}: ${ci[k]}\n`;
-      });
-      txt += `\n✅ Còn lại: ${d.DaysLeft !== null ? d.DaysLeft + " ngày" : "N/A"}\n`;
-      showResult(txt);
-    } else {
-      showResult("✔️ Xử lý xong (không có CertInfo trả về).");
+      try {
+        resultBox.innerHTML = "<p>⏳ Đang kiểm tra UDID...</p>";
+        const res = await fetch(`${API_BASE}/check_udid`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ udid }),
+        });
+        const data = await res.json();
+        if (res.ok) {
+          resultBox.innerHTML = `<p class='success'>✅ ${data.message || "Kiểm tra thành công!"}</p>`;
+        } else {
+          resultBox.innerHTML = `<p class='error'>❌ ${data.error || "Không thể kiểm tra UDID."}</p>`;
+        }
+      } catch (err) {
+        resultBox.innerHTML = `<p class='error'>❌ Không thể kết nối tới server (API).</p>`;
+      }
     }
-  } catch(e){
-    showError("Lỗi khi upload file.");
-    console.error(e);
-  }
-});
-</script>
+
+    async function uploadZip() {
+      const zipFile = document.getElementById("zipFile").files[0];
+      const password = document.getElementById("zipPass").value.trim();
+      const resultBox = document.getElementById("result");
+      resultBox.innerHTML = "";
+
+      if (!zipFile) return (resultBox.innerHTML = "<p class='error'>⚠️ Vui lòng chọn file .zip!</p>");
+
+      const formData = new FormData();
+      formData.append("file", zipFile);
+      if (password) formData.append("password", password);
+
+      try {
+        resultBox.innerHTML = "<p>⏳ Đang upload file...</p>";
+        const res = await fetch(`${API_BASE}/upload_zip`, {
+          method: "POST",
+          body: formData,
+        });
+        const data = await res.json();
+        if (res.ok) {
+          resultBox.innerHTML = `<p class='success'>✅ ${data.message || "File upload thành công!"}</p>`;
+        } else {
+          resultBox.innerHTML = `<p class='error'>❌ ${data.error || "Lỗi khi upload file."}</p>`;
+        }
+      } catch (err) {
+        resultBox.innerHTML = `<p class='error'>❌ Không thể kết nối tới server (API).</p>`;
+      }
+    }
+  </script>
 </body>
 </html>
