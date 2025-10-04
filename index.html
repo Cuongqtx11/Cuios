@@ -1,123 +1,49 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>P12.vn — Kiểm tra UDID & Chứng chỉ</title>
-  <link rel="icon" href="🔍" />
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #0f1b2b;
-      color: #cde3ff;
-      text-align: center;
-      margin: 0;
-      padding: 20px;
-    }
-    input, button {
-      padding: 10px;
-      margin: 10px;
-      border-radius: 5px;
-      border: none;
-      font-size: 16px;
-    }
-    input {
-      width: 80%;
-      max-width: 400px;
-    }
-    button {
-      background-color: #1e90ff;
-      color: white;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #4682b4;
-    }
-    .error {
-      color: #ff4d4f;
-      margin-top: 15px;
-    }
-    .success {
-      color: #52c41a;
-      margin-top: 15px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiểm tra chứng chỉ – P12.vn</title>
+<style>
+body { font-family: sans-serif; background: #fafafa; text-align: center; margin-top: 60px; }
+input, button { padding: 10px; margin: 5px; font-size: 16px; }
+#result { margin-top: 20px; white-space: pre-line; text-align: left; display: inline-block; }
+</style>
 </head>
 <body>
-  <h1>🔍 P12.vn — Kiểm tra UDID & Chứng chỉ</h1>
-  <p>Nhập UDID để kiểm tra hoặc upload file .zip kèm mật khẩu.</p>
+<h2>🔍 Kiểm tra chứng chỉ UDID</h2>
+<input id="udid" placeholder="Nhập UDID..." size="40">
+<button onclick="checkUDID()">Kiểm tra</button>
+<div id="result"></div>
 
-  <input id="udid" placeholder="Nhập UDID (ví dụ: 00008030...)" />
-  <br />
-  <button onclick="checkUDID()">Kiểm tra UDID</button>
+<script>
+const API_BASE = "https://bot.p12.vn:5050";
 
-  <hr style="margin: 30px 0;" />
+async function checkUDID(){
+  const udid = document.getElementById("udid").value.trim();
+  if(!udid){ alert("Vui lòng nhập UDID"); return; }
 
-  <label>Upload file .zip (nếu có):</label>
-  <br />
-  <input type="file" id="zipFile" accept=".zip" />
-  <br />
-  <input id="zipPass" placeholder="Nhập mật khẩu file (nếu có)" />
-  <br />
-  <button onclick="uploadZip()">Upload & Check ZIP</button>
-
-  <div id="result"></div>
-
-  <script>
-    const API_BASE = "https://bot.p12.vn"; // ✅ Cập nhật endpoint chính thức
-
-    async function checkUDID() {
-      const udid = document.getElementById("udid").value.trim();
-      const resultBox = document.getElementById("result");
-      resultBox.innerHTML = "";
-      if (!udid) return (resultBox.innerHTML = "<p class='error'>⚠️ Vui lòng nhập UDID!</p>");
-
-      try {
-        resultBox.innerHTML = "<p>⏳ Đang kiểm tra UDID...</p>";
-        const res = await fetch(`${API_BASE}/check_udid`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ udid }),
-        });
-        const data = await res.json();
-        if (res.ok) {
-          resultBox.innerHTML = `<p class='success'>✅ ${data.message || "Kiểm tra thành công!"}</p>`;
-        } else {
-          resultBox.innerHTML = `<p class='error'>❌ ${data.error || "Không thể kiểm tra UDID."}</p>`;
-        }
-      } catch (err) {
-        resultBox.innerHTML = `<p class='error'>❌ Không thể kết nối tới server (API).</p>`;
-      }
-    }
-
-    async function uploadZip() {
-      const zipFile = document.getElementById("zipFile").files[0];
-      const password = document.getElementById("zipPass").value.trim();
-      const resultBox = document.getElementById("result");
-      resultBox.innerHTML = "";
-
-      if (!zipFile) return (resultBox.innerHTML = "<p class='error'>⚠️ Vui lòng chọn file .zip!</p>");
-
-      const formData = new FormData();
-      formData.append("file", zipFile);
-      if (password) formData.append("password", password);
-
-      try {
-        resultBox.innerHTML = "<p>⏳ Đang upload file...</p>";
-        const res = await fetch(`${API_BASE}/upload_zip`, {
-          method: "POST",
-          body: formData,
-        });
-        const data = await res.json();
-        if (res.ok) {
-          resultBox.innerHTML = `<p class='success'>✅ ${data.message || "File upload thành công!"}</p>`;
-        } else {
-          resultBox.innerHTML = `<p class='error'>❌ ${data.error || "Lỗi khi upload file."}</p>`;
-        }
-      } catch (err) {
-        resultBox.innerHTML = `<p class='error'>❌ Không thể kết nối tới server (API).</p>`;
-      }
-    }
-  </script>
+  document.getElementById("result").innerText = "⏳ Đang kiểm tra...";
+  try{
+    const res = await fetch(`${API_BASE}/check_udid`, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({udid})
+    });
+    const data = await res.json();
+    if(data.error){ document.getElementById("result").innerText = "❌ " + data.error; return; }
+    document.getElementById("result").innerText =
+      `📝 Thông tin đơn hàng:\n\n` +
+      `🔎 PIN: ${data.pin}\n` +
+      `📱 UDID: ${data.udid}\n` +
+      `⏰ Thời hạn: ${data.remain_time}\n` +
+      `📆 Ngày mua: ${data.ngay_mua}\n` +
+      `📆 Bảo hành đến: ${data.bao_hanh}\n` +
+      `📌 Trạng thái: ${data.trang_thai}`;
+  }catch(e){
+    document.getElementById("result").innerText = "❌ Lỗi khi kết nối server.";
+  }
+}
+</script>
 </body>
 </html>
