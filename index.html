@@ -3,144 +3,162 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tra cứu chứng chỉ iOS - P12.VN</title>
+  <title>P12 Tools</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+    * { box-sizing: border-box; }
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f5f7fa;
-      color: #222;
-      margin: 0;
-      padding: 0;
+      margin: 0; font-family: 'Inter', sans-serif;
+      background: #0e0e11; color: #eaeaea;
+      display: flex; justify-content: center; align-items: center;
+      height: 100vh; flex-direction: column;
     }
-    header {
-      background: #007bff;
-      color: white;
-      padding: 20px;
-      text-align: center;
+    .container {
+      background: #18181b; border-radius: 16px;
+      width: 90%; max-width: 500px;
+      padding: 30px; box-shadow: 0 0 25px rgba(80,80,255,0.15);
     }
-    header h1 {
-      margin: 0;
-      font-size: 22px;
-      letter-spacing: 1px;
+    h1 {
+      text-align: center; color: #4f9bff;
+      font-size: 1.6rem; margin-bottom: 1rem;
     }
-    main {
-      max-width: 480px;
-      background: white;
-      margin: 30px auto;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      padding: 25px;
+    .tabs { display: flex; justify-content: space-around; margin-bottom: 1rem; }
+    .tab {
+      flex: 1; text-align: center; padding: 10px 0;
+      cursor: pointer; border-bottom: 2px solid transparent;
+      transition: all 0.3s ease;
     }
-    label {
-      font-weight: 600;
+    .tab.active { border-bottom: 2px solid #4f9bff; color: #4f9bff; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    input {
-      width: 100%;
-      padding: 12px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      margin-top: 8px;
-      margin-bottom: 10px;
-      font-size: 16px;
+
+    input[type="text"], input[type="password"], input[type="file"] {
+      width: 100%; padding: 10px; border-radius: 8px;
+      border: none; background: #2a2a2f; color: #fff;
+      margin-bottom: 12px; font-size: 0.95rem;
     }
     button {
-      width: 100%;
-      background: #007bff;
-      color: white;
-      padding: 12px;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
+      width: 100%; background: #4f9bff; color: white;
+      border: none; border-radius: 8px;
+      padding: 12px; font-size: 1rem; cursor: pointer;
+      transition: background 0.3s;
     }
-    button:hover {
-      background: #0056d2;
-    }
+    button:hover { background: #367ae6; }
     .result {
-      margin-top: 20px;
-      border-top: 1px solid #ddd;
-      padding-top: 15px;
-      white-space: pre-line;
-      font-size: 15px;
-      color: #333;
-    }
-    .loading {
-      color: #007bff;
-      font-weight: 500;
-      margin-top: 10px;
+      margin-top: 1rem; background: #222229;
+      padding: 12px; border-radius: 8px;
+      font-size: 0.9rem; word-break: break-all;
     }
     footer {
-      text-align: center;
-      margin-top: 40px;
-      color: #777;
-      font-size: 14px;
+      color: #888; margin-top: 20px; font-size: 0.8rem; text-align: center;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h1>P12 Tools</h1>
+    <div class="tabs">
+      <div class="tab active" data-tab="udid">🔍 Nhập UDID</div>
+      <div class="tab" data-tab="upload">📤 Gửi File</div>
+    </div>
 
-  <header>
-    <h1>TRA CỨU CHỨNG CHỈ iOS</h1>
-    <p>P12.VN - Tra cứu UDID / PIN nhanh chóng</p>
-  </header>
+    <!-- Tab 1: Nhập UDID -->
+    <div id="udid" class="tab-content active">
+      <input type="text" id="udid-input" placeholder="Nhập UDID cần tra..." />
+      <button onclick="searchUDID()">Tra cứu</button>
+      <div id="udid-result" class="result"></div>
+    </div>
 
-  <main>
-    <label>Nhập UDID hoặc PIN:</label>
-    <input id="query" type="text" placeholder="Ví dụ: 00008101-XXXX hoặc 123456" />
-    <button id="btn">Tra cứu</button>
-    <div id="status" class="loading"></div>
-    <div id="result" class="result"></div>
-  </main>
+    <!-- Tab 2: Gửi file -->
+    <div id="upload" class="tab-content">
+      <input type="file" id="file-input" />
+      <input type="password" id="pass-input" placeholder="Nhập mật khẩu..." />
+      <button onclick="sendFile()">Gửi file</button>
+      <div id="upload-result" class="result"></div>
+    </div>
+  </div>
 
-  <footer>
-    © 2025 P12.VN - Phát triển bởi <b>cuios.shop</b>
-  </footer>
+  <footer>© 2025 P12 Tools</footer>
 
   <script>
-    const API_BASE = "https://api.p12.vn"; // Flask API thực tế
+    const API_BASE = "https://api.p12.vn/api";
 
-    document.getElementById("btn").onclick = async () => {
-      const query = document.getElementById("query").value.trim();
-      const status = document.getElementById("status");
-      const result = document.getElementById("result");
-      if (!query) return alert("⚠️ Vui lòng nhập UDID hoặc PIN.");
+    // ----- Chuyển tab -----
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+        document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+        tab.classList.add("active");
+        document.getElementById(tab.dataset.tab).classList.add("active");
+      });
+    });
 
-      status.innerText = "⏳ Đang gửi yêu cầu...";
-      result.innerText = "";
+    // ----- Tra cứu UDID -----
+    async function searchUDID() {
+      const udid = document.getElementById("udid-input").value.trim();
+      const resultDiv = document.getElementById("udid-result");
+      if (!udid) {
+        resultDiv.innerHTML = "⚠️ Vui lòng nhập UDID.";
+        return;
+      }
 
+      resultDiv.innerHTML = "⏳ Đang tra cứu...";
       try {
-        const res = await fetch(`${API_BASE}/api/check`, {
+        const res = await fetch(`${API_BASE}/search`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ query })
+          body: JSON.stringify({ keyword: udid })
         });
         const data = await res.json();
-        if (!data.ok) {
-          status.innerText = "❌ Không tìm thấy đơn hàng.";
-          return;
+
+        if (res.ok && data.found) {
+          resultDiv.innerHTML = `
+            ✅ <b>Tìm thấy:</b><br>
+            <b>${data.data.name}</b><br>
+            Giá: ${data.data.price}
+          `;
+        } else {
+          resultDiv.innerHTML = "❌ " + (data.message || "Không tìm thấy UDID này.");
         }
-
-        const jobId = data.job_id;
-        status.innerText = "⏳ Đang xử lý dữ liệu...";
-
-        for (let i = 0; i < 30; i++) {
-          const r2 = await fetch(`${API_BASE}/api/result/${jobId}`);
-          const d2 = await r2.json();
-          if (d2.ok) {
-            status.innerText = "✅ Kết quả tra cứu:";
-            result.innerText = d2.result;
-            return;
-          }
-          await new Promise(r => setTimeout(r, 2000));
-        }
-
-        status.innerText = "⚠️ Hết thời gian chờ phản hồi (timeout).";
-
       } catch (err) {
-        status.innerText = "⚠️ Lỗi kết nối: " + err;
+        resultDiv.innerHTML = "⚠️ Lỗi kết nối đến API.";
       }
-    };
-  </script>
+    }
 
+    // ----- Gửi file -----
+    async function sendFile() {
+      const fileInput = document.getElementById("file-input");
+      const passInput = document.getElementById("pass-input");
+      const resultDiv = document.getElementById("upload-result");
+
+      if (!fileInput.files.length) {
+        resultDiv.innerHTML = "⚠️ Chưa chọn file.";
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("file", fileInput.files[0]);
+      formData.append("password", passInput.value);
+
+      resultDiv.innerHTML = "⏳ Đang gửi file...";
+      try {
+        const res = await fetch(`${API_BASE}/notify`, { method: "POST", body: formData });
+        const data = await res.json();
+
+        if (res.ok) {
+          resultDiv.innerHTML = "✅ Đã gửi thành công!";
+        } else {
+          resultDiv.innerHTML = "❌ Lỗi gửi file: " + (data.error || "Không xác định");
+        }
+      } catch (err) {
+        resultDiv.innerHTML = "⚠️ Lỗi kết nối đến API.";
+      }
+    }
+  </script>
 </body>
 </html>
