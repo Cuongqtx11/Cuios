@@ -112,7 +112,7 @@
         const res = await fetch(`${API_BASE}/search`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ keyword: udid })
+          body: JSON.stringify({ udid: udid })
         });
         const data = await res.json();
 
