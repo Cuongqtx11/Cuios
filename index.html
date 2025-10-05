@@ -2,192 +2,165 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kiểm tra chứng chỉ Apple P12</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>P12 Check Real</title>
 <style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --text: #c9d1d9;
+    --accent: #238636;
+    --revoked: #da3633;
+  }
   body {
+    background: var(--bg);
+    color: var(--text);
     font-family: 'Inter', sans-serif;
-    background: #0f172a;
-    color: #e2e8f0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    margin: 0; padding: 0;
+    display: flex; justify-content: center; align-items: center;
+    min-height: 100vh;
   }
   .container {
-    width: 90%;
-    max-width: 400px;
-    background: #1e293b;
+    width: 90%; max-width: 400px;
+    background: var(--card);
     border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 4px 30px rgba(0,0,0,0.4);
-    animation: fadeIn 0.6s ease;
+    padding: 20px;
+    box-shadow: 0 0 20px #0004;
+    transition: all 0.3s;
   }
-  h2 {
-    text-align: center;
-    margin-bottom: 16px;
-    color: #38bdf8;
-  }
-  .form-group {
-    margin-bottom: 15px;
-  }
-  input[type="file"], input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    background: #334155;
-    border: 1px solid #475569;
-    color: #e2e8f0;
-    border-radius: 6px;
-  }
-  input[type="file"]::file-selector-button {
-    background: #38bdf8;
-    border: none;
-    color: #fff;
-    padding: 8px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  button {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s;
-  }
-  #checkBtn {
-    background: #10b981;
-    color: white;
-  }
-  #checkBtn:hover {
-    background: #059669;
-  }
-  .result-box {
-    display: none;
-    text-align: left;
-    animation: fadeIn 0.5s ease;
-  }
-  .result-line {
-    margin: 8px 0;
+  h1 { text-align: center; font-size: 20px; margin-bottom: 20px; }
+  input, button {
+    width: 100%; padding: 10px; margin-top: 10px;
+    border-radius: 6px; border: none; outline: none;
     font-size: 15px;
   }
-  .btn-group {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
+  input[type="file"] {
+    background: #21262d;
+    color: #aaa;
   }
-  .btn-group button, .btn-group a {
-    flex: 1;
+  input[type="text"] {
+    background: #21262d;
+    color: var(--text);
+  }
+  button {
+    background: var(--accent);
+    color: white; cursor: pointer; font-weight: bold;
+  }
+  button:hover { opacity: 0.9; }
+  .drop-zone {
+    background: #1c2128;
+    border: 2px dashed #30363d;
+    border-radius: 10px;
+    padding: 25px;
     text-align: center;
+    color: #888;
+    margin-bottom: 10px;
+  }
+  .drop-zone.dragover { border-color: var(--accent); color: var(--accent); }
+  .result-card {
+    background: #161b22;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 15px;
+  }
+  .status {
+    padding: 8px; border-radius: 6px;
+    color: white; font-weight: bold;
+    display: inline-block; margin-top: 5px;
+  }
+  .status.active { background: var(--accent); }
+  .status.revoked { background: var(--revoked); }
+  .actions { text-align: center; margin-top: 20px; }
+  .actions a {
+    display: inline-block; margin: 5px; padding: 10px 15px;
+    background: #30363d; color: #fff; border-radius: 6px;
     text-decoration: none;
   }
-  .buy-btn {
-    background: #38bdf8;
-    color: white;
-  }
-  .buy-btn:hover {
-    background: #0284c7;
-  }
-  .back-btn {
-    background: #475569;
-    color: #e2e8f0;
-  }
-  .back-btn:hover {
-    background: #64748b;
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  .actions a.buy { background: var(--accent); }
 </style>
 </head>
 <body>
-<div class="container" id="formContainer">
-  <h2>Kiểm tra chứng chỉ Apple P12</h2>
-  <form id="checkForm">
-    <div class="form-group">
-      <input type="file" id="ZipFile" accept=".zip" required>
-    </div>
-    <div class="form-group">
-      <input type="text" id="P12PassWordZip" placeholder="Nhập mật khẩu P12" required>
-    </div>
-    <button id="checkBtn" type="submit">Kiểm tra</button>
-  </form>
-  <p style="font-size:13px;text-align:center;margin-top:10px;color:#94a3b8;">
-    Chỉ cần upload file .zip và mật khẩu. Kết quả sẽ hiển thị ngay.
-  </p>
-</div>
+  <div class="container" id="main">
+    <h1>Kiểm tra chứng chỉ Apple P12</h1>
 
-<!-- Kết quả -->
-<div class="container result-box" id="resultBox">
-  <h2>Kết Quả Kiểm Tra</h2>
-  <div class="result-line"><b>Tên chứng chỉ:</b> <span id="certName">-</span></div>
-  <div class="result-line"><b>Ngày hết hạn:</b> <span id="expDate">-</span></div>
-  <div class="result-line"><b>Trạng thái:</b> <span id="status">-</span></div>
-  <div class="result-line"><b>Còn lại:</b> <span id="daysLeft">-</span></div>
-  <div class="result-line"><b>Loại:</b> Distribution có hỗ trợ App Group</div>
+    <form id="form">
+      <div class="drop-zone" id="dropZone">Kéo & thả file .zip vào đây hoặc chọn tệp</div>
+      <input type="file" id="zip" name="ZipFile" accept=".zip" hidden>
 
-  <div class="btn-group">
-    <button class="back-btn" onclick="location.reload()">↩️ Quay lại</button>
-    <a href="https://cuios.shop" target="_blank">
-      <button class="buy-btn">🛒 Buy Cert</button>
-    </a>
+      <input type="text" id="pass" name="P12PassWordZip" placeholder="Nhập mật khẩu (nếu có)">
+      <button type="submit">Kiểm tra</button>
+    </form>
+
+    <div id="result" class="result-card" style="display:none;"></div>
+
+    <div class="actions" id="actions" style="display:none;">
+      <a href="#" id="backBtn">Quay lại</a>
+      <a href="https://cuios.shop" target="_blank" class="buy">Buy Cert</a>
+    </div>
   </div>
-</div>
 
 <script>
-const form = document.getElementById('checkForm');
-const resultBox = document.getElementById('resultBox');
-const formContainer = document.getElementById('formContainer');
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('zip');
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', (e) => {
+  e.preventDefault(); dropZone.classList.add('dragover');
+});
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', (e) => {
+  e.preventDefault(); dropZone.classList.remove('dragover');
+  fileInput.files = e.dataTransfer.files;
+  dropZone.textContent = fileInput.files[0]?.name || 'File không hợp lệ';
+});
 
-form.addEventListener('submit', async (e) => {
+document.getElementById('form').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const file = document.getElementById('ZipFile').files[0];
-  const pass = document.getElementById('P12PassWordZip').value;
-  if (!file || !pass) return alert('Vui lòng chọn file và nhập mật khẩu.');
-
+  const file = fileInput.files[0];
+  if (!file) return alert('Vui lòng chọn file .zip');
+  const pass = document.getElementById('pass').value;
   const formData = new FormData();
-  formData.append('zip', file);
-  formData.append('pass', pass);
+  formData.append('ZipFile', file);
+  formData.append('P12PassWordZip', pass);
 
-  // Gọi API thực tế của bạn tại đây:
-  const res = await fetch('https://check.p12apple.com/', { method: 'POST', body: formData });
-  const data = await res.json();
+  const resEl = document.getElementById('result');
+  resEl.style.display = 'block';
+  resEl.innerHTML = '🔍 Đang kiểm tra...';
+  
+  const resp = await fetch('/api/check', { method: 'POST', body: formData });
+  const data = await resp.json();
 
-  if (!data || !data.certname) {
-    alert("Không nhận được dữ liệu hợp lệ từ server.");
+  if (!data.ok) {
+    resEl.innerHTML = '❌ Lỗi: ' + (data.error || JSON.stringify(data));
     return;
   }
 
-  // --- Hiển thị dữ liệu ---
-  const expDate = new Date(data.exp);
-  const now = new Date();
-  const daysLeft = Math.max(0, Math.floor((expDate - now) / (1000 * 60 * 60 * 24)));
-  let statusText = "";
-  const low = data.status.toLowerCase();
-  if (low.includes('revok')) statusText = "🔴 Đã thu hồi";
-  else if (low.includes('valid') || low.includes('good') || low.includes('active')) statusText = "🟢 Hoạt động";
-  else if (low.includes('expire')) statusText = "⚫ Đã hết hạn";
-  else statusText = "⚪ Không xác định";
+  let statusClass = 'active';
+  let statusText = 'Hoạt động';
+  if (data.status?.toLowerCase().includes('revoked')) {
+    statusClass = 'revoked'; statusText = 'Đã thu hồi';
+  } else if (data.status?.toLowerCase().includes('expire')) {
+    statusClass = 'revoked'; statusText = 'Đã hết hạn';
+  }
 
-  document.getElementById('certName').textContent = data.certname;
-  document.getElementById('expDate').textContent = expDate.toLocaleDateString('vi-VN');
-  document.getElementById('status').textContent = statusText;
-  document.getElementById('daysLeft').textContent = daysLeft + " ngày";
-
-  // Ẩn form, hiện kết quả
-  formContainer.style.display = 'none';
-  resultBox.style.display = 'block';
+  resEl.innerHTML = `
+    <p><b>Tên chứng chỉ:</b> ${data.certName || '-'}</p>
+    <p><b>Ngày bắt đầu:</b> ${data.effectiveDate || '-'}</p>
+    <p><b>Ngày hết hạn:</b> ${data.expirationDate || '-'}</p>
+    <p><b>Trạng thái:</b> <span class="status ${statusClass}">${statusText}</span></p>
+    <p><b>Loại:</b> Distribution có hỗ trợ App Group</p>
+  `;
+  document.getElementById('form').style.display = 'none';
+  document.getElementById('actions').style.display = 'block';
 });
 
-// Cho phép kéo & thả file
-document.body.addEventListener('dragover', (e) => e.preventDefault());
-document.body.addEventListener('drop', (e) => {
+document.getElementById('backBtn').addEventListener('click', (e) => {
   e.preventDefault();
-  const fileInput = document.getElementById('ZipFile');
-  if (e.dataTransfer.files.length) fileInput.files = e.dataTransfer.files;
+  document.getElementById('form').style.display = 'block';
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('actions').style.display = 'none';
+  document.getElementById('result').innerHTML = '';
+  dropZone.textContent = 'Kéo & thả file .zip vào đây hoặc chọn tệp';
+  fileInput.value = '';
 });
 </script>
 </body>
