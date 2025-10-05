@@ -1,63 +1,267 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>P12 Check Real</title>
-<style>
-  body { font-family: sans-serif; max-width: 600px; margin: 40px auto; }
-  label { display:block; margin-top:10px; }
-  input, button { width:100%; padding:8px; margin-top:5px; }
-  .ok { background: #c8f7c5; padding:8px; }
-  .revoked { background: #f9c0c0; padding:8px; }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Check P12 — ioscert</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#0f1724;
+      --muted:#98a0b3;
+      --accent:#00d084;
+      --danger:#ff5c6c;
+      --glass: rgba(255,255,255,0.03);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background: linear-gradient(180deg,#06101a 0%, #08131a 100%);
+      color:#e6eef8;
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:28px;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .container{
+      width:100%;
+      max-width:920px;
+      margin:0 auto;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border-radius:14px;
+      padding:26px;
+      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    h1 { margin:0 0 6px; font-size:26px; letter-spacing:0.3px; }
+    .subtitle { color:var(--muted); margin-bottom:18px; }
+
+    form .row { display:flex; gap:12px; align-items:center; margin-top:12px; }
+    input[type=file] { background:var(--glass); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.02); color:inherit; width:100%;}
+    input[type=text] { background:transparent; border:1px solid rgba(255,255,255,0.06); padding:10px 12px; border-radius:8px; color:inherit; width:100%;}
+    button.primary {
+      background: linear-gradient(90deg, var(--accent), #00c27b);
+      color:#04221a;
+      border:none;
+      padding:12px 18px;
+      border-radius:10px;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow: 0 6px 18px rgba(0,208,132,0.12);
+    }
+    button.ghost {
+      background: transparent;
+      color:var(--muted);
+      border:1px solid rgba(255,255,255,0.04);
+      padding:10px 14px;
+      border-radius:10px;
+      cursor:pointer;
+    }
+    .center { display:flex; gap:12px; align-items:center; }
+
+    /* result card */
+    .result-card {
+      margin-top:20px;
+      border-radius:12px;
+      padding:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.02);
+      opacity:0;
+      transform: translateY(8px);
+      transition: all 360ms ease;
+    }
+    .result-card.show { opacity:1; transform: translateY(0); }
+
+    .field { padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.02); }
+    .label { color:var(--muted); font-size:13px; margin-bottom:6px; display:block; }
+    .value { font-size:16px; font-weight:600; color:#e6eef8; }
+
+    .status {
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 12px;
+      border-radius:10px;
+      font-weight:700;
+    }
+    .status.ok { background: rgba(0,208,132,0.12); color: var(--accent); }
+    .status.revoked { background: rgba(255,92,108,0.10); color: var(--danger); }
+
+    .actions { display:flex; gap:12px; margin-top:18px; }
+    a.button { text-decoration:none; display:inline-block; padding:10px 14px; border-radius:10px; font-weight:700; }
+    .buy { background: linear-gradient(90deg,#ffb86b,#ff7b9c); color:#07111b; }
+    .back { background:transparent; border:1px solid rgba(255,255,255,0.04); color:var(--muted); }
+
+    .small { font-size:13px; color:var(--muted); margin-top:8px; }
+
+    /* responsive */
+    @media (max-width:600px){
+      .row { flex-direction:column; align-items:stretch;}
+      .actions { flex-direction:column; }
+    }
+  </style>
 </head>
 <body>
-  <h1>Kiểm tra P12 (ZIP)</h1>
-  <form id="form">
-    <label>Chọn file ZIP</label>
-    <input type="file" name="ZipFile" id="zip" accept=".zip" required>
+  <div class="container">
+    <div class="card">
+      <h1>Kết quả Kiểm Tra</h1>
+      <div class="subtitle">Kiểm tra trạng thái chứng chỉ Apple P12</div>
 
-    <label>Mật khẩu P12</label>
-    <input type="text" name="P12PassWordZip" id="pass" placeholder="Nhập mật khẩu">
+      <!-- Form -->
+      <form id="checkForm">
+        <div class="row">
+          <input id="zipFile" type="file" accept=".zip" required />
+        </div>
 
-    <button type="submit">Kiểm tra</button>
-  </form>
+        <div class="row" style="margin-top:12px;">
+          <input id="pwd" type="text" placeholder="Nhập mật khẩu P12 (nếu có)" />
+          <button id="btnCheck" class="primary" type="submit">Kiểm tra</button>
+        </div>
+        <div class="small">Chỉ cần upload file .zip và mật khẩu. Kết quả sẽ hiển thị ngay.</div>
+      </form>
 
-  <div id="result" style="margin-top:20px;"></div>
+      <!-- Result (hidden initially) -->
+      <div id="resultCard" class="result-card" aria-hidden="true">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div style="flex:1">
+            <div class="field">
+              <span class="label">Tên chứng chỉ</span>
+              <div id="certName" class="value">-</div>
+            </div>
+
+            <div class="field">
+              <span class="label">Ngày hết hạn</span>
+              <div id="expDate" class="value">-</div>
+            </div>
+
+            <div class="field">
+              <span class="label">Trạng thái</span>
+              <div id="statusWrap"><span id="status" class="status">-</span></div>
+            </div>
+
+            <div class="field">
+              <span class="label">Còn lại</span>
+              <div id="remaining" class="value">-</div>
+            </div>
+
+            <div class="field" style="border-bottom:none;">
+              <span class="label">Loại</span>
+              <div class="value">Distribution có hỗ trợ App Group</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="backBtn" class="back button">← Quay lại kiểm tra</button>
+          <a id="buyBtn" class="buy button" href="https://cuios.shop" target="_blank" rel="noopener">🛒 Buy Cert</a>
+        </div>
+      </div>
+
+      <div id="message" class="small" style="margin-top:12px"></div>
+    </div>
+  </div>
 
 <script>
-document.getElementById('form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const file = document.getElementById('zip').files[0];
-  const pass = document.getElementById('pass').value;
-  const formData = new FormData();
-  formData.append('ZipFile', file);
-  formData.append('P12PassWordZip', pass);
+  const form = document.getElementById('checkForm');
+  const fileInput = document.getElementById('zipFile');
+  const pwdInput = document.getElementById('pwd');
+  const resultCard = document.getElementById('resultCard');
+  const certNameEl = document.getElementById('certName');
+  const expDateEl = document.getElementById('expDate');
+  const statusEl = document.getElementById('status');
+  const remainingEl = document.getElementById('remaining');
+  const messageEl = document.getElementById('message');
+  const backBtn = document.getElementById('backBtn');
 
-  const resEl = document.getElementById('result');
-  resEl.textContent = 'Đang kiểm tra...';
-
-  const resp = await fetch('/api/check', { method: 'POST', body: formData });
-  const data = await resp.json();
-
-  if (!data.ok) {
-    resEl.textContent = 'Lỗi: ' + JSON.stringify(data);
-    return;
+  function showResultCard() {
+    resultCard.classList.add('show');
+    resultCard.setAttribute('aria-hidden','false');
+    // smooth scroll into view on small screens
+    resultCard.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+  function hideResultCard() {
+    resultCard.classList.remove('show');
+    resultCard.setAttribute('aria-hidden','true');
   }
 
-  let html = `
-    <p><b>CertName:</b> ${data.certName || '-'}</p>
-    <p><b>Effective Date:</b> ${data.effectiveDate || '-'}</p>
-    <p><b>Expiration Date:</b> ${data.expirationDate || '-'}</p>
-    <p><b>Status:</b> ${data.status || '-'}</p>
-  `;
-  if (data.status && data.status.toLowerCase().includes('revoked')) {
-    resEl.innerHTML = `<div class="revoked">${html}</div>`;
-  } else {
-    resEl.innerHTML = `<div class="ok">${html}</div>`;
-  }
-});
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    messageEl.textContent = '';
+    hideResultCard();
+
+    if (!fileInput.files.length) {
+      messageEl.textContent = 'Vui lòng chọn file .zip';
+      return;
+    }
+    const file = fileInput.files[0];
+    const pwd = pwdInput.value || '';
+
+    const fd = new FormData();
+    fd.append('ZipFile', file);
+    fd.append('P12PassWordZip', pwd);
+
+    // disable button
+    const btn = document.getElementById('btnCheck');
+    btn.disabled = true;
+    btn.textContent = 'Đang kiểm tra...';
+
+    try {
+      // If you deploy frontend and API to same Vercel repo, '/api/check' works.
+      // Else change to full Vercel URL: https://<your-vercel>.vercel.app/api/check
+      const res = await fetch('/api/check', { method: 'POST', body: fd });
+      const json = await res.json();
+
+      if (!res.ok || !json.ok) {
+        messageEl.textContent = 'Lỗi khi kiểm tra: ' + (json.error || JSON.stringify(json));
+        btn.disabled = false;
+        btn.textContent = 'Kiểm tra';
+        return;
+      }
+
+      // Fill values
+      certNameEl.textContent = json.certName || '-';
+      expDateEl.textContent = json.expirationDate || '-';
+      remainingEl.textContent = (typeof json.daysRemaining === 'number') ? (json.daysRemaining + ' ngày') : '-';
+
+      // status decide class
+      const st = (json.status || '').toString();
+      statusEl.textContent = st;
+      statusEl.classList.remove('ok','revoked');
+      if (/revok/i.test(st) || /🔴/.test(st)) {
+        statusEl.classList.add('revoked');
+      } else {
+        statusEl.classList.add('ok');
+      }
+
+      // show result
+      showResultCard();
+      messageEl.textContent = 'Kiểm tra thành công';
+    } catch (err) {
+      console.error(err);
+      messageEl.textContent = 'Lỗi kết nối: ' + err.message;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Kiểm tra';
+    }
+  });
+
+  backBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    // reset UI
+    fileInput.value = '';
+    pwdInput.value = '';
+    messageEl.textContent = '';
+    hideResultCard();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 </script>
 </body>
 </html>
