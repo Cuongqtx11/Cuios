@@ -1,49 +1,146 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kiểm tra chứng chỉ – P12.vn</title>
-<style>
-body { font-family: sans-serif; background: #fafafa; text-align: center; margin-top: 60px; }
-input, button { padding: 10px; margin: 5px; font-size: 16px; }
-#result { margin-top: 20px; white-space: pre-line; text-align: left; display: inline-block; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tra cứu chứng chỉ iOS - P12.VN</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f7fa;
+      color: #222;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #007bff;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: 1px;
+    }
+    main {
+      max-width: 480px;
+      background: white;
+      margin: 30px auto;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 25px;
+    }
+    label {
+      font-weight: 600;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-top: 8px;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      background: #007bff;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056d2;
+    }
+    .result {
+      margin-top: 20px;
+      border-top: 1px solid #ddd;
+      padding-top: 15px;
+      white-space: pre-line;
+      font-size: 15px;
+      color: #333;
+    }
+    .loading {
+      color: #007bff;
+      font-weight: 500;
+      margin-top: 10px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #777;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
-<h2>🔍 Kiểm tra chứng chỉ UDID</h2>
-<input id="udid" placeholder="Nhập UDID..." size="40">
-<button onclick="checkUDID()">Kiểm tra</button>
-<div id="result"></div>
 
-<script>
-const API_BASE = "https://bot.p12.vn:5050";
+  <header>
+    <h1>TRA CỨU CHỨNG CHỈ iOS</h1>
+    <p>P12.VN - Tra cứu UDID / PIN nhanh chóng</p>
+  </header>
 
-async function checkUDID(){
-  const udid = document.getElementById("udid").value.trim();
-  if(!udid){ alert("Vui lòng nhập UDID"); return; }
+  <main>
+    <label>Nhập UDID hoặc PIN:</label>
+    <input id="query" type="text" placeholder="Ví dụ: 00008101-XXXX hoặc 123456" />
+    <button id="btn">Tra cứu</button>
+    <div id="status" class="loading"></div>
+    <div id="result" class="result"></div>
+  </main>
 
-  document.getElementById("result").innerText = "⏳ Đang kiểm tra...";
-  try{
-    const res = await fetch(`${API_BASE}/check_udid`, {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({udid})
-    });
-    const data = await res.json();
-    if(data.error){ document.getElementById("result").innerText = "❌ " + data.error; return; }
-    document.getElementById("result").innerText =
-      `📝 Thông tin đơn hàng:\n\n` +
-      `🔎 PIN: ${data.pin}\n` +
-      `📱 UDID: ${data.udid}\n` +
-      `⏰ Thời hạn: ${data.remain_time}\n` +
-      `📆 Ngày mua: ${data.ngay_mua}\n` +
-      `📆 Bảo hành đến: ${data.bao_hanh}\n` +
-      `📌 Trạng thái: ${data.trang_thai}`;
-  }catch(e){
-    document.getElementById("result").innerText = "❌ Lỗi khi kết nối server.";
-  }
-}
-</script>
+  <footer>
+    © 2025 P12.VN - Phát triển bởi <b>cuios.shop</b>
+  </footer>
+
+  <script>
+    const API_BASE = "https://api.p12.vn"; // Flask API thực tế
+
+    document.getElementById("btn").onclick = async () => {
+      const query = document.getElementById("query").value.trim();
+      const status = document.getElementById("status");
+      const result = document.getElementById("result");
+      if (!query) return alert("⚠️ Vui lòng nhập UDID hoặc PIN.");
+
+      status.innerText = "⏳ Đang gửi yêu cầu...";
+      result.innerText = "";
+
+      try {
+        const res = await fetch(`${API_BASE}/api/check`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query })
+        });
+        const data = await res.json();
+        if (!data.ok) {
+          status.innerText = "❌ Không tìm thấy đơn hàng.";
+          return;
+        }
+
+        const jobId = data.job_id;
+        status.innerText = "⏳ Đang xử lý dữ liệu...";
+
+        for (let i = 0; i < 30; i++) {
+          const r2 = await fetch(`${API_BASE}/api/result/${jobId}`);
+          const d2 = await r2.json();
+          if (d2.ok) {
+            status.innerText = "✅ Kết quả tra cứu:";
+            result.innerText = d2.result;
+            return;
+          }
+          await new Promise(r => setTimeout(r, 2000));
+        }
+
+        status.innerText = "⚠️ Hết thời gian chờ phản hồi (timeout).";
+
+      } catch (err) {
+        status.innerText = "⚠️ Lỗi kết nối: " + err;
+      }
+    };
+  </script>
+
 </body>
 </html>
