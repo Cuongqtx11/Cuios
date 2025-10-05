@@ -12,11 +12,7 @@ export default async function handler(req, res) {
   const ADMIN_CHAT_ID = process.env.ADMIN_CHAT_ID;
 
   const text = `
-🆕 Yêu cầu mới:
-🔑 UDID/PIN: ${udid || pin}
-📦 Loại: ${type || "Không rõ"}
-🕒 ${new Date().toLocaleString("vi-VN")}
-  `;
+${udid || pin}`;
 
   try {
     await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
