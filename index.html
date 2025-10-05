@@ -134,20 +134,41 @@ document.getElementById('form').addEventListener('submit', async (e) => {
     return;
   }
 
-  let statusClass = 'active';
-  let statusText = 'Hoạt động';
-  if (data.status?.toLowerCase().includes('revoked')) {
-    statusClass = 'revoked'; statusText = 'Đã thu hồi';
-  } else if (data.status?.toLowerCase().includes('expire')) {
-    statusClass = 'revoked'; statusText = 'Đã hết hạn';
+  // === Tính số ngày còn lại ===
+  let daysLeft = '';
+  if (data.expirationDate) {
+    const exp = new Date(data.expirationDate);
+    const now = new Date();
+    const diff = Math.floor((exp - now) / (1000 * 60 * 60 * 24));
+    if (diff >= 0) daysLeft = diff + ' ngày';
+    else daysLeft = 'Đã hết hạn ' + Math.abs(diff) + ' ngày';
   }
 
+  // === Trạng thái + thông báo ===
+  let statusClass = 'active';
+  let statusText = '🟢 Hoạt động';
+  let noteText = '✅ Chứng chỉ của bạn đang rất bình thường, không có vấn đề lỗi gì. Hãy tiếp tục ký app và sử dụng.';
+
+  const low = (data.status || '').toLowerCase();
+  if (low.includes('revok')) {
+    statusClass = 'revoked';
+    statusText = '🔴 Đã thu hồi';
+    noteText = '⚠️ Chứng chỉ đã bị thu hồi. UDID đang có khả năng bị Blacklist. Nếu muốn sử dụng tiếp hãy mua gói Unband. Nếu mua gói thường, khả năng cần chờ 17–33 ngày mới sử dụng được.';
+  } else if (low.includes('expire')) {
+    statusClass = 'revoked';
+    statusText = '⚫ Đã hết hạn';
+    noteText = '⌛ Chứng chỉ của bạn đã hết hạn sử dụng. Chỉ cần mua mới là có thể tiếp tục dùng.';
+  }
+
+  // === Hiển thị kết quả ===
   resEl.innerHTML = `
     <p><b>Tên chứng chỉ:</b> ${data.certName || '-'}</p>
-    <p><b>Ngày bắt đầu:</b> ${data.effectiveDate || '-'}</p>
     <p><b>Ngày hết hạn:</b> ${data.expirationDate || '-'}</p>
     <p><b>Trạng thái:</b> <span class="status ${statusClass}">${statusText}</span></p>
-    <p><b>Loại:</b> Distribution có hỗ trợ App Group</p>
+    <p><b>Ngày sử dụng còn:</b> ${daysLeft || '-'}</p>
+    <p><b>Loại:</b> Hỗ trợ App Group</p>
+    <hr style="border:none;border-top:1px solid #30363d;margin:15px 0;">
+    <p style="line-height:1.6;">${noteText}</p>
   `;
   document.getElementById('form').style.display = 'none';
   document.getElementById('actions').style.display = 'block';
