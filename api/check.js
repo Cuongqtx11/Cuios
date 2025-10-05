@@ -1,4 +1,3 @@
-// api/check.js
 const fs = require("fs");
 const FormData = require("form-data");
 const formidable = require("formidable");
@@ -11,17 +10,15 @@ module.exports = async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "content-type");
-
   if (req.method === "OPTIONS") return res.status(200).end();
   if (req.method !== "POST")
-    return res.status(405).json({ ok: false, error: "Only POST allowed" });
+    return res.status(405).json({ error: "Only POST allowed" });
 
   const form = formidable({ multiples: false });
   form.parse(req, async (err, fields, files) => {
-    if (err)
-      return res.status(500).json({ ok: false, error: "Form parse error" });
+    if (err) return res.status(500).json({ error: err.message });
     if (!files.ZipFile)
-      return res.status(400).json({ ok: false, error: "Missing ZipFile" });
+      return res.status(400).json({ error: "Thiếu file ZipFile" });
 
     try {
       const fd = new FormData();
@@ -36,41 +33,34 @@ module.exports = async (req, res) => {
         body: fd,
         headers: fd.getHeaders(),
       });
-
       const html = await resp.text();
       const $ = cheerio.load(html);
+      const plain = $("body").text().trim();
 
-      let certName = "";
-      let effectiveDate = "";
-      let expirationDate = "";
-      let status = "";
+      // --- Trích dữ liệu
+      let certName = $("li:contains('CertName')").text().split(":")[1]?.trim();
+      let effectiveDate = $("li:contains('Effective Date')")
+        .text()
+        .split(":")[1]?.trim();
+      let expirationDate = $("li:contains('Expiration Date')")
+        .text()
+        .split(":")[1]?.trim();
+      let status = $("li:contains('Certificate Status')")
+        .text()
+        .split(":")[1]?.trim();
 
-      $("li").each((_, el) => {
-        const text = $(el).text().trim();
-        if (text.includes("CertName")) certName = text.split(":")[1]?.trim();
-        if (text.includes("Effective Date"))
-          effectiveDate = text.split(":")[1]?.trim();
-        if (text.includes("Expiration Date"))
-          expirationDate = text.split(":")[1]?.trim();
-        if (text.includes("Certificate Status"))
-          status = text.split(":")[1]?.trim();
-      });
-
-      // fallback khi ko có <li>
-      const plain = $("body").text().toLowerCase();
-      if (!certName && plain.includes("iphone distribution"))
-        certName = "iPhone Distribution";
+      // fallback nếu không tìm thấy trong <li>
+      const low = plain.toLowerCase();
       if (!status) {
-        if (plain.includes("revok")) status = "Đã thu hồi";
-        else if (plain.includes("expir")) status = "Đã hết hạn";
-        else if (
-          plain.includes("valid") ||
-          plain.includes("good") ||
-          plain.includes("active")
-        )
+        if (low.includes("revok")) status = "Đã thu hồi";
+        else if (low.includes("expir")) status = "Đã hết hạn";
+        else if (low.includes("valid") || low.includes("good"))
           status = "Hoạt động";
         else status = "Không xác định";
       }
+
+      if (!certName && low.includes("iphone distribution"))
+        certName = "iPhone Distribution";
 
       res.json({
         ok: true,
@@ -79,9 +69,9 @@ module.exports = async (req, res) => {
         expirationDate,
         status,
       });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ ok: false, error: error.message });
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({ ok: false, error: e.message });
     } finally {
       try {
         if (files.ZipFile && fs.existsSync(files.ZipFile.filepath))
