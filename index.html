@@ -1,50 +1,63 @@
 <!DOCTYPE html>
-<html lang="vi"> 
+<html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mod App VIP - Cuios.shop</title>
-  <meta name="description" content="Khám phá kho ứng dụng VIP, dylib và cấu hình Shadowrocket chất lượng cao theo phong cách Material Design. Tải về và trải nghiệm ngay!" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>P12 Check Real</title>
+<style>
+  body { font-family: sans-serif; max-width: 600px; margin: 40px auto; }
+  label { display:block; margin-top:10px; }
+  input, button { width:100%; padding:8px; margin-top:5px; }
+  .ok { background: #c8f7c5; padding:8px; }
+  .revoked { background: #f9c0c0; padding:8px; }
+</style>
 </head>
 <body>
-  <header>
-    <div id="header-content">
-      <span id="site-title">📱 Kho VIP</span>
-      <input type="text" id="search" placeholder="Tìm kiếm..." style="display: none;"/>
-      <span class="material-icons" id="search-icon" style="display: none;">search</span>
-    </div>
-    <button id="toggle-mode" title="Chuyển chế độ sáng/tối">
-      <span class="material-icons">dark_mode</span>
-    </button>
-  </header>
+  <h1>Kiểm tra P12 (ZIP)</h1>
+  <form id="form">
+    <label>Chọn file ZIP</label>
+    <input type="file" name="ZipFile" id="zip" accept=".zip" required>
 
-  <iframe src="pages/home.html" name="content-frame" class="content-frame"></iframe>
+    <label>Mật khẩu P12</label>
+    <input type="text" name="P12PassWordZip" id="pass" placeholder="Nhập mật khẩu">
 
-  <footer class="bottom-nav">
-    <a href="pages/home.html" target="content-frame" class="active">
-      <span class="material-icons">home</span>
-      <span>Home</span>
-    </a>
-    <a href="pages/dylib.html" target="content-frame">
-      <span class="material-icons">inventory_2</span>
-      <span>Dylib</span>
-    </a>
-    <a href="pages/ipa.html" target="content-frame">
-      <span class="material-icons">phone_iphone</span>
-      <span>IPA</span>
-    </a>
-    <a href="pages/conf.html" target="content-frame">
-      <span class="material-icons">vpn_key</span>
-      <span>Conf</span>
-    </a>
-    <a href="pages/admin.html" target="content-frame">
-      <span class="material-icons">build</span>
-      <span>Admin</span>
-    </a>
-  </footer>
+    <button type="submit">Kiểm tra</button>
+  </form>
 
-  <script src="js/script.js"></script>
+  <div id="result" style="margin-top:20px;"></div>
+
+<script>
+document.getElementById('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const file = document.getElementById('zip').files[0];
+  const pass = document.getElementById('pass').value;
+  const formData = new FormData();
+  formData.append('ZipFile', file);
+  formData.append('P12PassWordZip', pass);
+
+  const resEl = document.getElementById('result');
+  resEl.textContent = 'Đang kiểm tra...';
+
+  const resp = await fetch('/api/check', { method: 'POST', body: formData });
+  const data = await resp.json();
+
+  if (!data.ok) {
+    resEl.textContent = 'Lỗi: ' + JSON.stringify(data);
+    return;
+  }
+
+  let html = `
+    <p><b>CertName:</b> ${data.certName || '-'}</p>
+    <p><b>Effective Date:</b> ${data.effectiveDate || '-'}</p>
+    <p><b>Expiration Date:</b> ${data.expirationDate || '-'}</p>
+    <p><b>Status:</b> ${data.status || '-'}</p>
+  `;
+  if (data.status && data.status.toLowerCase().includes('revoked')) {
+    resEl.innerHTML = `<div class="revoked">${html}</div>`;
+  } else {
+    resEl.innerHTML = `<div class="ok">${html}</div>`;
+  }
+});
+</script>
 </body>
 </html>
