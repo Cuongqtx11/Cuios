@@ -27,7 +27,6 @@
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 0 20px #0004;
-    transition: all 0.3s;
   }
   h1 { text-align: center; font-size: 20px; margin-bottom: 20px; }
   input, button {
@@ -123,20 +122,23 @@ document.getElementById('form').addEventListener('submit', async e => {
 
     let statusClass = 'active';
     let statusText = 'Hoạt động';
-    let statusNote = '✅ Chứng chỉ của bạn đang rất bình thường, không có vấn đề gì. Hãy tiếp tục ký app và sử dụng.';
+    let statusNote = '✅ Chứng chỉ của bạn đang hoạt động bình thường, không có vấn đề gì.';
 
     const now = new Date();
     const expDate = new Date(data.expirationDate || now);
     const remain = Math.max(0, Math.ceil((expDate - now) / (1000 * 3600 * 24)));
 
-    if (data.status?.toLowerCase().includes('revoked')) {
+    if (/revok/i.test(data.status)) {
       statusClass = 'revoked';
       statusText = 'Đã thu hồi';
-      statusNote = '⚠️ Chứng chỉ đã bị thu hồi. UDID có khả năng bị blacklist. Nếu muốn dùng tiếp, hãy mua gói Unband.';
-    } else if (data.status?.toLowerCase().includes('expire')) {
+      statusNote = '⚠️ Chứng chỉ đã bị thu hồi. UDID có khả năng bị blacklist.';
+    } else if (/expire/i.test(data.status)) {
       statusClass = 'expired';
       statusText = 'Đã hết hạn';
-      statusNote = '⛔ Chứng chỉ của bạn đã hết hạn, vui lòng mua mới để tiếp tục sử dụng.';
+      statusNote = '⛔ Chứng chỉ của bạn đã hết hạn, vui lòng mua mới để sử dụng.';
+    } else if (/valid|good|active/i.test(data.status)) {
+      statusClass = 'active';
+      statusText = 'Hoạt động';
     }
 
     resEl.innerHTML = `
@@ -145,8 +147,7 @@ document.getElementById('form').addEventListener('submit', async e => {
       <p><b>Trạng thái:</b> <span class="status ${statusClass}">${statusText}</span></p>
       <p><b>Ngày sử dụng còn:</b> ${remain} ngày</p>
       <p><b>Loại:</b> Hỗ trợ App Group</p>
-      <hr>
-      <p>${statusNote}</p>
+      <hr><p>${statusNote}</p>
     `;
 
     document.getElementById('form').style.display = 'none';
@@ -161,7 +162,7 @@ document.getElementById('backBtn').addEventListener('click', e => {
   document.getElementById('form').style.display = 'block';
   document.getElementById('result').style.display = 'none';
   document.getElementById('actions').style.display = 'none';
-  document.getElementById('result').innerHTML = '';
+  resEl.innerHTML = '';
   dropZone.textContent = 'Kéo & thả file .zip vào đây hoặc chọn tệp';
   fileInput.value = '';
 });
