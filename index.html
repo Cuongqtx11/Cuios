@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>P12 Check Real</title>
+<title>Kiểm tra chứng chỉ Apple P12</title>
 <style>
   :root {
     --bg: #0d1117;
@@ -11,6 +11,7 @@
     --text: #c9d1d9;
     --accent: #238636;
     --revoked: #da3633;
+    --expired: #9e6c00;
   }
   body {
     background: var(--bg);
@@ -34,17 +35,11 @@
     border-radius: 6px; border: none; outline: none;
     font-size: 15px;
   }
-  input[type="file"] {
-    background: #21262d;
-    color: #aaa;
-  }
-  input[type="text"] {
-    background: #21262d;
-    color: var(--text);
+  input[type="file"], input[type="text"] {
+    background: #21262d; color: var(--text);
   }
   button {
-    background: var(--accent);
-    color: white; cursor: pointer; font-weight: bold;
+    background: var(--accent); color: white; cursor: pointer; font-weight: bold;
   }
   button:hover { opacity: 0.9; }
   .drop-zone {
@@ -57,19 +52,13 @@
     margin-bottom: 10px;
   }
   .drop-zone.dragover { border-color: var(--accent); color: var(--accent); }
-  .result-card {
-    background: #161b22;
-    border-radius: 10px;
-    padding: 15px;
-    margin-top: 15px;
-  }
+  .result-card { padding: 15px; margin-top: 15px; }
   .status {
-    padding: 8px; border-radius: 6px;
-    color: white; font-weight: bold;
-    display: inline-block; margin-top: 5px;
+    padding: 6px 10px; border-radius: 6px; font-weight: bold; color: white;
   }
   .status.active { background: var(--accent); }
   .status.revoked { background: var(--revoked); }
+  .status.expired { background: var(--expired); }
   .actions { text-align: center; margin-top: 20px; }
   .actions a {
     display: inline-block; margin: 5px; padding: 10px 15px;
@@ -80,40 +69,40 @@
 </style>
 </head>
 <body>
-  <div class="container" id="main">
-    <h1>Kiểm tra chứng chỉ Apple P12</h1>
+<div class="container" id="main">
+  <h1>Kiểm tra chứng chỉ Apple P12</h1>
 
-    <form id="form">
-      <div class="drop-zone" id="dropZone">Kéo & thả file .zip vào đây hoặc chọn tệp</div>
-      <input type="file" id="zip" name="ZipFile" accept=".zip" hidden>
+  <form id="form">
+    <div class="drop-zone" id="dropZone">Kéo & thả file .zip vào đây hoặc chọn tệp</div>
+    <input type="file" id="zip" name="ZipFile" accept=".zip" hidden>
+    <input type="text" id="pass" name="P12PassWordZip" placeholder="Nhập mật khẩu (nếu có)">
+    <button type="submit">Kiểm tra</button>
+  </form>
 
-      <input type="text" id="pass" name="P12PassWordZip" placeholder="Nhập mật khẩu (nếu có)">
-      <button type="submit">Kiểm tra</button>
-    </form>
+  <div id="result" class="result-card" style="display:none;"></div>
 
-    <div id="result" class="result-card" style="display:none;"></div>
-
-    <div class="actions" id="actions" style="display:none;">
-      <a href="#" id="backBtn">Quay lại</a>
-      <a href="https://cuios.shop" target="_blank" class="buy">Buy Cert</a>
-    </div>
+  <div class="actions" id="actions" style="display:none;">
+    <a href="#" id="backBtn">Quay lại</a>
+    <a href="https://cuios.shop" target="_blank" class="buy">Buy Cert</a>
   </div>
+</div>
 
 <script>
 const dropZone = document.getElementById('dropZone');
 const fileInput = document.getElementById('zip');
+
 dropZone.addEventListener('click', () => fileInput.click());
-dropZone.addEventListener('dragover', (e) => {
+dropZone.addEventListener('dragover', e => {
   e.preventDefault(); dropZone.classList.add('dragover');
 });
 dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-dropZone.addEventListener('drop', (e) => {
+dropZone.addEventListener('drop', e => {
   e.preventDefault(); dropZone.classList.remove('dragover');
   fileInput.files = e.dataTransfer.files;
   dropZone.textContent = fileInput.files[0]?.name || 'File không hợp lệ';
 });
 
-document.getElementById('form').addEventListener('submit', async (e) => {
+document.getElementById('form').addEventListener('submit', async e => {
   e.preventDefault();
   const file = fileInput.files[0];
   if (!file) return alert('Vui lòng chọn file .zip');
@@ -125,35 +114,49 @@ document.getElementById('form').addEventListener('submit', async (e) => {
   const resEl = document.getElementById('result');
   resEl.style.display = 'block';
   resEl.innerHTML = '🔍 Đang kiểm tra...';
-  
-  const resp = await fetch('/api/check', { method: 'POST', body: formData });
-  const data = await resp.json();
 
-  if (!data.ok) {
-    resEl.innerHTML = '❌ Lỗi: ' + (data.error || JSON.stringify(data));
-    return;
+  try {
+    const resp = await fetch('/api/check', { method: 'POST', body: formData });
+    const data = await resp.json();
+
+    if (!data.ok) throw new Error(data.error || 'Phân tích thất bại');
+
+    let statusClass = 'active';
+    let statusText = 'Hoạt động';
+    let statusNote = '✅ Chứng chỉ của bạn đang rất bình thường, không có vấn đề gì. Hãy tiếp tục ký app và sử dụng.';
+
+    const now = new Date();
+    const expDate = new Date(data.expirationDate || now);
+    const remain = Math.max(0, Math.ceil((expDate - now) / (1000 * 3600 * 24)));
+
+    if (data.status?.toLowerCase().includes('revoked')) {
+      statusClass = 'revoked';
+      statusText = 'Đã thu hồi';
+      statusNote = '⚠️ Chứng chỉ đã bị thu hồi. UDID có khả năng bị blacklist. Nếu muốn dùng tiếp, hãy mua gói Unband.';
+    } else if (data.status?.toLowerCase().includes('expire')) {
+      statusClass = 'expired';
+      statusText = 'Đã hết hạn';
+      statusNote = '⛔ Chứng chỉ của bạn đã hết hạn, vui lòng mua mới để tiếp tục sử dụng.';
+    }
+
+    resEl.innerHTML = `
+      <p><b>Tên chứng chỉ:</b> ${data.certName || '-'}</p>
+      <p><b>Ngày hết hạn:</b> ${data.expirationDate?.split(' ')[0] || '-'}</p>
+      <p><b>Trạng thái:</b> <span class="status ${statusClass}">${statusText}</span></p>
+      <p><b>Ngày sử dụng còn:</b> ${remain} ngày</p>
+      <p><b>Loại:</b> Hỗ trợ App Group</p>
+      <hr>
+      <p>${statusNote}</p>
+    `;
+
+    document.getElementById('form').style.display = 'none';
+    document.getElementById('actions').style.display = 'block';
+  } catch (err) {
+    resEl.innerHTML = '❌ Lỗi: ' + err.message;
   }
-
-  let statusClass = 'active';
-  let statusText = 'Hoạt động';
-  if (data.status?.toLowerCase().includes('revoked')) {
-    statusClass = 'revoked'; statusText = 'Đã thu hồi';
-  } else if (data.status?.toLowerCase().includes('expire')) {
-    statusClass = 'revoked'; statusText = 'Đã hết hạn';
-  }
-
-  resEl.innerHTML = `
-    <p><b>Tên chứng chỉ:</b> ${data.certName || '-'}</p>
-    <p><b>Ngày bắt đầu:</b> ${data.effectiveDate || '-'}</p>
-    <p><b>Ngày hết hạn:</b> ${data.expirationDate || '-'}</p>
-    <p><b>Trạng thái:</b> <span class="status ${statusClass}">${statusText}</span></p>
-    <p><b>Loại:</b> Distribution có hỗ trợ App Group</p>
-  `;
-  document.getElementById('form').style.display = 'none';
-  document.getElementById('actions').style.display = 'block';
 });
 
-document.getElementById('backBtn').addEventListener('click', (e) => {
+document.getElementById('backBtn').addEventListener('click', e => {
   e.preventDefault();
   document.getElementById('form').style.display = 'block';
   document.getElementById('result').style.display = 'none';
