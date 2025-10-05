@@ -77,6 +77,14 @@
     text-decoration: none;
   }
   .actions a.buy { background: var(--accent); }
+  p.note {
+    font-size: 13px;
+    background: #1f242c;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 10px;
+    line-height: 1.4;
+  }
 </style>
 </head>
 <body>
@@ -134,42 +142,48 @@ document.getElementById('form').addEventListener('submit', async (e) => {
     return;
   }
 
-  // === Tính số ngày còn lại ===
-  let daysLeft = '';
+  // Xử lý ngày còn lại
+  let daysLeftText = '-';
   if (data.expirationDate) {
-    const exp = new Date(data.expirationDate);
+    const expDate = new Date(data.expirationDate);
     const now = new Date();
-    const diff = Math.floor((exp - now) / (1000 * 60 * 60 * 24));
-    if (diff >= 0) daysLeft = diff + ' ngày';
-    else daysLeft = 'Đã hết hạn ' + Math.abs(diff) + ' ngày';
+    const diffDays = Math.ceil((expDate - now) / (1000 * 60 * 60 * 24));
+    if (!isNaN(diffDays)) {
+      daysLeftText = diffDays >= 0 ? `${diffDays} ngày` : `${Math.abs(diffDays)} ngày trước`;
+    }
   }
 
-  // === Trạng thái + thông báo ===
+  // Xử lý trạng thái
   let statusClass = 'active';
-  let statusText = '🟢 Hoạt động';
-  let noteText = '✅ Chứng chỉ của bạn đang rất bình thường, không có vấn đề lỗi gì. Hãy tiếp tục ký app và sử dụng.';
+  let statusText = 'Hoạt động';
+  let note = '';
 
   const low = (data.status || '').toLowerCase();
   if (low.includes('revok')) {
-    statusClass = 'revoked';
-    statusText = '🔴 Đã thu hồi';
-    noteText = '⚠️ Chứng chỉ đã bị thu hồi. UDID đang có khả năng bị Blacklist. Nếu muốn sử dụng tiếp hãy mua gói Unband. Nếu mua gói thường, khả năng cần chờ 17–33 ngày mới sử dụng được.';
+    statusClass = 'revoked'; 
+    statusText = 'Đã thu hồi';
+    note = `⚠️ Chứng chỉ đã bị thu hồi. UDID đang có khả năng bị **Blacklist**.<br>
+    👉 Nếu muốn sử dụng tiếp, hãy mua **gói Unband**. 
+    Nếu mua gói thường, có thể cần chờ **17–33 ngày** mới sử dụng được.`;
   } else if (low.includes('expire')) {
-    statusClass = 'revoked';
-    statusText = '⚫ Đã hết hạn';
-    noteText = '⌛ Chứng chỉ của bạn đã hết hạn sử dụng. Chỉ cần mua mới là có thể tiếp tục dùng.';
+    statusClass = 'revoked'; 
+    statusText = 'Đã hết hạn';
+    note = `⏰ Chứng chỉ của bạn đã hết hạn sử dụng.<br>
+    👉 Chỉ cần mua mới là có thể sử dụng lại ngay.`;
+  } else {
+    note = `✅ Chứng chỉ của bạn đang hoạt động bình thường.<br>
+    👉 Hãy tiếp tục ký app và sử dụng như bình thường.`;
   }
 
-  // === Hiển thị kết quả ===
   resEl.innerHTML = `
     <p><b>Tên chứng chỉ:</b> ${data.certName || '-'}</p>
     <p><b>Ngày hết hạn:</b> ${data.expirationDate || '-'}</p>
     <p><b>Trạng thái:</b> <span class="status ${statusClass}">${statusText}</span></p>
-    <p><b>Ngày sử dụng còn:</b> ${daysLeft || '-'}</p>
+    <p><b>Ngày sử dụng còn:</b> ${daysLeftText}</p>
     <p><b>Loại:</b> Hỗ trợ App Group</p>
-    <hr style="border:none;border-top:1px solid #30363d;margin:15px 0;">
-    <p style="line-height:1.6;">${noteText}</p>
+    <p class="note">${note}</p>
   `;
+
   document.getElementById('form').style.display = 'none';
   document.getElementById('actions').style.display = 'block';
 });
