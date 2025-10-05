@@ -29,6 +29,7 @@ module.exports = async (req, res) => {
     const fileName = fileObj.originalFilename;
 
     try {
+      // Gửi request lên check.p12apple.com
       const fd = new FormData();
       fd.append("ZipFile", fs.createReadStream(filePath), { filename: fileName });
       fd.append("P12PassWordZip", fields.P12PassWordZip || "");
@@ -42,32 +43,45 @@ module.exports = async (req, res) => {
 
       const html = await resp.text();
       const $ = cheerio.load(html);
-      const result = {};
 
-      // --- đọc tất cả text từ trang ---
-      const allText = $("body").text().replace(/\s+/g, " ").trim();
+      // Gom tất cả text từ toàn trang
+      let text = $("body").text().replace(/\s+/g, " ").trim();
 
-      // --- lọc dữ liệu ---
-      const certMatch = allText.match(/CertName[^:]*:\s*([^\n]+)/i);
-      const effMatch = allText.match(/Effective Date[^:]*:\s*([^\n]+)/i);
-      const expMatch = allText.match(/Expiration Date[^:]*:\s*([^\n]+)/i);
-      const statMatch = allText.match(/(Certificate Status|Status)[^:]*:\s*([^\n]+)/i);
+      // Trường hợp trang có JSON ẩn (nếu có)
+      const jsonMatch = html.match(/\{[^{}]*(CertName|Expiration Date)[^{}]*\}/i);
+      if (jsonMatch) text += " " + jsonMatch[0];
 
-      result.certName = certMatch ? certMatch[1].trim() : null;
-      result.effectiveDate = effMatch ? effMatch[1].trim() : null;
-      result.expirationDate = expMatch ? expMatch[1].trim() : null;
-      result.status = statMatch ? statMatch[2].trim() : null;
+      // Chuẩn hóa chữ
+      const low = text.toLowerCase();
 
-      // --- fallback nếu html khác cấu trúc ---
-      if (!result.status) {
-        if (/revoked/i.test(allText)) result.status = "Revoked";
-        else if (/valid/i.test(allText)) result.status = "Valid";
-        else if (/expire/i.test(allText)) result.status = "Expired";
-      }
+      // Regex tìm các trường chính
+      const cert = text.match(/CertName[^:]*:\s*([^\n<]+)/i);
+      const start = text.match(/Effective[^:]*:\s*([^\n<]+)/i);
+      const exp = text.match(/Expiration[^:]*:\s*([^\n<]+)/i);
+      const stat =
+        text.match(/Status[^:]*:\s*([^\n<]+)/i) ||
+        text.match(/Certificate Status[^:]*:\s*([^\n<]+)/i);
 
-      res.json({ ok: true, ...result });
+      // Mapping trạng thái
+      let statusRaw =
+        stat?.[1] ||
+        (/revok/i.test(low)
+          ? "Revoked"
+          : /expire/i.test(low)
+          ? "Expired"
+          : /valid|good|active/i.test(low)
+          ? "Valid"
+          : "Unknown");
+
+      res.json({
+        ok: true,
+        certName: cert ? cert[1].trim() : null,
+        effectiveDate: start ? start[1].trim() : null,
+        expirationDate: exp ? exp[1].trim() : null,
+        status: statusRaw,
+      });
     } catch (error) {
-      console.error(error);
+      console.error("Error:", error);
       res.status(500).json({ error: error.message });
     } finally {
       try {
