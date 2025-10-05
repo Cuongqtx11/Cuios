@@ -1,4 +1,3 @@
-// api/check.js
 const fs = require('fs');
 const FormData = require('form-data');
 const formidable = require('formidable');
@@ -27,36 +26,31 @@ module.exports = async (req, res) => {
       fd.append('P12PassWordZip', fields.P12PassWordZip || '');
       fd.append('inputMethod', 'zip_upload');
 
-      const resp = await fetch(TARGET_URL, { method: 'POST', body: fd, headers: fd.getHeaders() });
-      const html = await resp.text();
+      const resp = await fetch(TARGET_URL, {
+        method: 'POST',
+        body: fd,
+        headers: fd.getHeaders(),
+      });
 
+      const html = await resp.text();
       const $ = cheerio.load(html);
       const result = {};
 
-      $('li').each((_, el) => {
+      const getValue = (label, text) => {
+        const regex = new RegExp(`${label}\\s*:\\s*(.*)`, 'i');
+        const match = text.match(regex);
+        return match ? match[1].trim() : null;
+      };
+
+      $('li, p, div').each((_, el) => {
         const text = $(el).text().trim();
-        if (text.includes('CertName')) result.certName = text.split(':')[1]?.trim();
-        if (text.includes('Effective Date')) result.effectiveDate = text.split(':')[1]?.trim();
-        if (text.includes('Expiration Date')) result.expirationDate = text.split(':')[1]?.trim();
-        if (text.includes('Certificate Status')) result.statusRaw = text.split(':')[1]?.trim();
+        if (/CertName/i.test(text)) result.certName = getValue('CertName', text);
+        if (/Effective Date/i.test(text)) result.effectiveDate = getValue('Effective Date', text);
+        if (/Expiration Date/i.test(text)) result.expirationDate = getValue('Expiration Date', text);
+        if (/Certificate Status/i.test(text)) result.status = getValue('Certificate Status', text);
       });
 
-      // ✅ Chuẩn hóa status
-      const low = (result.statusRaw || '').toLowerCase();
-      let mappedStatus = 'unknown';
-      if (low.includes('revok')) mappedStatus = 'revoked';
-      else if (low.includes('expire')) mappedStatus = 'expired';
-      else if (low.includes('valid') || low.includes('good') || low.includes('active') || low.includes('issued'))
-        mappedStatus = 'valid';
-
-      res.json({
-        ok: true,
-        certName: result.certName,
-        effectiveDate: result.effectiveDate,
-        expirationDate: result.expirationDate,
-        status: mappedStatus,
-        statusRaw: result.statusRaw,
-      });
+      res.json({ ok: true, ...result });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: error.message });
