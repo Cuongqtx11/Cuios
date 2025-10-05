@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
     try {
       // Tạo form gửi lên site check.p12apple.com
       const fd = new FormData();
-      fd.append('ZipFile', fs.createReadStream(files.ZipFile.path), { filename: files.ZipFile.name });
+      fd.append('ZipFile', fs.createReadStream(files.ZipFile.filepath), { filename: files.ZipFile.originalFilename });
       fd.append('P12PassWordZip', fields.P12PassWordZip || '');
       fd.append('inputMethod', 'zip_upload');
 
