@@ -39,7 +39,7 @@ module.exports = async (req, res) => {
 
       $('li').each((_, el) => {
         const text = $(el).text().trim();
-        if (text.includes('CertName')) result.certName = text.replace('CertName:', '').trim();
+        if (text.includes('CertName')) result.certName = text.split(':')[1]?.trim();
         if (text.includes('Effective Date')) result.effectiveDate = text.split(':')[1]?.trim();
         if (text.includes('Expiration Date')) result.expirationDate = text.split(':')[1]?.trim();
         if (text.includes('Certificate Status')) result.status = text.split(':')[1]?.trim();
