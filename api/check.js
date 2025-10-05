@@ -27,26 +27,38 @@ module.exports = async (req, res) => {
       fd.append('P12PassWordZip', fields.P12PassWordZip || '');
       fd.append('inputMethod', 'zip_upload');
 
-      const resp = await fetch(TARGET_URL, {
-        method: 'POST',
-        body: fd,
-        headers: fd.getHeaders(),
-      });
-
+      const resp = await fetch(TARGET_URL, { method: 'POST', body: fd, headers: fd.getHeaders() });
       const html = await resp.text();
+
       const $ = cheerio.load(html);
       const result = {};
 
       $('li').each((_, el) => {
         const text = $(el).text().trim();
-        if (text.includes('CertName')) result.certName = text.replace('CertName:', '').trim();
+        if (text.includes('CertName')) result.certName = text.split(':')[1]?.trim();
         if (text.includes('Effective Date')) result.effectiveDate = text.split(':')[1]?.trim();
         if (text.includes('Expiration Date')) result.expirationDate = text.split(':')[1]?.trim();
-        if (text.includes('Certificate Status')) result.status = text.split(':')[1]?.trim();
+        if (text.includes('Certificate Status')) result.statusRaw = text.split(':')[1]?.trim();
       });
 
-      res.json({ ok: true, ...result });
+      // ✅ Chuẩn hóa status
+      const low = (result.statusRaw || '').toLowerCase();
+      let mappedStatus = 'unknown';
+      if (low.includes('revok')) mappedStatus = 'revoked';
+      else if (low.includes('expire')) mappedStatus = 'expired';
+      else if (low.includes('valid') || low.includes('good') || low.includes('active') || low.includes('issued'))
+        mappedStatus = 'valid';
+
+      res.json({
+        ok: true,
+        certName: result.certName,
+        effectiveDate: result.effectiveDate,
+        expirationDate: result.expirationDate,
+        status: mappedStatus,
+        statusRaw: result.statusRaw,
+      });
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: error.message });
     } finally {
       try {
