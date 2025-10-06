@@ -5,7 +5,7 @@ const formidable = require('formidable');
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 
-const TARGET_URL = 'https://check.p12apple.com/';
+const TARGET_URL = 'https://check.p12apple.com/'; // trang đích
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -47,6 +47,7 @@ module.exports = async (req, res) => {
 
       res.json({ ok: true, ...result });
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: error.message });
     } finally {
       try {
