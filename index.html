@@ -8,15 +8,12 @@
   body { font-family: sans-serif; max-width: 600px; margin: 40px auto; }
   label { display:block; margin-top:10px; }
   input, button { width:100%; padding:8px; margin-top:5px; }
-  button { background:#007bff; color:#fff; border:none; cursor:pointer; }
-  button:hover { background:#0056b3; }
-  .ok { background:#c8f7c5; padding:10px; border-radius:6px; }
-  .revoked { background:#f9c0c0; padding:10px; border-radius:6px; }
+  #result { margin-top:20px; }
 </style>
 </head>
 <body>
   <h1>Kiểm tra P12 (ZIP)</h1>
-  <form id="form" onsubmit="return false;">
+  <form id="form">
     <label>Chọn file ZIP</label>
     <input type="file" name="ZipFile" id="zip" accept=".zip" required>
 
@@ -26,7 +23,7 @@
     <button type="submit">Kiểm tra</button>
   </form>
 
-  <div id="result" style="margin-top:20px;"></div>
+  <div id="result"></div>
 
   <script src="./frontend.js"></script>
 </body>
