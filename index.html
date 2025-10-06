@@ -1,190 +1,267 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kiểm tra chứng chỉ Apple P12</title>
-<style>
-  body {
-    font-family: 'Inter', sans-serif;
-    background: #0d1117;
-    color: #c9d1d9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-  }
-  .container {
-    width: 90%;
-    max-width: 400px;
-    background: #161b22;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 0 15px #0006;
-  }
-  h1 { text-align: center; font-size: 18px; margin-bottom: 15px; }
-  input, button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 6px;
-    margin-top: 10px;
-    font-size: 15px;
-  }
-  input[type="file"], input[type="text"] {
-    background: #21262d;
-    color: #c9d1d9;
-  }
-  button {
-    background: #238636;
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  .drop-zone {
-    background: #1c2128;
-    border: 2px dashed #30363d;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    color: #888;
-    margin-bottom: 10px;
-  }
-  .drop-zone.dragover {
-    border-color: #238636;
-    color: #238636;
-  }
-  .result {
-    background: #161b22;
-    margin-top: 15px;
-    padding: 15px;
-    border-radius: 10px;
-  }
-  .status {
-    padding: 3px 8px;
-    border-radius: 4px;
-    color: #fff;
-    font-weight: bold;
-  }
-  .status.active { background: #238636; }
-  .status.revoked { background: #da3633; }
-  .actions {
-    text-align: center;
-    margin-top: 20px;
-  }
-  .actions a {
-    color: white;
-    text-decoration: none;
-    padding: 10px 14px;
-    border-radius: 6px;
-    margin: 5px;
-    display: inline-block;
-  }
-  .actions .buy { background: #238636; }
-  .actions .back { background: #30363d; }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Check P12 — ioscert</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#0f1724;
+      --muted:#98a0b3;
+      --accent:#00d084;
+      --danger:#ff5c6c;
+      --glass: rgba(255,255,255,0.03);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background: linear-gradient(180deg,#06101a 0%, #08131a 100%);
+      color:#e6eef8;
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:28px;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .container{
+      width:100%;
+      max-width:920px;
+      margin:0 auto;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border-radius:14px;
+      padding:26px;
+      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    h1 { margin:0 0 6px; font-size:26px; letter-spacing:0.3px; }
+    .subtitle { color:var(--muted); margin-bottom:18px; }
+
+    form .row { display:flex; gap:12px; align-items:center; margin-top:12px; }
+    input[type=file] { background:var(--glass); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.02); color:inherit; width:100%;}
+    input[type=text] { background:transparent; border:1px solid rgba(255,255,255,0.06); padding:10px 12px; border-radius:8px; color:inherit; width:100%;}
+    button.primary {
+      background: linear-gradient(90deg, var(--accent), #00c27b);
+      color:#04221a;
+      border:none;
+      padding:12px 18px;
+      border-radius:10px;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow: 0 6px 18px rgba(0,208,132,0.12);
+    }
+    button.ghost {
+      background: transparent;
+      color:var(--muted);
+      border:1px solid rgba(255,255,255,0.04);
+      padding:10px 14px;
+      border-radius:10px;
+      cursor:pointer;
+    }
+    .center { display:flex; gap:12px; align-items:center; }
+
+    /* result card */
+    .result-card {
+      margin-top:20px;
+      border-radius:12px;
+      padding:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.02);
+      opacity:0;
+      transform: translateY(8px);
+      transition: all 360ms ease;
+    }
+    .result-card.show { opacity:1; transform: translateY(0); }
+
+    .field { padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.02); }
+    .label { color:var(--muted); font-size:13px; margin-bottom:6px; display:block; }
+    .value { font-size:16px; font-weight:600; color:#e6eef8; }
+
+    .status {
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 12px;
+      border-radius:10px;
+      font-weight:700;
+    }
+    .status.ok { background: rgba(0,208,132,0.12); color: var(--accent); }
+    .status.revoked { background: rgba(255,92,108,0.10); color: var(--danger); }
+
+    .actions { display:flex; gap:12px; margin-top:18px; }
+    a.button { text-decoration:none; display:inline-block; padding:10px 14px; border-radius:10px; font-weight:700; }
+    .buy { background: linear-gradient(90deg,#ffb86b,#ff7b9c); color:#07111b; }
+    .back { background:transparent; border:1px solid rgba(255,255,255,0.04); color:var(--muted); }
+
+    .small { font-size:13px; color:var(--muted); margin-top:8px; }
+
+    /* responsive */
+    @media (max-width:600px){
+      .row { flex-direction:column; align-items:stretch;}
+      .actions { flex-direction:column; }
+    }
+  </style>
 </head>
 <body>
-  <div class="container" id="main">
-    <h1>Kiểm tra chứng chỉ Apple P12</h1>
-    <form id="form">
-      <div class="drop-zone" id="dropZone">Kéo & thả file .zip vào đây</div>
+  <div class="container">
+    <div class="card">
+      <h1>Kết quả Kiểm Tra</h1>
+      <div class="subtitle">Kiểm tra trạng thái chứng chỉ Apple P12</div>
 
-      <!-- 👇 Thêm nút chọn file riêng -->
-      <input type="file" id="zip" name="ZipFile" accept=".zip">
-      <input type="text" id="pass" name="P12PassWordZip" placeholder="Nhập mật khẩu (nếu có)">
-      <button type="submit">Kiểm tra</button>
-    </form>
-    <div id="result" class="result" style="display:none;"></div>
-    <div id="actions" class="actions" style="display:none;">
-      <a href="#" class="back" id="backBtn">Quay lại</a>
-      <a href="https://cuios.shop" target="_blank" class="buy">Buy Cert</a>
+      <!-- Form -->
+      <form id="checkForm">
+        <div class="row">
+          <input id="zipFile" type="file" accept=".zip" required />
+        </div>
+
+        <div class="row" style="margin-top:12px;">
+          <input id="pwd" type="text" placeholder="Nhập mật khẩu P12 (nếu có)" />
+          <button id="btnCheck" class="primary" type="submit">Kiểm tra</button>
+        </div>
+        <div class="small">Chỉ cần upload file .zip và mật khẩu. Kết quả sẽ hiển thị ngay.</div>
+      </form>
+
+      <!-- Result (hidden initially) -->
+      <div id="resultCard" class="result-card" aria-hidden="true">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div style="flex:1">
+            <div class="field">
+              <span class="label">Tên chứng chỉ</span>
+              <div id="certName" class="value">-</div>
+            </div>
+
+            <div class="field">
+              <span class="label">Ngày hết hạn</span>
+              <div id="expDate" class="value">-</div>
+            </div>
+
+            <div class="field">
+              <span class="label">Trạng thái</span>
+              <div id="statusWrap"><span id="status" class="status">-</span></div>
+            </div>
+
+            <div class="field">
+              <span class="label">Còn lại</span>
+              <div id="remaining" class="value">-</div>
+            </div>
+
+            <div class="field" style="border-bottom:none;">
+              <span class="label">Loại</span>
+              <div class="value">Distribution có hỗ trợ App Group</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="backBtn" class="back button">← Quay lại kiểm tra</button>
+          <a id="buyBtn" class="buy button" href="https://cuios.shop" target="_blank" rel="noopener">🛒 Buy Cert</a>
+        </div>
+      </div>
+
+      <div id="message" class="small" style="margin-top:12px"></div>
     </div>
   </div>
 
 <script>
-const dz = document.getElementById('dropZone');
-const fileInput = document.getElementById('zip');
+  const form = document.getElementById('checkForm');
+  const fileInput = document.getElementById('zipFile');
+  const pwdInput = document.getElementById('pwd');
+  const resultCard = document.getElementById('resultCard');
+  const certNameEl = document.getElementById('certName');
+  const expDateEl = document.getElementById('expDate');
+  const statusEl = document.getElementById('status');
+  const remainingEl = document.getElementById('remaining');
+  const messageEl = document.getElementById('message');
+  const backBtn = document.getElementById('backBtn');
 
-// Kéo & thả file
-dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('dragover'); });
-dz.addEventListener('dragleave', () => dz.classList.remove('dragover'));
-dz.addEventListener('drop', e => {
-  e.preventDefault(); dz.classList.remove('dragover');
-  fileInput.files = e.dataTransfer.files;
-  dz.textContent = fileInput.files[0]?.name || 'File không hợp lệ';
-});
-
-// Giao diện chọn file
-fileInput.addEventListener('change', () => {
-  if (fileInput.files.length > 0) {
-    dz.textContent = fileInput.files[0].name;
-  } else {
-    dz.textContent = 'Kéo & thả file .zip vào đây';
+  function showResultCard() {
+    resultCard.classList.add('show');
+    resultCard.setAttribute('aria-hidden','false');
+    // smooth scroll into view on small screens
+    resultCard.scrollIntoView({behavior:'smooth', block:'center'});
   }
-});
-
-// Gửi yêu cầu
-document.getElementById('form').addEventListener('submit', async e => {
-  e.preventDefault();
-  const file = fileInput.files[0];
-  if (!file) return alert('Vui lòng chọn file .zip');
-  const pass = document.getElementById('pass').value;
-  const formData = new FormData();
-  formData.append('ZipFile', file);
-  formData.append('P12PassWordZip', pass);
-
-  const resEl = document.getElementById('result');
-  resEl.style.display = 'block';
-  resEl.innerHTML = '⏳ Đang kiểm tra...';
-
-  const resp = await fetch('/api/check', { method: 'POST', body: formData });
-  const data = await resp.json();
-  if (!data.ok) {
-    resEl.innerHTML = '❌ Lỗi: ' + (data.error || 'Không xác định');
-    return;
+  function hideResultCard() {
+    resultCard.classList.remove('show');
+    resultCard.setAttribute('aria-hidden','true');
   }
 
-  let daysLeft = '-';
-  if (data.expirationDate) {
-    const diff = (new Date(data.expirationDate) - new Date()) / (1000 * 3600 * 24);
-    daysLeft = Math.max(0, Math.floor(diff));
-  }
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    messageEl.textContent = '';
+    hideResultCard();
 
-  let statusClass = 'active', msg = '';
-  if (data.status.includes('thu hồi')) {
-    statusClass = 'revoked';
-    msg = '🔴 Chứng chỉ bị thu hồi. UDID có thể bị blacklist.';
-  } else if (data.status.includes('hết hạn')) {
-    statusClass = 'revoked';
-    msg = '⚠️ Chứng chỉ đã hết hạn. Vui lòng mua mới.';
-  } else {
-    msg = '🟢 Chứng chỉ đang hoạt động bình thường.';
-  }
+    if (!fileInput.files.length) {
+      messageEl.textContent = 'Vui lòng chọn file .zip';
+      return;
+    }
+    const file = fileInput.files[0];
+    const pwd = pwdInput.value || '';
 
-  resEl.innerHTML = `
-    <p><b>Tên chứng chỉ:</b> ${data.certName || '-'}</p>
-    <p><b>Ngày hết hạn:</b> ${data.expirationDate || '-'}</p>
-    <p><b>Trạng thái:</b> <span class="status ${statusClass}">${data.status}</span></p>
-    <p><b>Còn lại:</b> ${daysLeft} ngày</p>
-    <p><b>Loại:</b> Distribution có hỗ trợ App Group</p>
-    <hr><p>${msg}</p>
-  `;
-  document.getElementById('form').style.display = 'none';
-  document.getElementById('actions').style.display = 'block';
-});
+    const fd = new FormData();
+    fd.append('ZipFile', file);
+    fd.append('P12PassWordZip', pwd);
 
-// Nút quay lại
-document.getElementById('backBtn').addEventListener('click', e => {
-  e.preventDefault();
-  document.getElementById('form').style.display = 'block';
-  document.getElementById('result').style.display = 'none';
-  document.getElementById('actions').style.display = 'none';
-  document.getElementById('result').innerHTML = '';
-  dz.textContent = 'Kéo & thả file .zip vào đây';
-  fileInput.value = '';
-});
+    // disable button
+    const btn = document.getElementById('btnCheck');
+    btn.disabled = true;
+    btn.textContent = 'Đang kiểm tra...';
+
+    try {
+      // If you deploy frontend and API to same Vercel repo, '/api/check' works.
+      // Else change to full Vercel URL: https://<your-vercel>.vercel.app/api/check
+      const res = await fetch('/api/check', { method: 'POST', body: fd });
+      const json = await res.json();
+
+      if (!res.ok || !json.ok) {
+        messageEl.textContent = 'Lỗi khi kiểm tra: ' + (json.error || JSON.stringify(json));
+        btn.disabled = false;
+        btn.textContent = 'Kiểm tra';
+        return;
+      }
+
+      // Fill values
+      certNameEl.textContent = json.certName || '-';
+      expDateEl.textContent = json.expirationDate || '-';
+      remainingEl.textContent = (typeof json.daysRemaining === 'number') ? (json.daysRemaining + ' ngày') : '-';
+
+      // status decide class
+      const st = (json.status || '').toString();
+      statusEl.textContent = st;
+      statusEl.classList.remove('ok','revoked');
+      if (/revok/i.test(st) || /🔴/.test(st)) {
+        statusEl.classList.add('revoked');
+      } else {
+        statusEl.classList.add('ok');
+      }
+
+      // show result
+      showResultCard();
+      messageEl.textContent = 'Kiểm tra thành công';
+    } catch (err) {
+      console.error(err);
+      messageEl.textContent = 'Lỗi kết nối: ' + err.message;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Kiểm tra';
+    }
+  });
+
+  backBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    // reset UI
+    fileInput.value = '';
+    pwdInput.value = '';
+    messageEl.textContent = '';
+    hideResultCard();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 </script>
 </body>
 </html>
