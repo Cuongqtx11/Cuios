@@ -1,68 +1,58 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Kiểm tra chứng chỉ Apple P12</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>P12 Check Real</title>
 <style>
   body {
-    font-family: "Segoe UI", Roboto, sans-serif;
-    background: #f5f5f5;
-    color: #222;
+    font-family: sans-serif;
     max-width: 600px;
     margin: 40px auto;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   }
-  h1 {
-    text-align: center;
-    color: #0070f3;
+  label {
+    display: block;
+    margin-top: 10px;
   }
-  label { display: block; margin-top: 15px; font-weight: 600; }
   input, button {
     width: 100%;
-    padding: 10px;
-    margin-top: 6px;
-    font-size: 15px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+    padding: 8px;
+    margin-top: 5px;
   }
   button {
-    background: #0070f3;
+    background: #007bff;
+    border: none;
     color: white;
-    font-weight: bold;
     cursor: pointer;
-    transition: 0.2s;
   }
-  button:hover { background: #0057c2; }
-  #result {
-    margin-top: 25px;
-    padding: 15px;
-    border-radius: 8px;
+  button:hover {
+    background: #0056b3;
   }
-  .ok { background: #e7fbe7; border: 1px solid #a4dca4; }
-  .revoked { background: #ffe6e6; border: 1px solid #ffb3b3; }
-  .expired { background: #fff0cc; border: 1px solid #ffd966; }
-  .info-box { margin-top: 15px; padding: 10px; border-radius: 6px; background: #f0f0f0; font-size: 14px; }
+  .ok {
+    background: #c8f7c5;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  .revoked {
+    background: #f9c0c0;
+    padding: 10px;
+    border-radius: 4px;
+  }
 </style>
 </head>
 <body>
-
-  <h1>Kiểm tra chứng chỉ Apple P12</h1>
-
+  <h1>Kiểm tra chứng chỉ P12 (ZIP)</h1>
   <form id="form">
     <label>Chọn file ZIP</label>
     <input type="file" name="ZipFile" id="zip" accept=".zip" required>
 
-    <label>Mật khẩu P12 (nếu có)</label>
-    <input type="text" name="P12PassWordZip" id="pass" placeholder="Nhập mật khẩu ZIP">
+    <label>Mật khẩu P12</label>
+    <input type="text" name="P12PassWordZip" id="pass" placeholder="Nhập mật khẩu (nếu có)">
 
-    <button type="submit">🔍 Kiểm tra</button>
+    <button type="submit">Kiểm tra</button>
   </form>
 
-  <div id="result"></div>
+  <div id="result" style="margin-top:20px;"></div>
 
 <script>
 document.getElementById('form').addEventListener('submit', async (e) => {
@@ -70,69 +60,44 @@ document.getElementById('form').addEventListener('submit', async (e) => {
 
   const file = document.getElementById('zip').files[0];
   const pass = document.getElementById('pass').value;
-  const resultBox = document.getElementById('result');
-  resultBox.innerHTML = '⏳ Đang kiểm tra, vui lòng đợi...';
+  const resultEl = document.getElementById('result');
+
+  if (!file) {
+    resultEl.textContent = 'Vui lòng chọn file ZIP.';
+    return;
+  }
 
   const formData = new FormData();
   formData.append('ZipFile', file);
   formData.append('P12PassWordZip', pass);
 
-  try {
-    const resp = await fetch('https://api.p12.vn/api/check', {
-      method: 'POST',
-      body: formData,
-    });
+  resultEl.textContent = '⏳ Đang kiểm tra...';
 
+  try {
+    const resp = await fetch('/api/check', { method: 'POST', body: formData });
     const data = await resp.json();
+
     if (!data.ok) {
-      resultBox.innerHTML = `<div class="revoked">❌ Lỗi: ${data.error || 'Không xác định'}</div>`;
+      resultEl.textContent = '❌ Lỗi: ' + JSON.stringify(data);
       return;
     }
 
-    // ---- Tính ngày còn lại ----
-    let daysLeft = '-';
-    if (data.expirationDate) {
-      const exp = new Date(data.expirationDate);
-      const now = new Date();
-      const diff = Math.ceil((exp - now) / (1000 * 60 * 60 * 24));
-      daysLeft = diff >= 0 ? diff : 0;
-    }
-
-    // ---- Phân loại trạng thái ----
-    let statusClass = 'ok';
-    let note = '';
-    if (data.status?.toLowerCase().includes('revoked')) {
-      statusClass = 'revoked';
-      note = `⚠️ Chứng chỉ đã bị thu hồi. UDID có khả năng bị Blacklist. 
-      Nếu muốn sử dụng tiếp, hãy mua gói Unband. 
-      Nếu mua gói thường, có thể cần chờ 17–33 ngày để dùng lại.`;
-    } else if (daysLeft === 0) {
-      statusClass = 'expired';
-      note = `⚠️ Chứng chỉ của bạn đã hết hạn. 
-      Vui lòng mua chứng chỉ mới để tiếp tục sử dụng.`;
-    } else {
-      statusClass = 'ok';
-      note = `✅ Chứng chỉ của bạn đang hoạt động bình thường. 
-      Có thể tiếp tục ký app và sử dụng.`;
-    }
-
-    // ---- Hiển thị kết quả ----
-    resultBox.innerHTML = `
-      <div class="${statusClass}">
-        <p><b>Tên chứng chỉ:</b> ${data.certName || '-'}</p>
-        <p><b>Ngày hết hạn:</b> ${data.expirationDate || '-'}</p>
-        <p><b>Trạng thái:</b> ${data.status || '-'}</p>
-        <p><b>Ngày sử dụng còn:</b> ${daysLeft} ngày</p>
-        <p><b>Loại:</b> Distribution có hỗ trợ App Group</p>
-      </div>
-      <div class="info-box">${note}</div>
+    const html = `
+      <p><b>CertName:</b> ${data.certName || '-'}</p>
+      <p><b>Effective Date:</b> ${data.effectiveDate || '-'}</p>
+      <p><b>Expiration Date:</b> ${data.expirationDate || '-'}</p>
+      <p><b>Status:</b> ${data.status || '-'}</p>
     `;
 
+    if (data.status && data.status.toLowerCase().includes('revoked')) {
+      resultEl.innerHTML = `<div class="revoked">${html}</div>`;
+    } else {
+      resultEl.innerHTML = `<div class="ok">${html}</div>`;
+    }
   } catch (err) {
-    resultBox.innerHTML = `<div class="revoked">❌ Lỗi kết nối API: ${err.message}</div>`;
+    resultEl.textContent = '⚠️ Lỗi khi gửi yêu cầu: ' + err.message;
   }
 });
 </script>
-
 </body>
 </html>
