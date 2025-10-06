@@ -5,7 +5,7 @@ const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 
 const TARGET_URL = 'https://check.p12apple.com/';
-const TIMEOUT_MS = 15000; // timeout 15 giây
+const TIMEOUT_MS = 15000;
 
 async function fetchWithTimeout(url, options = {}, timeout = TIMEOUT_MS) {
   return Promise.race([
@@ -20,11 +20,12 @@ module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'content-type');
+
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST')
     return res.status(405).json({ ok: false, error: 'Only POST allowed' });
 
-  const form = formidable({ multiples: false });
+  const form = formidable({ multiples: false, keepExtensions: true });
 
   form.parse(req, async (err, fields, files) => {
     if (err)
@@ -51,12 +52,10 @@ module.exports = async (req, res) => {
           'Cache-Control': 'no-cache, no-store, must-revalidate',
           Pragma: 'no-cache',
           Expires: '0',
-          Connection: 'close',
         },
       });
 
       const html = await resp.text();
-
       const $ = cheerio.load(html);
       const result = {};
 
