@@ -5,39 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>P12 Check Real</title>
 <style>
-  body {
-    font-family: sans-serif;
-    max-width: 600px;
-    margin: 40px auto;
-  }
-  label {
-    display: block;
-    margin-top: 10px;
-  }
-  input, button {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-  }
-  button {
-    background: #007bff;
-    border: none;
-    color: white;
-    cursor: pointer;
-  }
-  button:hover {
-    background: #0056b3;
-  }
-  .ok {
-    background: #c8f7c5;
-    padding: 10px;
-    border-radius: 4px;
-  }
-  .revoked {
-    background: #f9c0c0;
-    padding: 10px;
-    border-radius: 4px;
-  }
+  body { font-family: sans-serif; max-width: 600px; margin: 40px auto; }
+  label { display:block; margin-top:10px; }
+  input, button { width:100%; padding:8px; margin-top:5px; }
+  button { background:#007bff; color:white; border:none; cursor:pointer; }
+  button:hover { background:#0056b3; }
+  .ok { background: #c8f7c5; padding:8px; border-radius:5px; }
+  .revoked { background: #f9c0c0; padding:8px; border-radius:5px; }
 </style>
 </head>
 <body>
@@ -45,10 +19,8 @@
   <form id="form">
     <label>Chọn file ZIP</label>
     <input type="file" name="ZipFile" id="zip" accept=".zip" required>
-
     <label>Mật khẩu P12</label>
     <input type="text" name="P12PassWordZip" id="pass" placeholder="Nhập mật khẩu (nếu có)">
-
     <button type="submit">Kiểm tra</button>
   </form>
 
@@ -60,10 +32,10 @@ document.getElementById('form').addEventListener('submit', async (e) => {
 
   const file = document.getElementById('zip').files[0];
   const pass = document.getElementById('pass').value;
-  const resultEl = document.getElementById('result');
+  const resEl = document.getElementById('result');
 
   if (!file) {
-    resultEl.textContent = 'Vui lòng chọn file ZIP.';
+    resEl.textContent = 'Vui lòng chọn file ZIP!';
     return;
   }
 
@@ -71,14 +43,14 @@ document.getElementById('form').addEventListener('submit', async (e) => {
   formData.append('ZipFile', file);
   formData.append('P12PassWordZip', pass);
 
-  resultEl.textContent = '⏳ Đang kiểm tra...';
+  resEl.textContent = '⏳ Đang kiểm tra...';
 
   try {
-    const resp = await fetch('/api/check', { method: 'POST', body: formData });
+    const resp = await fetch(`/api/check?_=${Date.now()}`, { method: 'POST', body: formData });
     const data = await resp.json();
 
     if (!data.ok) {
-      resultEl.textContent = '❌ Lỗi: ' + JSON.stringify(data);
+      resEl.textContent = '❌ Lỗi: ' + (data.error || JSON.stringify(data));
       return;
     }
 
@@ -90,12 +62,12 @@ document.getElementById('form').addEventListener('submit', async (e) => {
     `;
 
     if (data.status && data.status.toLowerCase().includes('revoked')) {
-      resultEl.innerHTML = `<div class="revoked">${html}</div>`;
+      resEl.innerHTML = `<div class="revoked">${html}</div>`;
     } else {
-      resultEl.innerHTML = `<div class="ok">${html}</div>`;
+      resEl.innerHTML = `<div class="ok">${html}</div>`;
     }
   } catch (err) {
-    resultEl.textContent = '⚠️ Lỗi khi gửi yêu cầu: ' + err.message;
+    resEl.textContent = '⚠️ Lỗi kết nối: ' + err.message;
   }
 });
 </script>
