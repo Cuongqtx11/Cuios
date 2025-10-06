@@ -1,5 +1,5 @@
 {
-  "name": "p12-check-real",
+  "name": "p12-check",
   "version": "1.0.0",
   "main": "api/check.js",
   "type": "commonjs",
