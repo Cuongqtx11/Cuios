@@ -1,4 +1,3 @@
-// api/check.js
 const fs = require('fs');
 const FormData = require('form-data');
 const formidable = require('formidable');
@@ -35,17 +34,23 @@ module.exports = async (req, res) => {
 
       const html = await resp.text();
       const $ = cheerio.load(html);
-
       const result = {};
-      $('li, p, span, div').each((_, el) => {
-        const t = $(el).text().trim();
-        if (/Cert(Name)?|Tên chứng chỉ/i.test(t)) result.certName = t.split(':')[1]?.trim();
-        if (/Effective|Ngày bắt đầu/i.test(t)) result.effectiveDate = t.split(':')[1]?.trim();
-        if (/Expiration|Ngày hết hạn/i.test(t)) result.expirationDate = t.split(':')[1]?.trim();
-        if (/Status|Trạng thái/i.test(t)) result.status = t.split(':')[1]?.trim();
+
+      const getValue = (label, text) => {
+        const regex = new RegExp(`${label}\\s*:\\s*(.*)`, 'i');
+        const match = text.match(regex);
+        return match ? match[1].trim() : null;
+      };
+
+      $('li, p, div').each((_, el) => {
+        const text = $(el).text().trim();
+        if (/CertName/i.test(text)) result.certName = getValue('CertName', text);
+        if (/Effective Date/i.test(text)) result.effectiveDate = getValue('Effective Date', text);
+        if (/Expiration Date/i.test(text)) result.expirationDate = getValue('Expiration Date', text);
+        if (/Certificate Status/i.test(text)) result.status = getValue('Certificate Status', text);
       });
 
-      res.json({ ok: true, ...result, raw: html.slice(0, 500) });
+      res.json({ ok: true, ...result });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: error.message });
