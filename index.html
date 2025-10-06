@@ -8,68 +8,26 @@
   body { font-family: sans-serif; max-width: 600px; margin: 40px auto; }
   label { display:block; margin-top:10px; }
   input, button { width:100%; padding:8px; margin-top:5px; }
-  button { background:#007bff; color:white; border:none; cursor:pointer; }
+  button { background:#007bff; color:#fff; border:none; cursor:pointer; }
   button:hover { background:#0056b3; }
-  .ok { background: #c8f7c5; padding:8px; border-radius:5px; }
-  .revoked { background: #f9c0c0; padding:8px; border-radius:5px; }
+  .ok { background:#c8f7c5; padding:10px; border-radius:6px; }
+  .revoked { background:#f9c0c0; padding:10px; border-radius:6px; }
 </style>
 </head>
 <body>
-  <h1>Kiểm tra chứng chỉ P12 (ZIP)</h1>
+  <h1>Kiểm tra P12 (ZIP)</h1>
   <form id="form">
     <label>Chọn file ZIP</label>
     <input type="file" name="ZipFile" id="zip" accept=".zip" required>
+
     <label>Mật khẩu P12</label>
-    <input type="text" name="P12PassWordZip" id="pass" placeholder="Nhập mật khẩu (nếu có)">
+    <input type="text" name="P12PassWordZip" id="pass" placeholder="Nhập mật khẩu">
+
     <button type="submit">Kiểm tra</button>
   </form>
 
   <div id="result" style="margin-top:20px;"></div>
 
-<script>
-document.getElementById('form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const file = document.getElementById('zip').files[0];
-  const pass = document.getElementById('pass').value;
-  const resEl = document.getElementById('result');
-
-  if (!file) {
-    resEl.textContent = 'Vui lòng chọn file ZIP!';
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append('ZipFile', file);
-  formData.append('P12PassWordZip', pass);
-
-  resEl.textContent = '⏳ Đang kiểm tra...';
-
-  try {
-    const resp = await fetch(`/api/check?_=${Date.now()}`, { method: 'POST', body: formData });
-    const data = await resp.json();
-
-    if (!data.ok) {
-      resEl.textContent = '❌ Lỗi: ' + (data.error || JSON.stringify(data));
-      return;
-    }
-
-    const html = `
-      <p><b>CertName:</b> ${data.certName || '-'}</p>
-      <p><b>Effective Date:</b> ${data.effectiveDate || '-'}</p>
-      <p><b>Expiration Date:</b> ${data.expirationDate || '-'}</p>
-      <p><b>Status:</b> ${data.status || '-'}</p>
-    `;
-
-    if (data.status && data.status.toLowerCase().includes('revoked')) {
-      resEl.innerHTML = `<div class="revoked">${html}</div>`;
-    } else {
-      resEl.innerHTML = `<div class="ok">${html}</div>`;
-    }
-  } catch (err) {
-    resEl.textContent = '⚠️ Lỗi kết nối: ' + err.message;
-  }
-});
-</script>
+  <script src="./frontend.js"></script>
 </body>
 </html>
