@@ -1,5 +1,12 @@
 {
-  "name": "p12-ui",
+  "name": "p12-check-real",
   "version": "1.0.0",
-  "private": true
+  "main": "api/check.js",
+  "type": "commonjs",
+  "dependencies": {
+    "form-data": "^4.0.0",
+    "formidable": "^2.1.1",
+    "node-fetch": "^2.6.12",
+    "cheerio": "^1.0.0-rc.12"
+  }
 }
