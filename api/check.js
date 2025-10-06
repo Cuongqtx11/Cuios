@@ -7,7 +7,6 @@ const cheerio = require('cheerio');
 const TARGET_URL = 'https://check.p12apple.com/';
 const TIMEOUT_MS = 15000;
 
-// Hàm fetch có timeout
 async function fetchWithTimeout(url, options = {}, timeout = TIMEOUT_MS) {
   return Promise.race([
     fetch(url, options),
@@ -39,68 +38,55 @@ module.exports = async (req, res) => {
     try {
       const fd = new FormData();
       fd.append('ZipFile', fs.createReadStream(filePath), {
-        filename: files.ZipFile.originalFilename || 'upload.zip',
+        filename: files.ZipFile.originalFilename || `upload.zip`,
       });
       fd.append('P12PassWordZip', fields.P12PassWordZip || '');
       fd.append('inputMethod', 'zip_upload');
       fd.append('_nocache', Date.now().toString());
 
-      // gửi request
       const resp = await fetchWithTimeout(`${TARGET_URL}?_=${Date.now()}`, {
         method: 'POST',
         body: fd,
         headers: {
           ...fd.getHeaders(),
-          'Cache-Control': 'no-store',
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
           Pragma: 'no-cache',
           Expires: '0',
         },
       });
 
       const html = await resp.text();
-      const $ = cheerio.load(html, { decodeEntities: true });
-      const result = {};
+      const $ = cheerio.load(html);
 
-      // lấy text trong tất cả li/p/div
-      const lines = [];
-      $('li, p, div, td, span').each((_, el) => {
-        const text = $(el).text().trim();
-        if (text) lines.push(text);
+      const result = {};
+      const textBlocks = [];
+
+      // Lấy toàn bộ text trong li, td, div
+      $('li, td, div, span, p').each((_, el) => {
+        const txt = $(el).text().trim();
+        if (txt) textBlocks.push(txt);
       });
 
-      for (const text of lines) {
-        const clean = text.replace(/\s+/g, ' ').trim();
-        if (/certname/i.test(clean))
-          result.certName = clean.split(':').slice(1).join(':').trim();
-        if (/effective date/i.test(clean))
-          result.effectiveDate = clean.split(':').slice(1).join(':').trim();
-        if (/expiration date/i.test(clean))
-          result.expirationDate = clean.split(':').slice(1).join(':').trim();
-        if (/certificate status/i.test(clean)) {
-          result.status = clean.split(':').slice(1).join(':').trim();
-          // chuẩn hóa emoji
-          result.status = result.status
-            .replace('🟢', 'Good')
-            .replace('🔴', 'Revoked')
-            .replace('🟡', 'Expired')
-            .trim();
-        }
+      for (const t of textBlocks) {
+        if (t.toLowerCase().includes('certname'))
+          result.certName = t.split(':')[1]?.trim();
+        if (t.toLowerCase().includes('effective date'))
+          result.effectiveDate = t.split(':')[1]?.trim();
+        if (t.toLowerCase().includes('expiration date'))
+          result.expirationDate = t.split(':')[1]?.trim();
+        if (t.toLowerCase().includes('certificate status'))
+          result.status = t.split(':')[1]?.trim();
       }
 
+      // Một số trường hợp "Good" hoặc "Expired" nằm trong chuỗi plain text
       if (!result.status) {
         const bodyText = $('body').text().replace(/\s+/g, ' ');
-        const m = bodyText.match(/Status\s*:\s*([A-Za-z🟢🔴🟡 ]+)/i);
-        if (m) {
-          result.status = m[1]
-            .replace('🟢', 'Good')
-            .replace('🔴', 'Revoked')
-            .replace('🟡', 'Expired')
-            .trim();
-        }
+        const match = bodyText.match(/Status\s*:\s*([A-Za-z ]+)/i);
+        if (match) result.status = match[1].trim();
       }
 
       if (!Object.keys(result).length)
-        throw new Error('Không lấy được dữ liệu — HTML không khớp.');
+        throw new Error('Không lấy được dữ liệu — có thể HTML khác định dạng.');
 
       res.json({ ok: true, ...result });
     } catch (error) {
