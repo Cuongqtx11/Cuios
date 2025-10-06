@@ -1,8 +1,5 @@
 {
-  "dependencies": {
-    "form-data": "^4.0.0",
-    "formidable": "^2.1.1",
-    "node-fetch": "^2.6.12",
-    "cheerio": "^1.0.0-rc.12"
-  }
+  "name": "p12-ui",
+  "version": "1.0.0",
+  "private": true
 }
