@@ -7,6 +7,7 @@ const cheerio = require('cheerio');
 const TARGET_URL = 'https://check.p12apple.com/';
 const TIMEOUT_MS = 15000;
 
+// Hàm fetch có timeout
 async function fetchWithTimeout(url, options = {}, timeout = TIMEOUT_MS) {
   return Promise.race([
     fetch(url, options),
@@ -38,41 +39,68 @@ module.exports = async (req, res) => {
     try {
       const fd = new FormData();
       fd.append('ZipFile', fs.createReadStream(filePath), {
-        filename: files.ZipFile.originalFilename || `upload.zip`,
+        filename: files.ZipFile.originalFilename || 'upload.zip',
       });
       fd.append('P12PassWordZip', fields.P12PassWordZip || '');
       fd.append('inputMethod', 'zip_upload');
       fd.append('_nocache', Date.now().toString());
 
+      // gửi request
       const resp = await fetchWithTimeout(`${TARGET_URL}?_=${Date.now()}`, {
         method: 'POST',
         body: fd,
         headers: {
           ...fd.getHeaders(),
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Cache-Control': 'no-store',
           Pragma: 'no-cache',
           Expires: '0',
         },
       });
 
       const html = await resp.text();
-      const $ = cheerio.load(html);
+      const $ = cheerio.load(html, { decodeEntities: true });
       const result = {};
 
-      $('li').each((_, el) => {
+      // lấy text trong tất cả li/p/div
+      const lines = [];
+      $('li, p, div, td, span').each((_, el) => {
         const text = $(el).text().trim();
-        if (text.includes('CertName'))
-          result.certName = text.split(':')[1]?.trim();
-        if (text.includes('Effective Date'))
-          result.effectiveDate = text.split(':')[1]?.trim();
-        if (text.includes('Expiration Date'))
-          result.expirationDate = text.split(':')[1]?.trim();
-        if (text.includes('Certificate Status'))
-          result.status = text.split(':')[1]?.trim();
+        if (text) lines.push(text);
       });
 
+      for (const text of lines) {
+        const clean = text.replace(/\s+/g, ' ').trim();
+        if (/certname/i.test(clean))
+          result.certName = clean.split(':').slice(1).join(':').trim();
+        if (/effective date/i.test(clean))
+          result.effectiveDate = clean.split(':').slice(1).join(':').trim();
+        if (/expiration date/i.test(clean))
+          result.expirationDate = clean.split(':').slice(1).join(':').trim();
+        if (/certificate status/i.test(clean)) {
+          result.status = clean.split(':').slice(1).join(':').trim();
+          // chuẩn hóa emoji
+          result.status = result.status
+            .replace('🟢', 'Good')
+            .replace('🔴', 'Revoked')
+            .replace('🟡', 'Expired')
+            .trim();
+        }
+      }
+
+      if (!result.status) {
+        const bodyText = $('body').text().replace(/\s+/g, ' ');
+        const m = bodyText.match(/Status\s*:\s*([A-Za-z🟢🔴🟡 ]+)/i);
+        if (m) {
+          result.status = m[1]
+            .replace('🟢', 'Good')
+            .replace('🔴', 'Revoked')
+            .replace('🟡', 'Expired')
+            .trim();
+        }
+      }
+
       if (!Object.keys(result).length)
-        throw new Error('Không lấy được dữ liệu — có thể server đích bị chậm.');
+        throw new Error('Không lấy được dữ liệu — HTML không khớp.');
 
       res.json({ ok: true, ...result });
     } catch (error) {
