@@ -1,59 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>P12 Check Real</title>
+<style>
+  body { font-family: sans-serif; max-width: 600px; margin: 40px auto; }
+  label { display:block; margin-top:10px; }
+  input, button { width:100%; padding:8px; margin-top:5px; }
+  .ok { background: #c8f7c5; padding:8px; }
+  .revoked { background: #f9c0c0; padding:8px; }
+</style>
+</head>
+<body>
+  <h1>Kiểm tra P12 (ZIP)</h1>
+  <form id="form">
+    <label>Chọn file ZIP</label>
+    <input type="file" name="ZipFile" id="zip" accept=".zip" required>
+
+    <label>Mật khẩu P12</label>
+    <input type="text" name="P12PassWordZip" id="pass" placeholder="Nhập mật khẩu">
+
+    <button type="submit">Kiểm tra</button>
+  </form>
+
+  <div id="result" style="margin-top:20px;"></div>
+
 <script>
 document.getElementById('form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const file = document.getElementById('zip').files[0];
   const pass = document.getElementById('pass').value;
-  const fd = new FormData();
-  fd.append('ZipFile', file);
-  fd.append('P12PassWordZip', pass);
+  const formData = new FormData();
+  formData.append('ZipFile', file);
+  formData.append('P12PassWordZip', pass);
 
-  const resultEl = document.getElementById('result');
-  resultEl.innerHTML = 'Đang kiểm tra...';
+  const resEl = document.getElementById('result');
+  resEl.textContent = 'Đang kiểm tra...';
 
-  try {
-    const resp = await fetch('/api/check', { method: 'POST', body: fd });
-    const data = await resp.json();
+  const resp = await fetch('/api/check', { method: 'POST', body: formData });
+  const data = await resp.json();
 
-    if (!data.ok) {
-      resultEl.innerHTML = `<pre>Lỗi: ${JSON.stringify(data, null, 2)}</pre>`;
-      return;
-    }
+  if (!data.ok) {
+    resEl.textContent = 'Lỗi: ' + JSON.stringify(data);
+    return;
+  }
 
-    // Tạo HTML hiển thị kết quả
-    let statusClass = '';
-    let emoji = '🟢';
-    if (data.status?.toLowerCase().includes('revoked')) {
-      statusClass = 'revoked';
-      emoji = '🔴';
-    }
-
-    resultEl.innerHTML = `
-      <div class="result ${statusClass}">
-        <h3>Kết quả kiểm tra</h3>
-        <p><b>CertName:</b> ${data.certName || '-'}</p>
-        <p><b>Effective Date:</b> ${data.effectiveDate || '-'}</p>
-        <p><b>Expiration Date:</b> ${data.expirationDate || '-'}</p>
-        <p><b>Status:</b> ${emoji} ${data.status || '-'}</p>
-      </div>
-    `;
-  } catch (err) {
-    resultEl.innerHTML = `<pre>Lỗi kết nối: ${err.message}</pre>`;
+  let html = `
+    <p><b>CertName:</b> ${data.certName || '-'}</p>
+    <p><b>Effective Date:</b> ${data.effectiveDate || '-'}</p>
+    <p><b>Expiration Date:</b> ${data.expirationDate || '-'}</p>
+    <p><b>Status:</b> ${data.status || '-'}</p>
+  `;
+  if (data.status && data.status.toLowerCase().includes('revoked')) {
+    resEl.innerHTML = `<div class="revoked">${html}</div>`;
+  } else {
+    resEl.innerHTML = `<div class="ok">${html}</div>`;
   }
 });
 </script>
-
-<style>
-.result {
-  border-radius: 8px;
-  padding: 12px;
-  margin-top: 16px;
-  background: #eaffea;
-  color: #055a00;
-  border: 1px solid #55aa55;
-}
-.result.revoked {
-  background: #ffe6e6;
-  color: #a10000;
-  border-color: #cc0000;
-}
-</style>
+</body>
+</html>
