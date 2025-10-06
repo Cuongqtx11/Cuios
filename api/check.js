@@ -1,11 +1,10 @@
-// api/check.js
 const fs = require('fs');
 const FormData = require('form-data');
 const formidable = require('formidable');
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 
-const TARGET_URL = 'https://check.p12apple.com/'; // trang đích
+const TARGET_URL = 'https://check.p12apple.com/';
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -37,12 +36,18 @@ module.exports = async (req, res) => {
       const $ = cheerio.load(html);
       const result = {};
 
-      $('li').each((_, el) => {
+      const getValue = (label, text) => {
+        const regex = new RegExp(`${label}\\s*:\\s*(.*)`, 'i');
+        const match = text.match(regex);
+        return match ? match[1].trim() : null;
+      };
+
+      $('li, p, div').each((_, el) => {
         const text = $(el).text().trim();
-        if (text.includes('CertName')) result.certName = text.split(':')[1]?.trim();
-        if (text.includes('Effective Date')) result.effectiveDate = text.split(':')[1]?.trim();
-        if (text.includes('Expiration Date')) result.expirationDate = text.split(':')[1]?.trim();
-        if (text.includes('Certificate Status')) result.status = text.split(':')[1]?.trim();
+        if (/CertName/i.test(text)) result.certName = getValue('CertName', text);
+        if (/Effective Date/i.test(text)) result.effectiveDate = getValue('Effective Date', text);
+        if (/Expiration Date/i.test(text)) result.expirationDate = getValue('Expiration Date', text);
+        if (/Certificate Status/i.test(text)) result.status = getValue('Certificate Status', text);
       });
 
       res.json({ ok: true, ...result });
