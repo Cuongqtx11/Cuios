@@ -1,26 +1,33 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>P12 Check Real</title>
-<style>
-body { font-family: sans-serif; max-width:600px; margin:40px auto; }
-label { display:block; margin-top:10px; }
-input, button { width:100%; padding:8px; margin-top:5px; }
-#result { margin-top:20px; }
-</style>
+    <meta charset="UTF-8">
+    <title>Kiểm tra chứng chỉ</title>
 </head>
 <body>
-<h1>Kiểm tra P12 (ZIP)</h1>
-<form id="form">
-<label>Chọn file ZIP</label>
-<input type="file" id="zip" accept=".zip" required>
-<label>Mật khẩu P12</label>
-<input type="text" id="pass" placeholder="Nhập mật khẩu">
-<button type="submit">Kiểm tra</button>
-</form>
-<div id="result"></div>
-<script src="./frontend.js"></script>
+    <h2>Kiểm tra chứng chỉ</h2>
+    <form id="certForm" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".zip" required>
+        <input type="text" name="password" placeholder="Nhập mật khẩu chứng chỉ" required>
+        <button type="submit">Kiểm tra</button>
+    </form>
+    <div id="result"></div>
+    <script>
+    document.getElementById('certForm').onsubmit = async function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        document.getElementById('result').innerText = "Đang kiểm tra...";
+        let response = await fetch('http://YOUR_VPS_IP:5000/api/check-cert', {
+            method: 'POST',
+            body: formData
+        });
+        let data = await response.json();
+        if (data.error) {
+            document.getElementById('result').innerText = "Lỗi: " + data.error;
+        } else {
+            document.getElementById('result').innerText = JSON.stringify(data.cert_info, null, 2);
+        }
+    }
+    </script>
 </body>
 </html>
