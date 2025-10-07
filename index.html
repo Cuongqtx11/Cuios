@@ -17,7 +17,7 @@
         e.preventDefault();
         const formData = new FormData(this);
         document.getElementById('result').innerText = "Đang kiểm tra...";
-        let response = await fetch('http://YOUR_VPS_IP:5000/api/check-cert', {
+        let response = await fetch('http://103.82.38.225:5000/api/check-cert', {
             method: 'POST',
             body: formData
         });
