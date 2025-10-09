@@ -1,12 +1,1 @@
-{
-  "name": "p12-check",
-  "version": "1.0.0",
-  "main": "index.js",
-  "dependencies": {
-    "form-data": "^4.0.0",
-    "formidable": "^2.1.1",
-    "node-fetch": "^2.6.12",
-    "cheerio": "^1.0.0-rc.12",
-    "uuid": "^9.0.0"
-  }
-}
+
