@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Upload</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    /* CSS cục bộ cho form admin (giữ nguyên hoặc cập nhật như đã có) */
+    body {
+      padding: 20px;
+      background: none;
+      color: var(--text-light);
+      height: auto;
+      display: block;
+      overflow-y: auto;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: inherit;
+    }
+    .form-box {
+      max-width: 500px;
+      margin: 20px auto;
+      background: var(--card-bg-light);
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px var(--card-shadow-light);
+      transition: background var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 4px;
+      color: inherit;
+    }
+    input, textarea, select {
+      width: calc(100% - 24px);
+      padding: 10px 12px;
+      margin-top: 4px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+      background: var(--glass-bg-light);
+      color: var(--text-light);
+      transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease, color var(--transition-speed) ease;
+    }
+    input::placeholder, textarea::placeholder {
+        color: rgba(34, 34, 34, 0.6);
+    }
+    button {
+      margin-top: 20px;
+      background: var(--primary-color);
+      color: white;
+      padding: 10px 18px;
+      font-size: 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    button:hover {
+      background: #159f8a;
+    }
+
+    /* Dark mode for admin page */
+    body.dark {
+        color: var(--text-dark);
+    }
+    body.dark .form-box {
+        background: var(--card-bg-dark);
+        box-shadow: 0 8px 20px var(--card-shadow-dark);
+    }
+    body.dark input, body.dark textarea, body.dark select {
+        background: var(--glass-bg-dark);
+        border-color: rgba(26, 188, 156, 0.5);
+        color: var(--text-dark);
+    }
+    body.dark input::placeholder, body.dark textarea::placeholder {
+        color: rgba(224, 224, 224, 0.6);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-box">
+    <h1>🛠️ Admin Upload</h1>
+
+    <label for="select-type">📁 Chọn mục upload:</label>
+    <select id="select-type">
+      <option value="ipa">IPA</option>
+      <option value="dylib">Dylib</option>
+      <option value="conf">Conf</option>
+    </select>
+
+    <label for="input-name">📛 Tên App/Conf:</label>
+    <input type="text" id="input-name" placeholder="VD: Instagram Pro / Shadowrocket VN" />
+
+    <label for="input-icon">🖼️ Link Icon (ảnh):</label>
+    <input type="text" id="input-icon" placeholder="https://..." />
+
+    <label for="input-file" id="label-file">📥 Link tải file:</label>
+    <input type="text" id="input-file" placeholder="https://..." />
+
+    <label for="input-desc">📝 Mô tả sử dụng:</label>
+    <textarea id="input-desc" rows="4" placeholder="Nhập mô tả chi tiết..."></textarea>
+
+    <label for="input-usage" id="label-usage" style="display: none;">📝 Hướng dẫn sử dụng:</label>
+    <textarea id="input-usage" rows="4" placeholder="Nhập hướng dẫn sử dụng Shadowrocket conf..." style="display: none;"></textarea>
+
+    <label for="input-version" id="label-version">#️⃣ Phiên bản:</label>
+    <input type="text" id="input-version" placeholder="VD: 1.0.0" />
+
+    <label for="input-developer" id="label-developer">👨‍💻 Nhà phát triển:</label>
+    <input type="text" id="input-developer" placeholder="VD: John Doe" />
+
+    <button onclick="uploadApp()">📤 Upload</button>
+  </div>
+
+  <script>
+    const selectType = document.getElementById('select-type');
+    const inputFile = document.getElementById('input-file');
+    const labelFile = document.getElementById('label-file');
+    const inputUsage = document.getElementById('input-usage');
+    const labelUsage = document.getElementById('label-usage');
+    const inputVersion = document.getElementById('input-version');
+    const labelVersion = document.getElementById('label-version');
+    const inputDeveloper = document.getElementById('input-developer');
+    const labelDeveloper = document.getElementById('label-developer');
+
+    // Hàm điều chỉnh hiển thị các trường dựa trên loại
+    function adjustFormFields() {
+        const type = selectType.value;
+        if (type === 'conf') {
+            labelFile.textContent = '🔗 Link Conf (ss://, vmess://, etc.):';
+            inputUsage.style.display = 'block';
+            labelUsage.style.display = 'block';
+            inputVersion.style.display = 'none';
+            labelVersion.style.display = 'none';
+            inputDeveloper.style.display = 'none';
+            labelDeveloper.style.display = 'none';
+        } else {
+            labelFile.textContent = '📥 Link tải file:';
+            inputUsage.style.display = 'none';
+            labelUsage.style.display = 'none';
+            inputVersion.style.display = 'block';
+            labelVersion.style.display = 'block';
+            inputDeveloper.style.display = 'block';
+            labelDeveloper.style.display = 'block';
+        }
+    }
+
+    // Gọi hàm khi trang tải và khi loại thay đổi
+    selectType.addEventListener('change', adjustFormFields);
+    adjustFormFields(); // Initial call to set correct fields
+
+    // Đồng bộ Dark Mode từ trang cha
+    window.addEventListener('message', (event) => {
+        if (event.data.type === 'themeChange') {
+            if (event.data.theme === 'dark') {
+                document.body.classList.add('dark');
+            } else {
+                document.body.classList.remove('dark');
+            }
+        }
+    });
+
+    // Khôi phục theme đã lưu khi trang admin load trực tiếp (nếu có)
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark');
+    }
+
+    function uploadApp() {
+      const type = document.getElementById('select-type').value;
+      const name = document.getElementById('input-name').value.trim();
+      const icon = document.getElementById('input-icon').value.trim();
+      const desc = document.getElementById('input-desc').value.trim();
+
+      let appData = {
+          id: `${type}-${Date.now()}`,
+          type: type,
+          name: name,
+          icon: icon,
+          desc: desc
+      };
+
+      if (type === 'conf') {
+          const link = document.getElementById('input-file').value.trim(); // Dùng input-file cho link conf
+          const usage = document.getElementById('input-usage').value.trim();
+          if (!name || !icon || !link || !desc || !usage) {
+              alert('❗ Vui lòng điền đầy đủ thông tin bắt buộc cho Conf (Tên, Icon, Link Conf, Mô tả, Hướng dẫn sử dụng)!');
+              return;
+          }
+          appData.link = link;
+          appData.usage = usage;
+      } else { // IPA hoặc Dylib
+          const fileLink = document.getElementById('input-file').value.trim();
+          const version = document.getElementById('input-version').value.trim();
+          const developer = document.getElementById('input-developer').value.trim();
+          const date = new Date().toISOString().split('T')[0];
+          if (!name || !icon || !fileLink || !desc) {
+              alert('❗ Vui lòng điền đầy đủ thông tin bắt buộc cho App/Dylib (Tên, Icon, Link tải, Mô tả)!');
+              return;
+          }
+          appData.fileLink = fileLink;
+          appData.version = version;
+          appData.developer = developer;
+          appData.date = date;
+      }
+
+
+      // Lấy dữ liệu cũ từ localStorage
+      let data = localStorage.getItem(type);
+      let arr = data ? JSON.parse(data) : [];
+
+      // Thêm app mới
+      arr.push(appData);
+
+      // Lưu lại
+      localStorage.setItem(type, JSON.stringify(arr));
+
+      alert(`✅ Upload thành công vào mục ${type.toUpperCase()}\n\n(Lưu ý: Dữ liệu này chỉ lưu cục bộ trên trình duyệt của bạn. Để hiển thị công khai, bạn cần cập nhật thủ công file data/${type}.json trên GitHub.)`);
+
+      // Reset input
+      document.getElementById('input-name').value = '';
+      document.getElementById('input-icon').value = '';
+      document.getElementById('input-file').value = '';
+      document.getElementById('input-desc').value = '';
+      document.getElementById('input-usage').value = ''; // Reset usage field
+      document.getElementById('input-version').value = '';
+      document.getElementById('input-developer').value = '';
+    }
+  </script>
+
+</body>
+</html>
