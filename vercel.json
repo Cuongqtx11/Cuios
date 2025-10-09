@@ -1,1 +1,10 @@
-
+// Kiểm tra vercel.json
+{
+  "version": 2,
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
+    }
+  ]
+}
