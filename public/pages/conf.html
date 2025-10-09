@@ -6,9 +6,8 @@
   <title>Conf - Kho App VIP</title>
   <link rel="stylesheet" href="../css/style.css" />
   <style>
-    /* CSS bổ sung hoặc ghi đè cho trang conf */
     .app-card.conf-card {
-      cursor: pointer; /* Cho biết thẻ có thể nhấp vào */
+      cursor: pointer;
     }
   </style>
 </head>
@@ -32,7 +31,7 @@
 
   <script>
     const appListContainer = document.getElementById('app-list');
-    let confApps = []; // Store loaded conf apps
+    let confApps = [];
     const usagePopup = document.getElementById('usage-popup');
     const popupName = document.getElementById('popup-name');
     const popupUsage = document.getElementById('popup-usage');
@@ -55,7 +54,6 @@
         </div>
       `).join('');
 
-      // Add click listener to each conf card
       document.querySelectorAll('.conf-card').forEach(card => {
         card.addEventListener('click', (event) => {
           const appId = card.dataset.id;
@@ -83,7 +81,7 @@
     function showUsagePopup(app) {
       popupName.textContent = app.name;
       popupUsage.textContent = app.usage;
-      copyOpenBtn.dataset.link = app.link; // Lưu link conf vào data attribute
+      copyOpenBtn.dataset.link = app.link;
       usagePopup.classList.add('active');
     }
 
@@ -91,33 +89,28 @@
       usagePopup.classList.remove('active');
     }
 
-    // Xử lý sao chép và mở Shadowrocket
     copyOpenBtn.addEventListener('click', async () => {
       const confLink = copyOpenBtn.dataset.link;
       if (confLink) {
         try {
           await navigator.clipboard.writeText(confLink);
           alert('✅ Đã sao chép link cấu hình vào bộ nhớ tạm!');
-          // Thử mở Shadowrocket bằng URL Scheme
-          window.location.href = 'shadowrocket://'; // Hoặc 'shadowrocket://install' tùy phiên bản
+          window.location.href = 'shadowrocket://';
           closePopup();
         } catch (err) {
           console.error('Không thể sao chép hoặc mở ứng dụng:', err);
           alert('❌ Lỗi: Không thể sao chép link hoặc mở Shadowrocket tự động. Vui lòng sao chép thủ công.');
-          // Hiển thị link để người dùng sao chép thủ công nếu tự động thất bại
           prompt("Vui lòng sao chép thủ công link sau:", confLink);
         }
       }
     });
 
-    // Close popup when clicking outside
     usagePopup.addEventListener('click', (event) => {
       if (event.target === usagePopup) {
         closePopup();
       }
     });
 
-    // --- Search Listener ---
     window.addEventListener('message', (event) => {
       if (event.data.type === 'search') {
         const keyword = event.data.keyword.toLowerCase();
@@ -127,7 +120,6 @@
         );
         renderApps(filteredApps);
       } else if (event.data.type === 'themeChange') {
-          // Apply dark mode if received from parent
           if (event.data.theme === 'dark') {
               document.body.classList.add('dark');
           } else {
@@ -138,7 +130,8 @@
 
     loadConfApps();
 
-    const savedTheme = localStorage.getItem('theme');
+    // FIXED: Đổi localStorage thành sessionStorage
+    const savedTheme = sessionStorage.getItem('theme');
     if (savedTheme === 'dark') {
       document.body.classList.add('dark');
     }
