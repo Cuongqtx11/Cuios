@@ -29,9 +29,8 @@
 
   <script>
     const appListContainer = document.getElementById('app-list');
-    let dylibApps = []; // Store loaded dylib apps
+    let dylibApps = [];
 
-    // Elements for App Detail Popup
     const appDetailPopup = document.getElementById('app-detail-popup');
     const popupAppIcon = document.getElementById('popup-app-icon');
     const popupAppName = document.getElementById('popup-app-name');
@@ -63,7 +62,6 @@
         </div>
       `).join('');
 
-      // Add click listener to each app card
       document.querySelectorAll('.app-card').forEach(card => {
         card.addEventListener('click', (event) => {
           const appId = card.dataset.id;
@@ -88,7 +86,6 @@
       }
     }
 
-    // --- Popup Functions ---
     function showAppDetailPopup(app) {
         popupAppIcon.src = app.icon;
         popupAppName.textContent = app.name;
@@ -110,7 +107,6 @@
         }
     });
 
-    // --- Search Listener ---
     window.addEventListener('message', (event) => {
       if (event.data.type === 'search') {
         const keyword = event.data.keyword.toLowerCase();
@@ -131,7 +127,8 @@
 
     loadDylibApps();
 
-    const savedTheme = localStorage.getItem('theme');
+    // FIXED: Đổi localStorage thành sessionStorage
+    const savedTheme = sessionStorage.getItem('theme');
     if (savedTheme === 'dark') {
       document.body.classList.add('dark');
     }
